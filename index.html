@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Roger Ng Zi Liang — Digital Transformation Analyst and systems engineer. AI automation, rapid prototyping, and end-to-end digital delivery."
+    />
+    <title>Roger Ng Zi Liang | Digital Transformation &amp; Systems</title>
+    <link rel="icon" type="image/png" href="images/nav-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="assets/css/style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-nav" id="site-nav" role="banner">
+      <div class="site-nav__inner">
+        <a href="index.html#top" class="site-nav__logo" aria-label="Roger Ng — home">
+          <img
+            class="site-nav__logo-img"
+            src="images/nav-icon.png"
+            width="40"
+            height="40"
+            alt=""
+            decoding="async"
+          />
+          <span>Roger Ng</span>
+        </a>
+        <nav aria-label="Primary">
+          <ul class="site-nav__links">
+            <li><a href="index.html#about" data-section="about">About</a></li>
+            <li><a href="index.html#skills" data-section="skills">Skills</a></li>
+            <li><a href="index.html#experience" data-section="experience">Experience</a></li>
+            <li><a href="index.html#projects" data-section="projects">Projects</a></li>
+            <li><a href="academic.html#past-work">Past work</a></li>
+            <li><a href="index.html#contact" data-section="contact">Contact</a></li>
+          </ul>
+        </nav>
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-expanded="false"
+          aria-controls="nav-drawer"
+          aria-label="Open menu"
+        >
+          <i class="fa-solid fa-bars" aria-hidden="true"></i>
+        </button>
+      </div>
+    </header>
+
+    <div class="nav-drawer" id="nav-drawer" aria-hidden="true">
+      <button type="button" class="nav-drawer__backdrop" aria-label="Close menu" id="nav-backdrop"></button>
+      <div class="nav-drawer__panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <ul class="nav-drawer__list">
+          <li><a href="index.html#about" data-section="about">About</a></li>
+          <li><a href="index.html#skills" data-section="skills">Skills</a></li>
+          <li><a href="index.html#experience" data-section="experience">Experience</a></li>
+          <li><a href="index.html#projects" data-section="projects">Projects</a></li>
+          <li><a href="academic.html#past-work">Past work</a></li>
+          <li><a href="index.html#contact" data-section="contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <main id="main">
+      <section class="hero" id="top" aria-label="Introduction">
+        <div class="hero__bg" aria-hidden="true"></div>
+        <div class="hero__grid" aria-hidden="true"></div>
+        <div class="hero__content">
+          <p class="hero__eyebrow reveal">Portfolio 2026</p>
+          <h1 class="hero__name reveal" style="transition-delay: 0.05s">Roger Ng Zi Liang</h1>
+          <p class="hero__role reveal" id="hero-role" style="transition-delay: 0.1s">
+            <span id="hero-type-text"></span><span class="caret" aria-hidden="true"></span>
+          </p>
+          <p class="hero__tagline reveal" style="transition-delay: 0.15s">
+            Digital Transformation Analyst and Systems Engineer. I specialize in identifying process bottlenecks and
+            leveraging AI automation, rapid prototyping, and systems thinking to deploy real-world solutions.
+          </p>
+          <div class="hero__actions reveal" style="transition-delay: 0.2s">
+            <a href="#projects" class="btn btn--primary" data-smooth-scroll>
+              <i class="fa-solid fa-briefcase" aria-hidden="true"></i> View my work
+            </a>
+            <button type="button" class="btn btn--ghost" id="open-cv-modal">
+              <i class="fa-regular fa-eye" aria-hidden="true"></i> View CV
+            </button>
+          </div>
+        </div>
+        <a href="#about" class="hero__scroll" data-smooth-scroll>
+          <span>Scroll</span>
+          <i class="fa-solid fa-chevron-down hero__scroll-chev" aria-hidden="true"></i>
+        </a>
+      </section>
+
+      <section class="section" id="about" aria-labelledby="about-heading">
+        <div class="container">
+          <header class="section__header reveal">
+            <p class="section__eyebrow">About</p>
+            <h2 class="section__title" id="about-heading">Who I am</h2>
+          </header>
+          <div class="about__grid">
+            <div class="about__photo-wrap reveal">
+              <img src="images/profile.jpg" alt="Roger Ng portrait" class="about__photo" width="220" height="220" />
+            </div>
+            <div class="reveal" style="transition-delay: 0.08s">
+              <p class="about__body">
+                <strong>Digital Transformation Analyst and Systems Engineer.</strong> I specialize in identifying process
+                bottlenecks and leveraging AI automation, rapid prototyping, and systems thinking to deploy real-world
+                solutions. I translate stakeholder needs into governed digital delivery — workflows, integrations, and
+                applications — with the same rigour I apply to requirements, interfaces, documentation, and training.
+              </p>
+              <div class="about__chips">
+                <span class="chip">Digital Transformation</span>
+                <span class="chip">BEng Robotics Systems</span>
+                <span class="chip">Bilingual EN / CN</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="skills" aria-labelledby="skills-heading">
+        <div class="container">
+          <header class="section__header reveal">
+            <p class="section__eyebrow">Capabilities</p>
+            <h2 class="section__title" id="skills-heading">Skills &amp; tools</h2>
+            <p class="section__intro">
+              From AI-assisted build pipelines and workflow automation to physical prototyping — a toolkit shaped for
+              transformation programmes, not just lab coursework.
+            </p>
+          </header>
+          <div class="skills__grid">
+            <article class="card reveal">
+              <h3 class="skill-group__title">Engineering &amp; design</h3>
+              <div class="pills">
+                <span class="pill">SolidWorks</span>
+                <span class="pill">3D printing</span>
+                <span class="pill">Pneumatics</span>
+                <span class="pill">GD&amp;T</span>
+                <span class="pill">DFM / DFA</span>
+                <span class="pill">ROS</span>
+              </div>
+            </article>
+            <article class="card reveal">
+              <h3 class="skill-group__title">Software &amp; AI-enabled delivery</h3>
+              <div class="pills">
+                <span class="pill">Prompt Engineering</span>
+                <span class="pill">AI Code Generation</span>
+                <span class="pill">Cursor/Composer</span>
+                <span class="pill">Workflow Automation (n8n)</span>
+                <span class="pill">Python</span>
+              </div>
+            </article>
+            <article class="card reveal">
+              <h3 class="skill-group__title">Systems &amp; process</h3>
+              <div class="pills">
+                <span class="pill">Systems architecture</span>
+                <span class="pill">SEBOK</span>
+                <span class="pill">Systems lifecycle</span>
+                <span class="pill">Lean</span>
+                <span class="pill">Six Sigma (fundamentals)</span>
+                <span class="pill">Root cause analysis</span>
+                <span class="pill">Requirements &amp; interfaces</span>
+              </div>
+            </article>
+            <article class="card reveal">
+              <h3 class="skill-group__title">Project &amp; delivery</h3>
+              <div class="pills">
+                <span class="pill">Gantt charts</span>
+                <span class="pill">BOMs</span>
+                <span class="pill">QA / QC</span>
+                <span class="pill">n8n automation</span>
+                <span class="pill">Microsoft 365</span>
+                <span class="pill">Technical documentation</span>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="experience" aria-labelledby="experience-heading">
+        <div class="container">
+          <header class="section__header reveal">
+            <p class="section__eyebrow">Career</p>
+            <h2 class="section__title" id="experience-heading">Experience</h2>
+            <p class="section__intro">
+              From systems internships to digital transformation ownership — shipping governed, documented change that
+              stakeholders can run without heroics.
+            </p>
+          </header>
+          <ol class="timeline">
+            <li class="timeline__item reveal">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <article class="card exp-card">
+                <div class="exp-card__header">
+                  <div class="exp-card__logo">
+                    <img src="images/logo-winner-engineering.png" alt="" width="48" height="48" decoding="async" />
+                  </div>
+                  <div class="exp-card__meta">
+                    <h3>Digital Transformation Analyst</h3>
+                    <p class="exp-card__company">Winner Engineering Pte Ltd</p>
+                  </div>
+                  <span class="exp-card__date">May 2026 – Present</span>
+                </div>
+                <ul class="exp-card__list">
+                  <li>
+                    Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a
+                    Discover–Design–Deploy–Iterate approach to improve business processes.
+                  </li>
+                  <li>
+                    Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA /
+                    Responsible AI alignment.
+                  </li>
+                  <li>
+                    Translated requirements into user-centric digital applications; led testing, deployment, and
+                    troubleshooting with stakeholders.
+                  </li>
+                  <li>
+                    Authored documentation, delivered training, and mentored junior contributors to support adoption.
+                  </li>
+                </ul>
+              </article>
+            </li>
+            <li class="timeline__item reveal">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <article class="card exp-card">
+                <div class="exp-card__header">
+                  <div class="exp-card__logo exp-card__logo--light">
+                    <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
+                  </div>
+                  <div class="exp-card__meta">
+                    <h3>Assistant Engineer Intern</h3>
+                    <p class="exp-card__company">WEInnovate Pte Ltd</p>
+                  </div>
+                  <span class="exp-card__date">Jan 2025 – Dec 2025</span>
+                </div>
+                <ul class="exp-card__list">
+                  <li>
+                    Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through
+                    fabrication.
+                  </li>
+                  <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
+                  <li>
+                    Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional
+                    issues.
+                  </li>
+                  <li>Managed procurement and RFQs for 100+ components across projects.</li>
+                  <li>
+                    Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and
+                    coordinated stakeholders on-site.
+                  </li>
+                </ul>
+              </article>
+            </li>
+            <li class="timeline__item reveal">
+              <span class="timeline__dot" aria-hidden="true"></span>
+              <article class="card exp-card">
+                <div class="exp-card__header">
+                  <div class="exp-card__logo exp-card__logo--light">
+                    <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
+                  </div>
+                  <div class="exp-card__meta">
+                    <h3>Systems Engineer Intern</h3>
+                    <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
+                  </div>
+                  <span class="exp-card__date">Apr 2019 – Jul 2019</span>
+                </div>
+                <ul class="exp-card__list">
+                  <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
+                  <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
+                  <li>Developed standardised training docs to improve onboarding consistency.</li>
+                  <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
+                </ul>
+              </article>
+            </li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="section" id="projects" aria-labelledby="projects-heading">
+        <div class="container">
+          <header class="section__header reveal">
+            <p class="section__eyebrow">Portfolio</p>
+            <h2 class="section__title" id="projects-heading">Selected work</h2>
+            <p class="section__intro">
+              Featured work in AI-accelerated delivery and governed automation. Hardware integration and university-era
+              projects live on the <a href="academic.html#past-work">Past work</a> page.
+            </p>
+          </header>
+          <div class="projects__grid">
+            <article class="card project-card reveal">
+              <div class="project-card__media">
+                <img
+                  src="images/project-ai-web-deployment.png"
+                  alt="AI Web Deployment"
+                  width="640"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="project-card__body">
+                <h3 class="project-card__title">AI-accelerated web deployment (ePortfolio 2026)</h3>
+                <div class="project-card__meta">
+                  <span class="project-card__tag">Cursor</span>
+                  <span class="project-card__tag">AI prompting</span>
+                  <span class="project-card__tag">Vibe coding</span>
+                </div>
+                <p class="project-card__desc">
+                  Designed, generated, and deployed this static web portfolio using AI-driven tools (Cursor/Composer),
+                  reducing development time from weeks to hours.
+                </p>
+                <button type="button" class="btn-project-details" data-open-project="eportfolio">
+                  View details
+                </button>
+              </div>
+            </article>
+            <article class="card project-card reveal">
+              <div class="project-card__media">
+                <img
+                  src="images/project-workflow-automation.png"
+                  alt="AI and Automation Workflows"
+                  width="640"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="project-card__body">
+                <h3 class="project-card__title">AI &amp; automation workflows (current)</h3>
+                <div class="project-card__meta">
+                  <span class="project-card__tag">n8n</span>
+                  <span class="project-card__tag">Python</span>
+                  <span class="project-card__tag">PDPA</span>
+                </div>
+                <p class="project-card__desc">
+                  Digital transformation delivery: AI-assisted automations, self-hosted operations, and stakeholder-safe
+                  rollout — with documentation, training, and Responsible AI / PDPA alignment built in from day one.
+                </p>
+                <button type="button" class="btn-project-details" data-open-project="automation">
+                  View details
+                </button>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="contact" aria-labelledby="contact-heading">
+        <div class="container">
+          <header class="section__header reveal">
+            <p class="section__eyebrow">Hello</p>
+            <h2 class="section__title" id="contact-heading">Contact</h2>
+            <p class="section__intro">
+              Open to roles in digital transformation, systems integration, and AI-governed automation. Reach out
+              below.
+            </p>
+          </header>
+          <div class="contact__grid">
+            <div class="reveal">
+              <div class="card contact__info">
+                <p>
+                  <strong>Phone:</strong> +65 8993 7209<br />
+                  Prefer email for first contact — I typically reply within 1–2 business days.
+                </p>
+                <div class="contact-links">
+                  <a href="mailto:rogerngwork@gmail.com">
+                    <i class="fa-solid fa-envelope" aria-hidden="true"></i> rogerngwork@gmail.com
+                  </a>
+                  <a href="https://www.linkedin.com/in/1985-roger-ng/" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-linkedin" aria-hidden="true"></i> LinkedIn
+                  </a>
+                  <a href="https://github.com/5603roger" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-brands fa-github" aria-hidden="true"></i> GitHub
+                  </a>
+                  <a href="https://5603roger.github.io/ePortfolio/" target="_blank" rel="noopener noreferrer">
+                    <i class="fa-solid fa-globe" aria-hidden="true"></i> Legacy portfolio (reference)
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="reveal" style="transition-delay: 0.08s">
+              <form class="card" id="contact-form" action="#" method="get" novalidate>
+                <div class="form-group">
+                  <label for="contact-name">Name</label>
+                  <input type="text" id="contact-name" name="name" autocomplete="name" required />
+                </div>
+                <div class="form-group">
+                  <label for="contact-email">Email</label>
+                  <input type="email" id="contact-email" name="email" autocomplete="email" required />
+                </div>
+                <div class="form-group">
+                  <label for="contact-message">Message</label>
+                  <textarea id="contact-message" name="message" required></textarea>
+                </div>
+                <button type="submit" class="btn btn--primary" style="width: 100%">
+                  <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Send message
+                </button>
+                <p class="section__intro" style="margin: 1rem 0 0; font-size: 0.8125rem">
+                  Submits via your email app (no server). For a hosted form, wire this to Formspree or similar later.
+                </p>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>
+          © <span id="year"></span> Roger Ng Zi Liang · Built for
+          <a href="https://5603roger.github.io/ePortfolio/">ePortfolio</a> refresh ·
+          <a href="#top" data-smooth-scroll>Back to top</a>
+        </p>
+      </div>
+    </footer>
+
+    <button type="button" class="back-top" id="back-top" aria-label="Back to top">
+      <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
+
+    <div
+      id="cv-modal"
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="cv-modal-title"
+      aria-hidden="true"
+      hidden
+    >
+      <button type="button" class="modal__backdrop" id="cv-modal-backdrop" aria-label="Close CV preview (backdrop)"></button>
+      <div class="modal__panel" role="document">
+        <div class="modal__header">
+          <h2 id="cv-modal-title" class="modal__title">Curriculum vitae</h2>
+          <button type="button" class="modal__close" id="cv-modal-close" aria-label="Close CV preview">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal__body modal__body--cv">
+          <iframe
+            src="RogerNg_Resume2026.pdf"
+            title="Roger Ng CV PDF preview"
+            class="modal__iframe"
+          ></iframe>
+        </div>
+        <div class="modal__footer">
+          <a href="RogerNg_Resume2026.pdf" class="btn btn--primary" download="RogerNg_Resume2026.pdf">
+            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download CV
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="project-modal"
+      class="modal modal--project"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="project-modal-title"
+      aria-hidden="true"
+      hidden
+    >
+      <button
+        type="button"
+        class="modal__backdrop"
+        id="project-modal-backdrop"
+        aria-label="Close project details (backdrop)"
+      ></button>
+      <div class="modal__panel" role="document">
+        <div class="modal__header">
+          <h2 id="project-modal-title" class="modal__title">Project details</h2>
+          <button type="button" class="modal__close" id="project-modal-close" aria-label="Close project details">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal__body">
+          <div id="project-stack-eportfolio" class="project-modal__stack" data-project="eportfolio" hidden>
+            <div class="tabs" data-tabs>
+              <div class="tabs__list" role="tablist" aria-label="ePortfolio tabs">
+                <button
+                  type="button"
+                  class="tabs__tab"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="panel-eport-problem"
+                  id="tab-eport-problem"
+                >
+                  The Problem
+                </button>
+                <button
+                  type="button"
+                  class="tabs__tab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel-eport-exec"
+                  id="tab-eport-exec"
+                >
+                  The Execution
+                </button>
+                <button
+                  type="button"
+                  class="tabs__tab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel-eport-outcome"
+                  id="tab-eport-outcome"
+                >
+                  The Outcome
+                </button>
+              </div>
+              <div
+                class="tabs__panel is-active"
+                role="tabpanel"
+                id="panel-eport-problem"
+                aria-labelledby="tab-eport-problem"
+              >
+                <p>
+                  The legacy student portfolio no longer matched a Digital Transformation Analyst storyline: the template
+                  was dated, the information architecture was rigid, and manually rewriting responsive HTML/CSS would burn
+                  weeks while still risking weak accessibility and inconsistent content.
+                </p>
+              </div>
+              <div class="tabs__panel" role="tabpanel" id="panel-eport-exec" aria-labelledby="tab-eport-exec">
+                <p>
+                  I used Cursor/Composer as an implementation accelerator: structured prompts for semantic sections,
+                  design tokens, and DOM refactors, then reviewed every output for layout, contrast, and keyboard flow.
+                  The workflow treated the LLM as a pair programmer under explicit IA and brand constraints rather than a
+                  black-box author.
+                </p>
+              </div>
+              <div class="tabs__panel" role="tabpanel" id="panel-eport-outcome" aria-labelledby="tab-eport-outcome">
+                <p>
+                  The result is this deployable, two-page static site — including CV preview and project modals — produced
+                  in hours instead of a multi-week ground-up build, with interview-ready narrative and room to iterate as
+                  roles and proof points evolve.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div id="project-stack-automation" class="project-modal__stack" data-project="automation" hidden>
+            <div class="tabs" data-tabs>
+              <div class="tabs__list" role="tablist" aria-label="Automation workflow tabs">
+                <button
+                  type="button"
+                  class="tabs__tab"
+                  role="tab"
+                  aria-selected="true"
+                  aria-controls="panel-auto-problem"
+                  id="tab-auto-problem"
+                >
+                  The Problem
+                </button>
+                <button
+                  type="button"
+                  class="tabs__tab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel-auto-exec"
+                  id="tab-auto-exec"
+                >
+                  The Execution
+                </button>
+                <button
+                  type="button"
+                  class="tabs__tab"
+                  role="tab"
+                  aria-selected="false"
+                  aria-controls="panel-auto-outcome"
+                  id="tab-auto-outcome"
+                >
+                  The Outcome
+                </button>
+              </div>
+              <div
+                class="tabs__panel is-active"
+                role="tabpanel"
+                id="panel-auto-problem"
+                aria-labelledby="tab-auto-problem"
+              >
+                <p>
+                  Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed
+                  onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI
+                  expectations.
+                </p>
+              </div>
+              <div class="tabs__panel" role="tabpanel" id="panel-auto-exec" aria-labelledby="tab-auto-exec">
+                <p>
+                  I prototyped and hardened flows in n8n with Python connectors where needed, mapped trust boundaries for
+                  each integration, and wrote operator-facing documentation so automations could be owned after launch — not
+                  dependent on ad-hoc fixes.
+                </p>
+              </div>
+              <div class="tabs__panel" role="tabpanel" id="panel-auto-outcome" aria-labelledby="tab-auto-outcome">
+                <p>
+                  Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so
+                  stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise
+                  exact metrics where NDAs apply).
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="assets/js/main.js" defer></script>
+  </body>
+</html>
