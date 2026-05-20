@@ -22,13 +22,137 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
+    
+    <style>
+      .btn-project-details {
+        background: transparent;
+        border: 1px solid #555;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-family: inherit;
+        font-size: 0.875rem;
+        margin-top: 1rem;
+        transition: background 0.2s, border-color 0.2s;
+        width: 100%;
+      }
+      .btn-project-details:hover {
+        background: #222;
+        border-color: #888;
+      }
+
+      .inline-content {
+        display: none;
+      }
+      .inline-content.is-expanded {
+        display: block;
+        margin-top: 1.5rem;
+        border-top: 1px solid #333;
+        padding-top: 1.25rem;
+        animation: fadeIn 0.3s ease-in;
+      }
+
+      .tab-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        border-bottom: 1px solid #444;
+        padding-bottom: 0.5rem;
+      }
+      .tab-btn {
+        background: none;
+        border: none;
+        color: #888;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.85rem;
+        padding: 0.5rem 0;
+        transition: color 0.2s;
+        position: relative;
+      }
+      .tab-btn:hover { color: #ccc; }
+      .tab-btn.active { color: #fff; }
+      .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -9px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+      }
+      .tab-content {
+        display: none;
+        color: #bbb;
+        line-height: 1.6;
+        font-size: 0.9rem;
+      }
+      .tab-content p {
+        margin-bottom: 0.75rem;
+      }
+      .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
+      
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+      /* Clickable Thumbnail Style */
+      .zoomable-image {
+        cursor: zoom-in;
+        transition: opacity 0.2s ease;
+        opacity: 0.85;
+      }
+      .zoomable-image:hover {
+        opacity: 1;
+      }
+
+      /* Unified Standalone Lightbox CSS */
+      #custom-lightbox {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999999;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+      #custom-lightbox.is-active {
+        display: flex; 
+      }
+      #custom-lightbox img {
+        max-width: 95vw;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        background: transparent;
+        border: none;
+        font-size: 3rem;
+        cursor: pointer;
+        transition: color 0.2s;
+        z-index: 10000000; 
+      }
+      .lightbox-close:hover {
+        color: #ccc;
+      }
+    </style>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
 
     <header class="site-nav" id="site-nav" role="banner">
       <div class="site-nav__inner">
-        <a href="index.html#top" class="site-nav__logo" aria-label="Roger Ng — home">
+        <a href="#top" class="site-nav__logo" aria-label="Roger Ng — home">
           <img
             class="site-nav__logo-img"
             src="images/nav-icon.png"
@@ -41,12 +165,12 @@
         </a>
         <nav aria-label="Primary">
           <ul class="site-nav__links">
-            <li><a href="index.html#about" data-section="about">About</a></li>
-            <li><a href="index.html#skills" data-section="skills">Skills</a></li>
-            <li><a href="index.html#experience" data-section="experience">Experience</a></li>
-            <li><a href="index.html#projects" data-section="projects">Projects</a></li>
+            <li><a href="#about" data-section="about">About</a></li>
+            <li><a href="#skills" data-section="skills">Skills</a></li>
+            <li><a href="#experience" data-section="experience">Experience</a></li>
+            <li><a href="#projects" data-section="projects">Projects</a></li>
             <li><a href="academic.html#past-work">Past work</a></li>
-            <li><a href="index.html#contact" data-section="contact">Contact</a></li>
+            <li><a href="#contact" data-section="contact">Contact</a></li>
           </ul>
         </nav>
         <button
@@ -66,12 +190,12 @@
       <button type="button" class="nav-drawer__backdrop" aria-label="Close menu" id="nav-backdrop"></button>
       <div class="nav-drawer__panel" role="dialog" aria-modal="true" aria-label="Mobile navigation">
         <ul class="nav-drawer__list">
-          <li><a href="index.html#about" data-section="about">About</a></li>
-          <li><a href="index.html#skills" data-section="skills">Skills</a></li>
-          <li><a href="index.html#experience" data-section="experience">Experience</a></li>
-          <li><a href="index.html#projects" data-section="projects">Projects</a></li>
+          <li><a href="#about" data-section="about">About</a></li>
+          <li><a href="#skills" data-section="skills">Skills</a></li>
+          <li><a href="#experience" data-section="experience">Experience</a></li>
+          <li><a href="#projects" data-section="projects">Projects</a></li>
           <li><a href="academic.html#past-work">Past work</a></li>
-          <li><a href="index.html#contact" data-section="contact">Contact</a></li>
+          <li><a href="#contact" data-section="contact">Contact</a></li>
         </ul>
       </div>
     </div>
@@ -81,7 +205,7 @@
         <div class="hero__bg" aria-hidden="true"></div>
         <div class="hero__grid" aria-hidden="true"></div>
         <div class="hero__content">
-          <p class="hero__eyebrow reveal">Portfolio 2026</p>
+          <p class="hero__eyebrow reveal">Digital Portfolio</p>
           <h1 class="hero__name reveal" style="transition-delay: 0.05s">Roger Ng Zi Liang</h1>
           <p class="hero__role reveal" id="hero-role" style="transition-delay: 0.1s">
             <span id="hero-type-text"></span><span class="caret" aria-hidden="true"></span>
@@ -234,6 +358,7 @@
                 </ul>
               </article>
             </li>
+            
             <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
               <article class="card exp-card">
@@ -247,24 +372,37 @@
                   </div>
                   <span class="exp-card__date">Jan 2025 – Dec 2025</span>
                 </div>
-                <ul class="exp-card__list">
-                  <li>
-                    Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through
-                    fabrication.
-                  </li>
-                  <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
-                  <li>
-                    Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional
-                    issues.
-                  </li>
-                  <li>Managed procurement and RFQs for 100+ components across projects.</li>
-                  <li>
-                    Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and
-                    coordinated stakeholders on-site.
-                  </li>
-                </ul>
+                
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                  <div style="flex: 1 1 300px;">
+                    <ul class="exp-card__list" style="margin-top: 0;">
+                      <li>
+                        Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through
+                        fabrication.
+                      </li>
+                      <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
+                      <li>
+                        Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional
+                        issues.
+                      </li>
+                      <li>Managed procurement and RFQs for 100+ components across projects.</li>
+                      <li>
+                        Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and
+                        coordinated stakeholders on-site.
+                      </li>
+                    </ul>
+                  </div>
+                  
+                  <div style="flex: 1 1 250px; display: flex; flex-direction: column; justify-content: center; background: #111; padding: 1rem; border-radius: 8px; border: 1px solid #333;">
+                    <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 0.75rem; display: block;">Featured Work (Jan - Dec 2025)</span>
+                    <div style="width: 100%; border: 1px solid #444; border-radius: 6px; overflow: hidden; background: #000;">
+                      <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; display: block;" />
+                    </div>
+                  </div>
+                </div>
               </article>
             </li>
+            
             <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
               <article class="card exp-card">
@@ -278,12 +416,34 @@
                   </div>
                   <span class="exp-card__date">Apr 2019 – Jul 2019</span>
                 </div>
-                <ul class="exp-card__list">
-                  <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
-                  <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
-                  <li>Developed standardised training docs to improve onboarding consistency.</li>
-                  <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
-                </ul>
+                
+                <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                  <div style="flex: 1 1 300px;">
+                    <ul class="exp-card__list" style="margin-top: 0;">
+                      <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
+                      <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
+                      <li>Developed standardised training docs to improve onboarding consistency.</li>
+                      <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
+                    </ul>
+                  </div>
+                  
+                  <div style="flex: 1 1 250px; display: flex; flex-direction: column; justify-content: center; background: #111; padding: 1rem; border-radius: 8px; border: 1px solid #333;">
+                    <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #888; margin-bottom: 0.75rem; display: block;">Process Mapping Showcase</span>
+                    <div style="width: 100%; aspect-ratio: 16/9; border: 1px solid #444; border-radius: 6px; overflow: hidden; background: #000;">
+                      <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen 
+                        style="display: block;">
+                      </iframe>
+                    </div>
+                  </div>
+                </div>
+
               </article>
             </li>
           </ol>
@@ -301,6 +461,7 @@
             </p>
           </header>
           <div class="projects__grid">
+            
             <article class="card project-card reveal">
               <div class="project-card__media">
                 <img
@@ -310,6 +471,7 @@
                   height="360"
                   loading="lazy"
                   decoding="async"
+                  class="zoomable-image"
                 />
               </div>
               <div class="project-card__body">
@@ -323,11 +485,29 @@
                   Designed, generated, and deployed this static web portfolio using AI-driven tools (Cursor/Composer),
                   reducing development time from weeks to hours.
                 </p>
-                <button type="button" class="btn-project-details" data-open-project="eportfolio">
-                  View details
+                <button type="button" class="btn-project-details toggle-expand" aria-expanded="false">
+                  See all
                 </button>
+
+                <div class="inline-content">
+                  <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="tab-eport-problem">The Problem</button>
+                    <button class="tab-btn" data-target="tab-eport-exec">The Execution</button>
+                    <button class="tab-btn" data-target="tab-eport-outcome">The Outcome</button>
+                  </div>
+                  <div id="tab-eport-problem" class="tab-content active">
+                    <p>The legacy student portfolio no longer matched a Digital Transformation Analyst storyline: the template was dated, the information architecture was rigid, and manually rewriting responsive HTML/CSS would burn weeks while still risking weak accessibility and inconsistent content.</p>
+                  </div>
+                  <div id="tab-eport-exec" class="tab-content">
+                    <p>I used Cursor/Composer as an implementation accelerator: structured prompts for semantic sections, design tokens, and DOM refactors, then reviewed every output for layout, contrast, and keyboard flow. The workflow treated the LLM as a pair programmer under explicit IA and brand constraints rather than a black-box author.</p>
+                  </div>
+                  <div id="tab-eport-outcome" class="tab-content">
+                    <p>The result is this deployable, two-page static site — including CV preview and embedded inline case studies — produced in hours instead of a multi-week ground-up build, with interview-ready narrative and room to iterate as roles and proof points evolve.</p>
+                  </div>
+                </div>
               </div>
             </article>
+
             <article class="card project-card reveal">
               <div class="project-card__media">
                 <img
@@ -337,6 +517,7 @@
                   height="360"
                   loading="lazy"
                   decoding="async"
+                  class="zoomable-image"
                 />
               </div>
               <div class="project-card__body">
@@ -350,11 +531,29 @@
                   Digital transformation delivery: AI-assisted automations, self-hosted operations, and stakeholder-safe
                   rollout — with documentation, training, and Responsible AI / PDPA alignment built in from day one.
                 </p>
-                <button type="button" class="btn-project-details" data-open-project="automation">
-                  View details
+                <button type="button" class="btn-project-details toggle-expand" aria-expanded="false">
+                  See all
                 </button>
+
+                <div class="inline-content">
+                  <div class="tab-buttons">
+                    <button class="tab-btn active" data-target="tab-auto-problem">The Problem</button>
+                    <button class="tab-btn" data-target="tab-auto-exec">The Execution</button>
+                    <button class="tab-btn" data-target="tab-auto-outcome">The Outcome</button>
+                  </div>
+                  <div id="tab-auto-problem" class="tab-content active">
+                    <p>Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI expectations.</p>
+                  </div>
+                  <div id="tab-auto-exec" class="tab-content">
+                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapped trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
+                  </div>
+                  <div id="tab-auto-outcome" class="tab-content">
+                    <p>Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise exact metrics where NDAs apply).</p>
+                  </div>
+                </div>
               </div>
             </article>
+
           </div>
         </div>
       </section>
@@ -445,178 +644,104 @@
       <button type="button" class="modal__backdrop" id="cv-modal-backdrop" aria-label="Close CV preview (backdrop)"></button>
       <div class="modal__panel" role="document">
         <div class="modal__header">
-          <h2 id="cv-modal-title" class="modal__title">Curriculum vitae</h2>
+          <h2 id="cv-modal-title" class="modal__title">Resume</h2>
           <button type="button" class="modal__close" id="cv-modal-close" aria-label="Close CV preview">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div class="modal__body modal__body--cv">
+        <div class="modal__body modal__body--cv" style="overflow-y: auto; -webkit-overflow-scrolling: touch; flex-grow: 1; display: flex; justify-content: center;">
           <iframe
             src="RogerNg_Resume2026.pdf"
             title="Roger Ng CV PDF preview"
             class="modal__iframe"
+            style="width: 100%; max-width: 850px; height: 100%; border: none; box-shadow: 0 0 10px rgba(0,0,0,0.5);"
           ></iframe>
         </div>
-        <div class="modal__footer">
-          <a href="RogerNg_Resume2026.pdf" class="btn btn--primary" download="RogerNg_Resume2026.pdf">
-            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download CV
+        <div class="modal__footer" style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="RogerNg_Resume2026.pdf" target="_blank" class="btn btn--ghost" style="flex: 1; text-align: center;">
+            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Open in New Tab
+          </a>
+          <a href="RogerNg_Resume2026.pdf" class="btn btn--primary" download="RogerNg_Resume2026.pdf" style="flex: 1; text-align: center;">
+            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download
           </a>
         </div>
       </div>
     </div>
 
-    <div
-      id="project-modal"
-      class="modal modal--project"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="project-modal-title"
-      aria-hidden="true"
-      hidden
-    >
-      <button
-        type="button"
-        class="modal__backdrop"
-        id="project-modal-backdrop"
-        aria-label="Close project details (backdrop)"
-      ></button>
-      <div class="modal__panel" role="document">
-        <div class="modal__header">
-          <h2 id="project-modal-title" class="modal__title">Project details</h2>
-          <button type="button" class="modal__close" id="project-modal-close" aria-label="Close project details">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal__body">
-          <div id="project-stack-eportfolio" class="project-modal__stack" data-project="eportfolio" hidden>
-            <div class="tabs" data-tabs>
-              <div class="tabs__list" role="tablist" aria-label="ePortfolio tabs">
-                <button
-                  type="button"
-                  class="tabs__tab"
-                  role="tab"
-                  aria-selected="true"
-                  aria-controls="panel-eport-problem"
-                  id="tab-eport-problem"
-                >
-                  The Problem
-                </button>
-                <button
-                  type="button"
-                  class="tabs__tab"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="panel-eport-exec"
-                  id="tab-eport-exec"
-                >
-                  The Execution
-                </button>
-                <button
-                  type="button"
-                  class="tabs__tab"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="panel-eport-outcome"
-                  id="tab-eport-outcome"
-                >
-                  The Outcome
-                </button>
-              </div>
-              <div
-                class="tabs__panel is-active"
-                role="tabpanel"
-                id="panel-eport-problem"
-                aria-labelledby="tab-eport-problem"
-              >
-                <p>
-                  The legacy student portfolio no longer matched a Digital Transformation Analyst storyline: the template
-                  was dated, the information architecture was rigid, and manually rewriting responsive HTML/CSS would burn
-                  weeks while still risking weak accessibility and inconsistent content.
-                </p>
-              </div>
-              <div class="tabs__panel" role="tabpanel" id="panel-eport-exec" aria-labelledby="tab-eport-exec">
-                <p>
-                  I used Cursor/Composer as an implementation accelerator: structured prompts for semantic sections,
-                  design tokens, and DOM refactors, then reviewed every output for layout, contrast, and keyboard flow.
-                  The workflow treated the LLM as a pair programmer under explicit IA and brand constraints rather than a
-                  black-box author.
-                </p>
-              </div>
-              <div class="tabs__panel" role="tabpanel" id="panel-eport-outcome" aria-labelledby="tab-eport-outcome">
-                <p>
-                  The result is this deployable, two-page static site — including CV preview and project modals — produced
-                  in hours instead of a multi-week ground-up build, with interview-ready narrative and room to iterate as
-                  roles and proof points evolve.
-                </p>
-              </div>
-            </div>
-          </div>
-          <div id="project-stack-automation" class="project-modal__stack" data-project="automation" hidden>
-            <div class="tabs" data-tabs>
-              <div class="tabs__list" role="tablist" aria-label="Automation workflow tabs">
-                <button
-                  type="button"
-                  class="tabs__tab"
-                  role="tab"
-                  aria-selected="true"
-                  aria-controls="panel-auto-problem"
-                  id="tab-auto-problem"
-                >
-                  The Problem
-                </button>
-                <button
-                  type="button"
-                  class="tabs__tab"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="panel-auto-exec"
-                  id="tab-auto-exec"
-                >
-                  The Execution
-                </button>
-                <button
-                  type="button"
-                  class="tabs__tab"
-                  role="tab"
-                  aria-selected="false"
-                  aria-controls="panel-auto-outcome"
-                  id="tab-auto-outcome"
-                >
-                  The Outcome
-                </button>
-              </div>
-              <div
-                class="tabs__panel is-active"
-                role="tabpanel"
-                id="panel-auto-problem"
-                aria-labelledby="tab-auto-problem"
-              >
-                <p>
-                  Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed
-                  onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI
-                  expectations.
-                </p>
-              </div>
-              <div class="tabs__panel" role="tabpanel" id="panel-auto-exec" aria-labelledby="tab-auto-exec">
-                <p>
-                  I prototyped and hardened flows in n8n with Python connectors where needed, mapped trust boundaries for
-                  each integration, and wrote operator-facing documentation so automations could be owned after launch — not
-                  dependent on ad-hoc fixes.
-                </p>
-              </div>
-              <div class="tabs__panel" role="tabpanel" id="panel-auto-outcome" aria-labelledby="tab-auto-outcome">
-                <p>
-                  Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so
-                  stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise
-                  exact metrics where NDAs apply).
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div id="custom-lightbox">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged view">
     </div>
 
     <script src="assets/js/main.js" defer></script>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Inline Expansion Toggle Logic ---
+        const toggleBtns = document.querySelectorAll('.toggle-expand');
+        
+        toggleBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            const content = btn.nextElementSibling;
+            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
+            
+            if (isExpanded) {
+              btn.setAttribute('aria-expanded', 'false');
+              btn.textContent = 'See all';
+              content.classList.remove('is-expanded');
+            } else {
+              btn.setAttribute('aria-expanded', 'true');
+              btn.textContent = 'Show less';
+              content.classList.add('is-expanded');
+            }
+          });
+        });
+
+        // --- 2. Inline Tab Interaction Logic ---
+        const tabBtns = document.querySelectorAll('.tab-btn');
+
+        tabBtns.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            const currentCard = e.target.closest('.inline-content');
+            const cardTabBtns = currentCard.querySelectorAll('.tab-btn');
+            const cardTabContents = currentCard.querySelectorAll('.tab-content');
+
+            cardTabBtns.forEach(b => b.classList.remove('active'));
+            cardTabContents.forEach(c => c.classList.remove('active'));
+
+            btn.classList.add('active');
+            const targetId = btn.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+          });
+        });
+
+        // --- 3. Unified Custom Lightbox Logic ---
+        const lightbox = document.getElementById('custom-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        document.body.addEventListener('click', (e) => {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.featured-card__media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
+            lightboxImg.src = e.target.src;
+            lightbox.classList.add('is-active');
+            document.body.style.overflow = 'hidden'; 
+          }
+        });
+
+        const closeLightbox = () => {
+          lightbox.classList.remove('is-active');
+          lightboxImg.src = '';
+          document.body.style.overflow = ''; 
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      });
+    </script>
   </body>
 </html>

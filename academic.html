@@ -22,6 +22,156 @@
       referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="assets/css/style.css" />
+    
+    <style>
+      /* Image Anti-Cropping & Clickable Hover States */
+      .project-card__media img,
+      .featured-card__media img {
+        object-fit: contain !important; 
+        background-color: #1a1a1a;      
+        width: 100%;
+        height: 100%;
+        display: block;
+        cursor: zoom-in; 
+        transition: opacity 0.2s ease;
+      }
+      .project-card__media img:hover,
+      .featured-card__media img:hover {
+        opacity: 0.85;
+      }
+
+      .featured-card {
+        background: #1a1a1a;
+        border: 1px solid #333;
+        border-radius: 12px;
+        overflow: hidden;
+        margin-bottom: 3rem;
+        display: flex;
+        flex-direction: column;
+      }
+      @media (min-width: 768px) {
+        .featured-card { flex-direction: row; }
+        .featured-card__media { width: 45%; border-right: 1px solid #333; }
+        .featured-card__body { width: 55%; }
+      }
+      
+      /* Dynamic Media Container Layout */
+      .featured-card__media {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        background: #111;
+        padding: 1rem;
+        gap: 1rem;
+      }
+      .featured-card__media img,
+      .featured-card__media video {
+        width: 100%;
+        height: 100%;
+        max-height: 100%;
+        object-fit: contain !important;
+        background-color: transparent;
+        display: block;
+        border-radius: 8px;
+      }
+      .featured-card__media > * {
+        flex: 1;
+        min-height: 0; 
+      }
+
+      .featured-card__body { padding: 2rem; }
+      
+      .tab-buttons {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid #444;
+        padding-bottom: 0.5rem;
+      }
+      .tab-btn {
+        background: none;
+        border: none;
+        color: #888;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 0.9rem;
+        padding: 0.5rem 0;
+        transition: color 0.2s;
+        position: relative;
+      }
+      .tab-btn:hover { color: #ccc; }
+      .tab-btn.active { color: #fff; }
+      .tab-btn.active::after {
+        content: '';
+        position: absolute;
+        bottom: -9px;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+      }
+      .tab-content {
+        display: none;
+        color: #bbb;
+        line-height: 1.6;
+        font-size: 0.95rem;
+      }
+      .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+      /* Education Logos */
+      .edu-card__logo {
+        width: 100%; /* Stretch fully across the card */
+        height: 80px; /* Define a set height for consistency */
+        object-fit: contain; /* Ensure the image fills the space but doesn't get distorted */
+        background-color: #f5f5f5; /* Add a light background behind the PNG for contrast */
+        margin-bottom: 1.5rem;
+        border-radius: 4px;
+        padding: 0.5rem; /* Give the logo some breathing room within the background block */
+        box-sizing: border-box; /* Ensure padding doesn't affect the width */
+      }
+
+      /* STANDALONE IMAGE LIGHTBOX MODAL */
+      #custom-lightbox {
+        display: none; 
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        z-index: 9999999 !important; /* Force it over everything */
+        justify-content: center;
+        align-items: center;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+      #custom-lightbox.is-active {
+        display: flex !important; /* Force display flex when active */
+      }
+      #custom-lightbox img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+      }
+      .lightbox-close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        color: #fff;
+        background: transparent;
+        border: none;
+        font-size: 2.5rem;
+        cursor: pointer;
+        transition: color 0.2s;
+        z-index: 10000000; /* Force it over the image */
+      }
+      .lightbox-close:hover {
+        color: #ccc;
+      }
+    </style>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -97,17 +247,59 @@
             <h2 class="section__title" id="past-work-heading">Past academic work</h2>
             <p class="section__intro">Selected university-era engineering and robotics projects (2022–2026).</p>
           </header>
+
+          <article class="featured-card reveal">
+            <div class="featured-card__media" id="dynamic-media-container">
+              <img src="images/picture1.jpg" alt="Analysis of the baseline problem" loading="lazy" />
+            </div>
+
+            <div class="featured-card__body">
+              <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">High-Precision Conveyor Pick & Place System (Capstone)</h3>
+              <div class="project-card__meta" style="margin-bottom: 1.5rem;">
+                <span class="project-card__tag">Systems Integration</span>
+                <span class="project-card__tag">Omron PLC</span>
+                <span class="project-card__tag">HMI Design</span>
+                <span class="project-card__tag">SolidWorks</span>
+              </div>
+              
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-target="tab-problem">The Problem</button>
+                <button class="tab-btn" data-target="tab-execution">The Execution</button>
+                <button class="tab-btn" data-target="tab-outcome">The Outcome</button>
+              </div>
+
+              <div id="tab-problem" class="tab-content active">
+                <p>During my internship at WEInnovate Pte Ltd, I was tasked with rescuing a discontinued conveyor-based pick-and-place prototype. The original design had failed its proof-of-concept phase due to critical mechanical limitations.</p>
+                <p>A forensic analysis of the baseline system revealed that the carriage mount relied on spring-force friction against a smooth Polyurethane (PU) belt. This architecture was highly susceptible to severe belt slippage, tooth jumping (ratcheting), and positional drift, making it impossible to maintain accurate coordinates during acceleration and deceleration.</p>
+                <p>The stakeholder required a robust, clean-room suitable testbed capable of repeatable precision for automated assembly, all while remaining strictly under a $500 budget constraint.</p>
+              </div>
+
+              <div id="tab-execution" class="tab-content">
+                <p>To transition the project from reactive troubleshooting to structured systems engineering, I first reverse-engineered a digital twin in SolidWorks. Utilizing a Decision Analysis and Resolution (DAR) matrix, I replaced the friction drive with a reverse-tooth belt engagement strategy (using a T5 timing belt) to establish a positive mechanical interlock.</p>
+                <p>For the control architecture, I integrated an Omron NX1P2 PLC with a Weintek HMI, establishing a sequential state machine for deterministic motion control. I synchronized dual Cool Muscle servo motors and integrated Festo pneumatic cylinders to provide a rigid, physical "hard stop" at the target locations.</p>
+                <p>During physical integration, I successfully navigated complex hardware challenges, including resolving PNP/NPN sensor polarity mismatches, bridging communication protocols, and managing facility space and limited pneumatic air supply constraints.</p>
+              </div>
+
+              <div id="tab-outcome" class="tab-content">
+                <p>The re-engineered system successfully eliminated all belt slippage and tooth jumping. By combining the PLC's velocity control with the pneumatic mechanical stoppers, the conveyor achieved a strict, repeatable positional accuracy margin of ±0.2mm across all target locations.</p>
+                <p>The prototype passed all Verification & Validation (V&V) criteria, successfully completing a 20-cycle automated repeatability test. Operators were provided with an intuitive HMI dashboard for seamless forward, reverse, and stop controls.</p>
+                <p>By effectively managing resources and repurposing internal company hardware (such as the Cool Muscle motors and Festo cylinders), the fully functional industrial testbed was delivered for approximately $130 — achieving all objectives well under the $500 budget.</p>
+              </div>
+
+            </div>
+          </article>
+
           <div class="projects__grid">
             <article class="card project-card reveal">
               <div class="project-card__media">
-                <img
-                  src="images/project-omron-folding.png"
-                  alt="Custom jig and aluminum frame for box folding automation prototype"
-                  width="640"
-                  height="360"
-                  loading="lazy"
-                  decoding="async"
-                />
+                <iframe 
+                  src="https://www.youtube.com/embed/ZEj8KNDEHSg" 
+                  title="Omron box folding automation" 
+                  frameborder="0" 
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen 
+                  style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none; display: block;"
+                ></iframe>
               </div>
               <div class="project-card__body">
                 <h3 class="project-card__title">Omron box folding automation</h3>
@@ -204,22 +396,6 @@
                 </p>
               </div>
             </article>
-            <article class="card project-card reveal">
-              <div class="project-card__media project-card__media--muted">
-                <span>Robotic arm — CAD / controls (archive)</span>
-              </div>
-              <div class="project-card__body">
-                <h3 class="project-card__title">Robotic arm design</h3>
-                <div class="project-card__meta">
-                  <span class="project-card__tag">SolidWorks</span>
-                  <span class="project-card__tag">Python</span>
-                </div>
-                <p class="project-card__desc">
-                  Mechanism modelling in SolidWorks with Python-oriented control framing — early systems project
-                  emphasising structured design decisions and documentation.
-                </p>
-              </div>
-            </article>
           </div>
         </div>
       </section>
@@ -232,6 +408,7 @@
           </header>
           <div class="edu__grid">
             <article class="card edu-card reveal">
+              <img src="images/image4.jpg" alt="Singapore Institute of Technology Logo" class="edu-card__logo" />
               <h3>Bachelor of Engineering (Hons), Robotics Systems Engineering</h3>
               <p class="edu-card__school">Singapore Institute of Technology</p>
               <p class="edu-card__period">Apr 2022 – Apr 2026</p>
@@ -241,6 +418,7 @@
               </p>
             </article>
             <article class="card edu-card reveal">
+              <img src="images/image5.png" alt="Temasek Polytechnic Logo" class="edu-card__logo" />
               <h3>Diploma in Business Process &amp; Systems Engineering</h3>
               <p class="edu-card__school">Temasek Polytechnic</p>
               <p class="edu-card__period">Apr 2017 – Apr 2020</p>
@@ -293,6 +471,73 @@
       <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
     </button>
 
+    <div id="custom-lightbox">
+      <button class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
+      <img id="lightbox-img" src="" alt="Enlarged view">
+    </div>
+
     <script src="assets/js/main.js" defer></script>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Tab Interaction Logic ---
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+        const mediaContainer = document.getElementById('dynamic-media-container');
+
+        const mediaMap = {
+          'tab-problem': '<img src="images/picture1.jpg" alt="Analysis of the baseline problem" loading="lazy" />',
+          'tab-execution': '<img src="images/picture2.jpeg" alt="Execution and system integration phase" loading="lazy" /><img src="images/picture3.jpeg" alt="Final project outcome" loading="lazy" />',
+          'tab-outcome': '<video src="images/video1.mp4" controls preload="metadata"></video>'
+        };
+
+        tabBtns.forEach(btn => {
+          btn.addEventListener('click', () => {
+            // Remove active classes
+            tabBtns.forEach(b => b.classList.remove('active'));
+            tabContents.forEach(c => c.classList.remove('active'));
+
+            // Add active class to clicked
+            btn.classList.add('active');
+            const targetId = btn.getAttribute('data-target');
+            document.getElementById(targetId).classList.add('active');
+
+            // Swap out the media container
+            if (mediaContainer && mediaMap[targetId]) {
+              mediaContainer.innerHTML = mediaMap[targetId];
+            }
+          });
+        });
+
+        // --- 2. Custom Bulletproof Lightbox Logic ---
+        const lightbox = document.getElementById('custom-lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+
+        // Listen for clicks on the entire body to support dynamically swapped tab images
+        document.body.addEventListener('click', (e) => {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.featured-card__media') || e.target.closest('.project-card__media'))) {
+            lightboxImg.src = e.target.src;
+            lightbox.classList.add('is-active');
+            document.body.style.overflow = 'hidden'; // Stop background scrolling
+          }
+        });
+
+        const closeLightbox = () => {
+          lightbox.classList.remove('is-active');
+          lightboxImg.src = '';
+          document.body.style.overflow = ''; // Restore background scrolling
+        };
+
+        lightboxClose.addEventListener('click', closeLightbox);
+        
+        // Close if the user clicks the dark background outside the image
+        lightbox.addEventListener('click', (e) => {
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      });
+    </script>
   </body>
 </html>
