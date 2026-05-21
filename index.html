@@ -155,6 +155,7 @@
         margin-bottom: 0.75rem;
         display: block;
         font-weight: 600;
+        text-align: center;
       }
       .exp-video-wrapper {
         width: 100%;
@@ -165,43 +166,56 @@
         border: 1px solid #444;
       }
 
-      /* WIDESCREEN: Branches Media into the Void and Centers it Vertically */
+      /* WIDESCREEN: Branches Media into the Void and Centers it Perfectly */
       @media (min-width: 1100px) {
         .timeline__item {
           position: relative; 
         }
-        /* Invisible wrapper that matches item height to force vertical centering */
+        
+        /* 1. Left Void Container */
         .media-wrapper--left {
           position: absolute;
           top: 0;
           bottom: 0;
-          right: calc(100% + 60px); /* Pushes past the center line to the left void */
-          width: 400px;
+          right: 100%; /* Spans exactly 100% of the opposite card's width */
+          width: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center; /* Dead-center vertically */
+          align-items: center; /* Dead-center horizontally inside the mirrored space */
+          padding-right: 2.5rem; /* Offsets the center line gap */
+          box-sizing: border-box;
         }
+
+        /* 2. Right Void Container */
         .media-wrapper--right {
           position: absolute;
           top: 0;
           bottom: 0;
-          left: calc(100% + 60px); /* Pushes past the center line to the right void */
-          width: 400px;
+          left: 100%; /* Spans exactly 100% of the opposite card's width */
+          width: 100%;
           display: flex;
           flex-direction: column;
           justify-content: center; /* Dead-center vertically */
+          align-items: center; /* Dead-center horizontally inside the mirrored space */
+          padding-left: 2.5rem; /* Offsets the center line gap */
+          box-sizing: border-box;
         }
-        /* The actual visible box */
+
+        /* The actual visible box containing the media */
         .desktop-media-box {
+          width: 95%; /* Adjusts dynamically to match the relative width of the text card */
+          max-width: 480px; /* Safe cap for ultra-wide monitors */
           background: #111;
           padding: 1.25rem;
           border-radius: 8px;
           border: 1px solid #333;
+          box-sizing: border-box;
           box-shadow: 0 4px 20px rgba(0,0,0,0.3);
           text-align: center;
         }
         .mobile-media {
-          display: none !important; /* Hide inline fallback */
+          display: none !important; /* Hide inline fallback on desktop */
         }
       }
 
@@ -221,6 +235,7 @@
         }
       }
 
+      /* Profile Image Fix: Add breathing room inside the circle */
       .about__photo-wrap {
         padding: 5%; 
       }
@@ -441,11 +456,11 @@
             
             <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
-
+              
               <div class="media-wrapper--left">
                 <div class="desktop-media-box">
                   <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
+                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
                 </div>
               </div>
 
@@ -480,7 +495,7 @@
                 
                 <div class="mobile-media">
                   <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
+                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
                 </div>
               </article>
             </li>
@@ -813,7 +828,7 @@
         const lightboxClose = document.getElementById('lightbox-close');
 
         document.body.addEventListener('click', (e) => {
-          if (e.target.tagName === 'IMG' && (e.target.closest('.timeline__left-media') || e.target.closest('.media-wrapper--left') || e.target.closest('.media-wrapper--right') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.media-wrapper--left') || e.target.closest('.media-wrapper--right') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
             lightboxImg.src = e.target.src;
             lightbox.classList.add('is-active');
             document.body.style.overflow = 'hidden'; 
