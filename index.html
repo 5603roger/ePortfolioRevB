@@ -91,6 +91,10 @@
       .tab-content p {
         margin-bottom: 0.75rem;
       }
+      .branch-layout__left .exp-card__list,
+      .branch-layout__right .exp-card__list {
+        padding-left: 1rem;
+      }
       .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
       
       @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -146,7 +150,7 @@
         color: #ccc;
       }
 
-      /* Timeline Media Layout Box Base Engine */
+      /* Timeline Media Components */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -177,9 +181,14 @@
       }
 
       /* ========================================================================= */
-      /* BULLETPROOF SYMMETRICAL THREE-COLUMN GRID OVERRIDES                       */
+      /* GLOBAL AND DESKTOP TIMELINE TRACK LINE RESET & COLOR OVERRIDES            */
       /* ========================================================================= */
+      ol.timeline::before {
+        background: #555 !important; /* Force track line to be an elegant visible gray on mobile & desktop */
+      }
+
       @media (min-width: 1100px) {
+        /* Force container to be perfectly centralized */
         ol.timeline {
           max-width: 1050px;
           margin: 0 auto !important;
@@ -187,12 +196,12 @@
           padding: 2rem 0 !important;
         }
         
-        /* Force template vertical central trace line back to baseline center exactly */
+        /* Force template's default track line to sit precisely at 50% center */
         ol.timeline::before {
           left: 50% !important;
           transform: translateX(-50%) !important;
           width: 2px !important;
-          background: #222 !important;
+          background: #555 !important; /* Unified visible track line gray color */
         }
         
         /* Strip out layout collisions from style.css template configuration rules */
@@ -721,7 +730,7 @@
                     <p>Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI expectations.</p>
                   </div>
                   <div id="tab-auto-exec" class="tab-content">
-                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapped trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
+                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapping trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
                   </div>
                   <div id="tab-auto-outcome" class="tab-content">
                     <p>Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise exact metrics where NDAs apply).</p>
