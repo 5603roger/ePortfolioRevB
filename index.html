@@ -166,19 +166,19 @@
         border: 1px solid #444;
       }
 
-      /* WIDESCREEN: Branches Media into the Void, Centered Vertically */
+      /* WIDESCREEN: Branches Media into the Void, Natively Centers & Scales Height */
       @media (min-width: 1100px) {
         .timeline__item {
           display: flex;
           position: relative;
-          align-items: center; /* Forces vertical centering of all flex children */
+          /* Inherit height from the tallest element inside the flex container */
         }
         
         .timeline__item > .card.exp-card {
           flex: 0 0 100%;
           width: 100%;
           max-width: 100%;
-          align-self: center; /* Centers the text block vertically to match the media */
+          align-self: flex-start; /* Anchors the text to the top so it aligns with the timeline dot */
         }
 
         /* 1. Left Void Container */
@@ -190,7 +190,7 @@
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          justify-content: center; /* Dead-center vertically */
+          justify-content: center; /* Dead-center vertically against the total item height */
           align-items: flex-end; /* Hugs the right edge near the timeline */
         }
 
@@ -203,7 +203,7 @@
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          justify-content: center; /* Dead-center vertically */
+          justify-content: center; /* Dead-center vertically against the total item height */
           align-items: flex-start; /* Hugs the left edge near the timeline */
         }
 
@@ -317,9 +317,9 @@
             <a href="#projects" class="btn btn--primary" data-smooth-scroll>
               <i class="fa-solid fa-briefcase" aria-hidden="true"></i> View my work
             </a>
-            <button type="button" class="btn btn--ghost" id="open-cv-modal">
+            <a href="RogerNg_Resume2026.pdf" target="_blank" class="btn btn--ghost">
               <i class="fa-regular fa-eye" aria-hidden="true"></i> View CV
-            </button>
+            </a>
           </div>
         </div>
         <a href="#about" class="hero__scroll" data-smooth-scroll>
@@ -743,44 +743,6 @@
     <button type="button" class="back-top" id="back-top" aria-label="Back to top">
       <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
     </button>
-
-    <div
-      id="cv-modal"
-      class="modal"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="cv-modal-title"
-      aria-hidden="true"
-      hidden
-    >
-      <button type="button" class="modal__backdrop" id="cv-modal-backdrop" aria-label="Close CV preview (backdrop)"></button>
-      <div class="modal__panel" role="document" style="max-height: 90vh; display: flex; flex-direction: column;">
-        <div class="modal__header">
-          <h2 id="cv-modal-title" class="modal__title">Resume</h2>
-          <button type="button" class="modal__close" id="cv-modal-close" aria-label="Close CV preview">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        
-        <div class="modal__body modal__body--cv" style="flex: 1 1 auto; overflow-y: auto; -webkit-overflow-scrolling: touch; max-height: 65vh;">
-          <iframe
-            src="RogerNg_Resume2026.pdf"
-            title="Roger Ng CV PDF preview"
-            class="modal__iframe"
-            style="width: 100%; height: 1100px; max-width: 850px; border: none; box-shadow: 0 0 10px rgba(0,0,0,0.5); margin: 0 auto; display: block;"
-          ></iframe>
-        </div>
-
-        <div class="modal__footer" style="display: flex; gap: 1rem; flex-wrap: wrap;">
-          <a href="RogerNg_Resume2026.pdf" target="_blank" class="btn btn--ghost" style="flex: 1; text-align: center;">
-            <i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i> Open in New Tab
-          </a>
-          <a href="RogerNg_Resume2026.pdf" class="btn btn--primary" download="RogerNg_Resume2026.pdf" style="flex: 1; text-align: center;">
-            <i class="fa-solid fa-file-arrow-down" aria-hidden="true"></i> Download
-          </a>
-        </div>
-      </div>
-    </div>
 
     <div id="custom-lightbox">
       <button class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
