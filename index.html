@@ -24,6 +24,13 @@
     <link rel="stylesheet" href="assets/css/style.css" />
     
     <style>
+      /* ========================================================================= */
+      /* GLOBAL WEBSITE ZOOM (SET TO 80%)                                          */
+      /* ========================================================================= */
+      body {
+        zoom: 0.8; /* Scales entire layout layout natively in Chrome, Safari, and Edge */
+      }
+
       .btn-project-details {
         background: transparent;
         border: 1px solid #555;
@@ -91,10 +98,6 @@
       .tab-content p {
         margin-bottom: 0.75rem;
       }
-      .branch-layout__left .exp-card__list,
-      .branch-layout__right .exp-card__list {
-        padding-left: 1rem;
-      }
       .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
       
       @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -150,7 +153,7 @@
         color: #ccc;
       }
 
-      /* Timeline Media Components */
+      /* Timeline Media Components Base Styles */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -169,7 +172,7 @@
         overflow: hidden;
         border: 1px solid #444;
       }
-      .exp-media-box {
+      .desktop-media-box {
         width: 100%; 
         max-width: 480px; 
         background: #111;
@@ -181,10 +184,10 @@
       }
 
       /* ========================================================================= */
-      /* GLOBAL AND DESKTOP TIMELINE TRACK LINE RESET & COLOR OVERRIDES            */
+      /* MASTER STYLESHEET TIMELINE TRACK LINE RESET & HARD ALIGNMENT OVERRIDES    */
       /* ========================================================================= */
       ol.timeline::before {
-        background: #555 !important; 
+        background: #555 !important; /* Forces visible mid-tone gray track line color globally */
       }
 
       @media (min-width: 1100px) {
@@ -195,28 +198,34 @@
           padding: 2rem 0 !important;
         }
         
+        /* Lock central timeline spine back to exactly 50% midpoint hook */
         ol.timeline::before {
           left: 50% !important;
           transform: translateX(-50%) !important;
           width: 2px !important;
-          background: #555 !important; 
         }
         
+        /* Strip out conflicting position coordinates and offsets from style.css */
         li.timeline__item,
         li.timeline__item:nth-child(even),
         li.timeline__item:nth-child(odd) {
-          margin: 0 0 4rem 0 !important;
+          margin: 0 0 5rem 0 !important;
           padding: 0 !important;
           width: 100% !important;
           max-width: 100% !important;
           background: none !important;
           display: block !important;
+          position: relative !important;
+          left: auto !important;
+          right: auto !important;
+          transform: none !important;
         }
         li.timeline__item::before,
         li.timeline__item::after {
-          display: none !important;
+          display: none !important; /* Neutralizes template node ghost duplicates */
         }
 
+        /* Enforce absolute mirrored three-column table architecture mappings */
         .timeline-row {
           display: flex !important;
           width: 100% !important;
@@ -231,18 +240,28 @@
           box-sizing: border-box !important;
         }
         
-        .timeline-row--media-left {
-          flex-direction: row !important;
-        }
-        .timeline-row--media-right {
-          flex-direction: row-reverse !important;
-        }
+        .timeline-row--media-left { flex-direction: row !important; }
+        .timeline-row--media-right { flex-direction: row-reverse !important; }
         
+        /* Lock card items clean along column edge directions */
         .timeline-row--media-left .exp-media-box { margin-left: auto !important; margin-right: 0 !important; }
         .timeline-row--media-right .exp-media-box { margin-right: auto !important; margin-left: 0 !important; }
         .timeline-row--media-left .card.exp-card { margin-right: auto !important; margin-left: 0 !important; }
         .timeline-row--media-right .card.exp-card { margin-left: auto !important; margin-right: 0 !important; }
 
+        /* Force cleanup of positional bugs inherited on internal elements from style.css */
+        .timeline-row .card.exp-card,
+        .timeline-row .desktop-media-box {
+          position: relative !important;
+          left: auto !important;
+          right: auto !important;
+          transform: none !important;
+          width: 100% !important;
+          max-width: 480px !important;
+          box-sizing: border-box !important;
+        }
+
+        /* Central Track Node Component Mapping */
         .timeline-col--center {
           flex: 0 0 70px !important;
           width: 70px !important;
@@ -265,9 +284,14 @@
           margin: 0 !important;
           z-index: 50 !important;
         }
+        .mobile-media {
+          display: none !important; 
+        }
       }
 
-      /* MOBILE/TABLET RESPONSIVE FALLBACKS */
+      /* ========================================================================= */
+      /* MOBILE AND TABLET LAYOUT ENGINE AND LOGO ALIGNMENT FIX                    */
+      /* ========================================================================= */
       @media (max-width: 1099px) {
         .timeline-row {
           display: flex !important;
@@ -280,12 +304,9 @@
           width: 100% !important;
           flex: 1 1 auto !important;
         }
-        .timeline-row--media-left {
-          flex-direction: column-reverse !important;
-        }
-        .timeline-row--media-right {
-          flex-direction: column !important;
-        }
+        .timeline-row--media-left { flex-direction: column-reverse !important; }
+        .timeline-row--media-right { flex-direction: column !important; }
+        
         .exp-media-box {
           background: #111;
           padding: 1rem;
@@ -297,25 +318,31 @@
           max-width: 100% !important;
         }
 
-        /* NEW MOBILE LOGO INLINE POSITION OVERRIDES */
+        /* MOBILE LOGO INLINE ALIGNMENT FIX (Positions logo to the left of Titles) */
         .exp-card__header {
           display: flex !important;
           flex-direction: row !important;
-          align-items: flex-start !important; /* Top-aligns logo with text titles */
+          align-items: flex-start !important; 
           gap: 1rem !important;
-          flex-wrap: wrap !important;
+          position: relative !important;
+          width: 100% !important;
         }
         .exp-card__logo {
-          margin-bottom: 0 !important; /* Removes template absolute stacking margins */
-          flex-shrink: 0 !important;
+          margin: 0 !important; 
+          position: static !important;
+          flex: 0 0 48px !important;
+          width: 48px !important;
+          height: 48px !important;
         }
         .exp-card__meta {
           flex: 1 1 auto !important;
         }
         .exp-card__date {
           display: block !important;
-          width: 100% !important; /* Forces the date badge cleanly onto its own line below */
+          position: static !important;
+          width: 100% !important; 
           margin-top: 0.5rem !important;
+          text-align: left !important;
         }
       }
 
@@ -624,7 +651,7 @@
                 </div>
 
                 <div class="timeline-col">
-                  <div class="desktop-media-box">
+                  <div class="exp-media-box">
                     <span class="exp-media-title">Process Mapping Showcase</span>
                     <div class="exp-video-wrapper">
                       <iframe 
