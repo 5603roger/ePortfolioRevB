@@ -166,7 +166,7 @@
         border: 1px solid #444;
       }
 
-      /* WIDESCREEN: Branches Media into the Void, Centered Vertically */
+      /* WIDESCREEN: Branches Media into the Void, Natively Centers & Scales Height */
       @media (min-width: 1100px) {
         .timeline__item {
           display: flex;
@@ -244,12 +244,26 @@
         }
       }
 
-      /* Profile Image Fix: Add breathing room inside the circle */
-      .about__photo-wrap {
+      /* ========================================================================= */
+      /* PROFILE IMAGE ADJUSTMENT SECTION                                          */
+      /* ========================================================================= */
+      .about__photo {
         object-fit: cover !important;
-        object-position: center 0% !important; /* Shoves the photo slightly downwards */
-        transform: scale(0.75); /* Shrinks it to give breathing room */
+        
+        /* 1. SLIDE UP OR DOWN */
+        /* Change "top" to "10%", "20%", or "center" to slide the picture */
+        object-position: center top !important; /* <--- EDIT THIS */
+        
+        /* 2. ZOOM IN OR OUT */
+        /* Change 1.05 to 0.95 (zoom out) or 1.15 (zoom in) */
+        transform: scale(1.05); /* <--- EDIT THIS */
       }
+      
+      .about__photo-wrap {
+        /* Removed the broken masking properties from here */
+        padding: 0; 
+      }
+      /* ========================================================================= */
     </style>
   </head>
   <body>
