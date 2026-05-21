@@ -146,7 +146,9 @@
         color: #ccc;
       }
 
-      /* Timeline Media Components */
+      /* ========================================================================= */
+      /* NEW TIMELINE BRANCHING LAYOUT (NO OVERLAPS)                               */
+      /* ========================================================================= */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -165,61 +167,59 @@
         overflow: hidden;
         border: 1px solid #444;
       }
+      .desktop-media-box {
+        width: 100%; 
+        max-width: 500px; 
+        background: #111;
+        padding: 1.25rem;
+        border-radius: 8px;
+        border: 1px solid #333;
+        box-sizing: border-box;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        text-align: center;
+      }
 
-      /* WIDESCREEN: Branches Media into the Void, Natively Centers & Scales Height */
+      /* WIDESCREEN: Branches Media into Voids, Natively Centers & Prevents Overlap */
       @media (min-width: 1100px) {
-        .timeline__item {
+        .branch-layout {
           display: flex;
+          align-items: center; /* Vertically centers the entire container relative to the row */
           position: relative;
-          align-items: center; /* THIS aligns the containers natively */
-          /* Clever Widescreen Pull-up for Void row relative to dot */
-          margin-top: -3rem; /* Nudges the entire centered assembly up relative to the dot */
         }
         
-        .timeline__item > .card.exp-card {
-          flex: 0 0 100%;
+        /* Locks the timeline dot to the perfect center of the new taller container */
+        .branch-layout .timeline__dot {
+          top: 50% !important;
+          transform: translateY(-50%) !important;
+          margin-top: 0 !important;
+        }
+
+        /* Flex row that holds BOTH the media and text side-by-side */
+        .branch-layout__inner {
+          display: flex;
+          align-items: center; /* Perfectly centers media and text against each other */
           width: 100%;
-          max-width: 100%;
-          align-self: center; /* Centered relative to entire item flow height */
+        }
+        
+        /* Left Side Void Placement */
+        .branch-layout__media--left {
+          width: 450px;
+          margin-left: calc(-450px - 50px); /* Pulls left into the void */
+          margin-right: 50px; /* Cancels out horizontal footprint so the text card stays anchored */
+          flex-shrink: 0;
         }
 
-        /* 1. Left Void Container */
-        .media-wrapper--left {
-          flex: 0 0 100%; 
-          margin-left: calc(-100% - 60px); 
-          margin-right: 60px; 
-          padding-right: 2.5rem; 
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: column;
-          justify-content: center; 
-          align-items: flex-end; 
+        /* Right Side Void Placement */
+        .branch-layout__media--right {
+          width: 450px;
+          margin-left: 50px; /* Pushes into the right void */
+          margin-right: calc(-450px - 50px); /* Cancels out horizontal footprint */
+          flex-shrink: 0;
         }
 
-        /* 2. Right Void Container */
-        .media-wrapper--right {
-          flex: 0 0 100%; 
-          margin-left: calc(100% + 60px); 
-          margin-right: calc(-200% - 60px); 
-          padding-left: 2.5rem; 
-          box-sizing: border-box;
-          display: flex;
-          flex-direction: column;
-          justify-content: center; 
-          align-items: flex-start; 
-        }
-
-        /* The actual visible box containing the media */
-        .desktop-media-box {
-          width: 100%; 
-          max-width: 500px; 
-          background: #111;
-          padding: 1.25rem;
-          border-radius: 8px;
-          border: 1px solid #333;
-          box-sizing: border-box;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-          text-align: center;
+        .branch-layout__text {
+          width: 100%;
+          flex-grow: 1;
         }
         .mobile-media {
           display: none !important; 
@@ -228,8 +228,8 @@
 
       /* MOBILE/TABLET: Tucks media safely inside the card */
       @media (max-width: 1099px) {
-        .media-wrapper--left,
-        .media-wrapper--right {
+        .branch-layout__media--left,
+        .branch-layout__media--right {
           display: none !important;
         }
         .mobile-media {
@@ -237,8 +237,7 @@
           padding: 1rem;
           border-radius: 8px;
           border: 1px solid #333;
-          /* Margin on top of image when placed ABOVE card on mobile flow */
-          margin-bottom: 1rem;
+          margin-bottom: 1.5rem;
           margin-top: 1.5rem;
           text-align: center;
         }
@@ -250,22 +249,19 @@
       
       .about__photo-wrap {
         padding: 0; 
-        overflow: hidden !important; /* <--- FIX: Forces the circle to crop any spilling image perfectly */
-        border-radius: 50% !important; /* Locks the container as a perfect circle */
+        overflow: hidden !important; 
+        border-radius: 50% !important; 
         display: flex;
         justify-content: center;
         align-items: center;
       }
 
-      /* Target BOTH the main about photo AND the navbar logo */
       .about__photo,
       .site-nav__logo-img {
         object-fit: cover !important;
-        /* Horizontal is 'center', Vertical is '25%' (adjust to taste to reveal hair) */
         object-position: center 25% !important; 
-        /* Zoom slightly to completely fill the circular mask and eliminate gaps */
         transform: scale(1.1); 
-        margin: 0 auto; /* Safeguard for perfect horizontal centering */
+        margin: 0 auto; 
       }
       /* ========================================================================= */
     </style>
@@ -483,13 +479,37 @@
               </article>
             </li>
             
-            <li class="timeline__item reveal">
+            <li class="timeline__item reveal branch-layout">
               <span class="timeline__dot" aria-hidden="true"></span>
 
-              <div class="media-wrapper--left">
-                <div class="desktop-media-box">
-                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
+              <div class="branch-layout__inner">
+                <div class="branch-layout__media--left">
+                  <div class="desktop-media-box">
+                    <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                    <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
+                  </div>
+                </div>
+
+                <div class="branch-layout__text">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo exp-card__logo--light">
+                        <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Assistant Engineer Intern</h3>
+                        <p class="exp-card__company">WEInnovate Pte Ltd</p>
+                      </div>
+                      <span class="exp-card__date">Jan 2025 – Dec 2025</span>
+                    </div>
+                    <ul class="exp-card__list">
+                      <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
+                      <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
+                      <li>Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional issues.</li>
+                      <li>Managed procurement and RFQs for 100+ components across projects.</li>
+                      <li>Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and coordinated stakeholders on-site.</li>
+                    </ul>
+                  </article>
                 </div>
               </div>
 
@@ -497,53 +517,46 @@
                 <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
                 <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
               </div>
-
-              <article class="card exp-card">
-                <div class="exp-card__header">
-                  <div class="exp-card__logo exp-card__logo--light">
-                    <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
-                  </div>
-                  <div class="exp-card__meta">
-                    <h3>Assistant Engineer Intern</h3>
-                    <p class="exp-card__company">WEInnovate Pte Ltd</p>
-                  </div>
-                  <span class="exp-card__date">Jan 2025 – Dec 2025</span>
-                </div>
-                
-                <ul class="exp-card__list">
-                  <li>
-                    Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through
-                    fabrication.
-                  </li>
-                  <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
-                  <li>
-                    Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional
-                    issues.
-                  </li>
-                  <li>Managed procurement and RFQs for 100+ components across projects.</li>
-                  <li>
-                    Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and
-                    coordinated stakeholders on-site.
-                  </li>
-                </ul>
-              </article>
             </li>
             
-            <li class="timeline__item reveal">
+            <li class="timeline__item reveal branch-layout">
               <span class="timeline__dot" aria-hidden="true"></span>
               
-              <div class="media-wrapper--right">
-                <div class="desktop-media-box">
-                  <span class="exp-media-title">Process Mapping Showcase</span>
-                  <div class="exp-video-wrapper">
-                    <iframe 
-                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen 
-                      style="width: 100%; height: 100%; display: block;">
-                    </iframe>
+              <div class="branch-layout__inner">
+                <div class="branch-layout__text">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo exp-card__logo--light">
+                        <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Systems Engineer Intern</h3>
+                        <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
+                      </div>
+                      <span class="exp-card__date">Apr 2019 – Jul 2019</span>
+                    </div>
+                    <ul class="exp-card__list">
+                      <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
+                      <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
+                      <li>Developed standardised training docs to improve onboarding consistency.</li>
+                      <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
+                    </ul>
+                  </article>
+                </div>
+
+                <div class="branch-layout__media--right">
+                  <div class="desktop-media-box">
+                    <span class="exp-media-title">Process Mapping Showcase</span>
+                    <div class="exp-video-wrapper">
+                      <iframe 
+                        src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen 
+                        style="width: 100%; height: 100%; display: block;">
+                      </iframe>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -561,27 +574,8 @@
                   </iframe>
                 </div>
               </div>
-
-              <article class="card exp-card">
-                <div class="exp-card__header">
-                  <div class="exp-card__logo exp-card__logo--light">
-                    <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
-                  </div>
-                  <div class="exp-card__meta">
-                    <h3>Systems Engineer Intern</h3>
-                    <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
-                  </div>
-                  <span class="exp-card__date">Apr 2019 – Jul 2019</span>
-                </div>
-                
-                <ul class="exp-card__list">
-                  <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
-                  <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
-                  <li>Developed standardised training docs to improve onboarding consistency.</li>
-                  <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
-                </ul>
-              </article>
             </li>
+
           </ol>
         </div>
       </section>
@@ -821,7 +815,7 @@
         const lightboxClose = document.getElementById('lightbox-close');
 
         document.body.addEventListener('click', (e) => {
-          if (e.target.tagName === 'IMG' && (e.target.closest('.media-wrapper--left') || e.target.closest('.media-wrapper--right') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.branch-layout__media--left') || e.target.closest('.branch-layout__media--right') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
             lightboxImg.src = e.target.src;
             lightbox.classList.add('is-active');
             document.body.style.overflow = 'hidden'; 
