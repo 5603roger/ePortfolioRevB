@@ -201,16 +201,26 @@
           background: #222 !important;
         }
         
-        /* Neutralize conflicting row properties from style.css */
-        li.timeline__item {
+        /* Neutralize conflicting row properties from style.css across all selectors */
+        li.timeline__item,
+        li.timeline__item:nth-child(even),
+        li.timeline__item:nth-child(odd) {
           margin-left: 0 !important;
+          margin-right: 0 !important;
           padding-left: 0 !important;
+          padding-right: 0 !important;
+          padding-bottom: 0 !important;
           width: 100% !important;
+          max-width: 100% !important;
           background: none !important;
+          left: auto !important;
+          right: auto !important;
+          transform: none !important;
         }
+        
         li.timeline__item::before,
         li.timeline__item::after {
-          display: none !important; /* Disables double-dot ghost artifacts */
+          display: none !important; /* Disables template ghost dot artifacts */
         }
 
         /* Enforce absolute symmetrical three-column row mapping */
@@ -267,6 +277,7 @@
           box-sizing: border-box;
         }
 
+        /* Destroy internal offset position bugs inherited from style.css rules */
         .branch-layout__left .card.exp-card,
         .branch-layout__right .card.exp-card,
         .branch-layout__left .desktop-media-box,
@@ -274,6 +285,10 @@
           width: 100% !important;
           max-width: 480px !important;
           margin: 0 !important;
+          left: auto !important;
+          right: auto !important;
+          transform: none !important;
+          position: relative !important;
           box-sizing: border-box;
         }
         .mobile-media {
@@ -506,11 +521,7 @@
           <ol class="timeline">
             
             <li class="timeline__item reveal branch-layout">
-              <div class="branch-layout__left"></div>
-              <div class="branch-layout__center">
-                <span class="timeline__dot" aria-hidden="true"></span>
-              </div>
-              <div class="branch-layout__right">
+              <div class="branch-layout__left">
                 <article class="card exp-card">
                   <div class="exp-card__header">
                     <div class="exp-card__logo">
@@ -541,6 +552,10 @@
                   </ul>
                 </article>
               </div>
+              <div class="branch-layout__center">
+                <span class="timeline__dot" aria-hidden="true"></span>
+              </div>
+              <div class="branch-layout__right"></div>
             </li>
             
             <li class="timeline__item reveal branch-layout">
@@ -566,7 +581,7 @@
                       <p class="exp-card__company">WEInnovate Pte Ltd</p>
                     </div>
                     <span class="exp-card__date">Jan 2025 – Dec 2025</span>
-                  </div>
+                    </div>
                   
                   <ul class="exp-card__list">
                     <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
