@@ -247,16 +247,13 @@
       /* ========================================================================= */
       /* PROFILE IMAGE ADJUSTMENT SECTION                                          */
       /* ========================================================================= */
-      .about__photo {
+      
+      /* Target BOTH the main about photo AND the navbar logo */
+      .about__photo,
+      .site-nav__logo-img {
         object-fit: cover !important;
-        
-        /* 1. SLIDE UP OR DOWN */
-        /* Change "top" to "10%", "20%", or "center" to slide the picture */
-        object-position: center 40% !important; /* <--- EDIT THIS */
-        
-        /* 2. ZOOM IN OR OUT */
-        /* Change 1.05 to 0.95 (zoom out) or 1.15 (zoom in) */
-        transform: scale(1.05); /* <--- EDIT THIS */
+        object-position: center 40% !important; /* Shoves the photo slightly downwards */
+        transform: scale(1.05); /* Shrinks it to give breathing room */
       }
       
       .about__photo-wrap {
