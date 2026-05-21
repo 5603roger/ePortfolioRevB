@@ -146,39 +146,7 @@
         color: #ccc;
       }
 
-      /* Fixed Split Layout for Experience Items: Top Aligned, forced side-by-side on desktop */
-      .exp-split-layout {
-        display: flex;
-        gap: 1.5rem;
-        margin-top: 1.5rem;
-        align-items: flex-start; /* Keeps text and media top-aligned */
-      }
-      .exp-text-side {
-        flex: 1; /* Absorbs majority of the space */
-        min-width: 0;
-      }
-      /* Clean up margins inside text container */
-      .exp-text-side ul {
-        margin-top: 0;
-      }
-      .exp-media-side {
-        flex: 0 0 250px; /* Locks media column width on desktop */
-        min-width: 0;
-        background: #111;
-        padding: 1rem;
-        border-radius: 8px;
-        border: 1px solid #333;
-        box-sizing: border-box;
-      }
-      .exp-media-side img,
-      .exp-media-side iframe {
-        width: 100%;
-        border: 1px solid #444;
-        border-radius: 6px;
-        overflow: hidden;
-        background: #000;
-        display: block;
-      }
+      /* Timeline Alternating Media Layout */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -188,26 +156,66 @@
         display: block;
         font-weight: 600;
       }
-      /* Ensure Video Container inside media box is correct aspect ratio */
+      .timeline__left-media img,
+      .mobile-media img,
+      .timeline__left-media iframe,
+      .mobile-media iframe {
+        width: 100%;
+        border-radius: 6px;
+        display: block;
+        border: 1px solid #444;
+      }
       .exp-video-wrapper {
         width: 100%;
         aspect-ratio: 16/9;
+        background: #000;
+        border-radius: 6px;
+        overflow: hidden;
       }
-      
-      /* Mobile responsiveness: Stack them vertically on smaller screens */
-      @media (max-width: 800px) {
-        .exp-split-layout {
-          flex-direction: column;
+
+      /* Widescreen Layout: Pulls media to the left void */
+      @media (min-width: 1100px) {
+        .timeline__item.has-left-media {
+          display: flow-root; /* Contains floating elements natively */
         }
-        .exp-media-side {
-          flex: 1 1 auto;
-          width: 100%;
+        .timeline__item.has-left-media::after {
+          content: "";
+          display: table;
+          clear: both;
+        }
+        .timeline__left-media {
+          float: left;
+          width: 340px;
+          margin-left: -430px; /* Pulls the box past the timeline dot into the void */
+          background: #111;
+          padding: 1rem;
+          border-radius: 8px;
+          border: 1px solid #333;
+          box-sizing: border-box;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .mobile-media {
+          display: none !important; /* Hide inline version on desktop */
+        }
+      }
+
+      /* Mobile/Tablet Layout: Keeps media stacked inside the card safely */
+      @media (max-width: 1099px) {
+        .timeline__left-media {
+          display: none !important;
+        }
+        .mobile-media {
+          background: #111;
+          padding: 1rem;
+          border-radius: 8px;
+          border: 1px solid #333;
+          margin-top: 1.5rem;
         }
       }
 
       /* Profile Image Fix: Add breathing room inside the circle */
       .about__photo-wrap {
-        padding: 5%; /* Insets the image slightly within the circle */
+        padding: 5%; 
       }
     </style>
   </head>
@@ -390,6 +398,7 @@
             </p>
           </header>
           <ol class="timeline">
+            
             <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
               <article class="card exp-card">
@@ -423,8 +432,14 @@
               </article>
             </li>
             
-            <li class="timeline__item reveal">
+            <li class="timeline__item reveal has-left-media">
               <span class="timeline__dot" aria-hidden="true"></span>
+              
+              <div class="timeline__left-media">
+                <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" />
+              </div>
+
               <article class="card exp-card">
                 <div class="exp-card__header">
                   <div class="exp-card__logo exp-card__logo--light">
@@ -437,36 +452,46 @@
                   <span class="exp-card__date">Jan 2025 – Dec 2025</span>
                 </div>
                 
-                <div class="exp-split-layout">
-                  <div class="exp-text-side">
-                    <ul class="exp-card__list">
-                      <li>
-                        Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through
-                        fabrication.
-                      </li>
-                      <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
-                      <li>
-                        Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional
-                        issues.
-                      </li>
-                      <li>Managed procurement and RFQs for 100+ components across projects.</li>
-                      <li>
-                        Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and
-                        coordinated stakeholders on-site.
-                      </li>
-                    </ul>
-                  </div>
-                  
-                  <div class="exp-media-side">
-                    <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                    <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="height: auto;" />
-                  </div>
+                <ul class="exp-card__list">
+                  <li>
+                    Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through
+                    fabrication.
+                  </li>
+                  <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
+                  <li>
+                    Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional
+                    issues.
+                  </li>
+                  <li>Managed procurement and RFQs for 100+ components across projects.</li>
+                  <li>
+                    Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and
+                    coordinated stakeholders on-site.
+                  </li>
+                </ul>
+                
+                <div class="mobile-media">
+                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" />
                 </div>
               </article>
             </li>
             
-            <li class="timeline__item reveal">
+            <li class="timeline__item reveal has-left-media">
               <span class="timeline__dot" aria-hidden="true"></span>
+              
+              <div class="timeline__left-media">
+                <span class="exp-media-title">Process Mapping Showcase</span>
+                <div class="exp-video-wrapper">
+                  <iframe 
+                    src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                  </iframe>
+                </div>
+              </div>
+
               <article class="card exp-card">
                 <div class="exp-card__header">
                   <div class="exp-card__logo exp-card__logo--light">
@@ -479,30 +504,23 @@
                   <span class="exp-card__date">Apr 2019 – Jul 2019</span>
                 </div>
                 
-                <div class="exp-split-layout">
-                  <div class="exp-text-side">
-                    <ul class="exp-card__list">
-                      <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
-                      <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
-                      <li>Developed standardised training docs to improve onboarding consistency.</li>
-                      <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
-                    </ul>
-                  </div>
-                  
-                  <div class="exp-media-side">
-                    <span class="exp-media-title">Process Mapping Showcase</span>
-                    <div class="exp-video-wrapper">
-                      <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen 
-                        style="display: block;">
-                      </iframe>
-                    </div>
+                <ul class="exp-card__list">
+                  <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
+                  <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
+                  <li>Developed standardised training docs to improve onboarding consistency.</li>
+                  <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
+                </ul>
+
+                <div class="mobile-media">
+                  <span class="exp-media-title">Process Mapping Showcase</span>
+                  <div class="exp-video-wrapper">
+                    <iframe 
+                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                      title="YouTube video player" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen>
+                    </iframe>
                   </div>
                 </div>
               </article>
