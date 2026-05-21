@@ -146,7 +146,7 @@
         color: #ccc;
       }
 
-      /* Timeline Media Title */
+      /* Timeline Media Components */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -156,39 +156,71 @@
         display: block;
         font-weight: 600;
       }
+      .exp-video-wrapper {
+        width: 100%;
+        aspect-ratio: 16/9;
+        background: #000;
+        border-radius: 6px;
+        overflow: hidden;
+        border: 1px solid #444;
+      }
 
-      /* Widescreen Layout: PERFECTLY VERTICALLY CENTERED Left Media */
+      /* WIDESCREEN: Branches Media into the Void and Centers it Vertically */
       @media (min-width: 1100px) {
-        .timeline__item.has-left-media {
-          position: relative; /* Allows child absolute positioning */
+        .timeline__item {
+          position: relative; 
         }
-        .timeline__left-media {
+        /* Invisible wrapper that matches item height to force vertical centering */
+        .media-wrapper--left {
           position: absolute;
-          top: 50%;
-          right: calc(100% + 40px); /* Safely pushes it to the left of the timeline line */
-          transform: translateY(-50%); /* Vertically centralizes it */
-          width: 400px; /* Widened slightly to balance the page visually */
+          top: 0;
+          bottom: 0;
+          right: calc(100% + 60px); /* Pushes past the center line to the left void */
+          width: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center; /* Dead-center vertically */
+        }
+        .media-wrapper--right {
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: calc(100% + 60px); /* Pushes past the center line to the right void */
+          width: 400px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center; /* Dead-center vertically */
+        }
+        /* The actual visible box */
+        .desktop-media-box {
           background: #111;
           padding: 1.25rem;
           border-radius: 8px;
           border: 1px solid #333;
-          box-sizing: border-box;
           box-shadow: 0 4px 20px rgba(0,0,0,0.3);
           text-align: center;
         }
         .mobile-media {
-          display: none !important; /* Hide inline version on desktop */
+          display: none !important; /* Hide inline fallback */
         }
       }
 
-      /* Mobile/Tablet Layout: Keeps media stacked inside the card safely */
+      /* MOBILE/TABLET: Tucks media safely inside the card */
       @media (max-width: 1099px) {
-        .timeline__left-media {
+        .media-wrapper--left,
+        .media-wrapper--right {
           display: none !important;
         }
+        .mobile-media {
+          background: #111;
+          padding: 1rem;
+          border-radius: 8px;
+          border: 1px solid #333;
+          margin-top: 1.5rem;
+          text-align: center;
+        }
       }
 
-      /* Profile Image Fix: Add breathing room inside the circle */
       .about__photo-wrap {
         padding: 5%; 
       }
@@ -407,12 +439,14 @@
               </article>
             </li>
             
-            <li class="timeline__item reveal has-left-media">
+            <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
-              
-              <div class="timeline__left-media">
-                <span class="exp-media-title" style="text-align: center; margin-bottom: 1rem;">Featured Work (Jan - Dec 2025)</span>
-                <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
+
+              <div class="media-wrapper--left">
+                <div class="desktop-media-box">
+                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
+                </div>
               </div>
 
               <article class="card exp-card">
@@ -444,11 +478,9 @@
                   </li>
                 </ul>
                 
-                <div class="mobile-media" style="margin-top: 1.5rem; text-align: center; border-top: 1px solid #333; padding-top: 1.5rem;">
-                  <span class="exp-media-title" style="text-align: center;">Featured Work (Jan - Dec 2025)</span>
-                  <div style="background: #111; padding: 1rem; border-radius: 8px; border: 1px solid #333; box-sizing: border-box; max-width: 500px; margin: 0 auto;">
-                    <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
-                  </div>
+                <div class="mobile-media">
+                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
                 </div>
               </article>
             </li>
@@ -456,6 +488,22 @@
             <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
               
+              <div class="media-wrapper--right">
+                <div class="desktop-media-box">
+                  <span class="exp-media-title">Process Mapping Showcase</span>
+                  <div class="exp-video-wrapper">
+                    <iframe 
+                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                      title="YouTube video player" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen 
+                      style="width: 100%; height: 100%; display: block;">
+                    </iframe>
+                  </div>
+                </div>
+              </div>
+
               <article class="card exp-card">
                 <div class="exp-card__header">
                   <div class="exp-card__logo exp-card__logo--light">
@@ -475,24 +523,19 @@
                   <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
                 </ul>
 
-                <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; border-top: 1px solid #333; padding-top: 1.5rem;">
-                  <span class="exp-media-title" style="text-align: center; margin-bottom: 1rem;">Process Mapping Showcase</span>
-                  <div style="width: 100%; max-width: 500px; background: #111; padding: 1rem; border-radius: 8px; border: 1px solid #333; box-sizing: border-box;">
-                    <div style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid #444;">
-                      <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen 
-                        style="display: block;">
-                      </iframe>
-                    </div>
+                <div class="mobile-media">
+                  <span class="exp-media-title">Process Mapping Showcase</span>
+                  <div class="exp-video-wrapper">
+                    <iframe 
+                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                      title="YouTube video player" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen 
+                      style="width: 100%; height: 100%; display: block;">
+                    </iframe>
                   </div>
                 </div>
-
               </article>
             </li>
           </ol>
@@ -770,7 +813,7 @@
         const lightboxClose = document.getElementById('lightbox-close');
 
         document.body.addEventListener('click', (e) => {
-          if (e.target.tagName === 'IMG' && (e.target.closest('.timeline__left-media') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.timeline__left-media') || e.target.closest('.media-wrapper--left') || e.target.closest('.media-wrapper--right') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
             lightboxImg.src = e.target.src;
             lightbox.classList.add('is-active');
             document.body.style.overflow = 'hidden'; 
