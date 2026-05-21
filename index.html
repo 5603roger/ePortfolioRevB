@@ -146,7 +146,7 @@
         color: #ccc;
       }
 
-      /* Timeline Alternating Media Layout */
+      /* Timeline Media Title */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -156,43 +156,25 @@
         display: block;
         font-weight: 600;
       }
-      .timeline__left-media img,
-      .mobile-media img,
-      .timeline__left-media iframe,
-      .mobile-media iframe {
-        width: 100%;
-        border-radius: 6px;
-        display: block;
-        border: 1px solid #444;
-      }
-      .exp-video-wrapper {
-        width: 100%;
-        aspect-ratio: 16/9;
-        background: #000;
-        border-radius: 6px;
-        overflow: hidden;
-      }
 
-      /* Widescreen Layout: Pulls media to the left void */
+      /* Widescreen Layout: PERFECTLY VERTICALLY CENTERED Left Media */
       @media (min-width: 1100px) {
         .timeline__item.has-left-media {
-          display: flow-root; /* Contains floating elements natively */
-        }
-        .timeline__item.has-left-media::after {
-          content: "";
-          display: table;
-          clear: both;
+          position: relative; /* Allows child absolute positioning */
         }
         .timeline__left-media {
-          float: left;
-          width: 340px;
-          margin-left: -430px; /* Pulls the box past the timeline dot into the void */
+          position: absolute;
+          top: 50%;
+          right: calc(100% + 40px); /* Safely pushes it to the left of the timeline line */
+          transform: translateY(-50%); /* Vertically centralizes it */
+          width: 400px; /* Widened slightly to balance the page visually */
           background: #111;
-          padding: 1rem;
+          padding: 1.25rem;
           border-radius: 8px;
           border: 1px solid #333;
           box-sizing: border-box;
           box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+          text-align: center;
         }
         .mobile-media {
           display: none !important; /* Hide inline version on desktop */
@@ -203,13 +185,6 @@
       @media (max-width: 1099px) {
         .timeline__left-media {
           display: none !important;
-        }
-        .mobile-media {
-          background: #111;
-          padding: 1rem;
-          border-radius: 8px;
-          border: 1px solid #333;
-          margin-top: 1.5rem;
         }
       }
 
@@ -436,8 +411,8 @@
               <span class="timeline__dot" aria-hidden="true"></span>
               
               <div class="timeline__left-media">
-                <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" />
+                <span class="exp-media-title" style="text-align: center; margin-bottom: 1rem;">Featured Work (Jan - Dec 2025)</span>
+                <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
               </div>
 
               <article class="card exp-card">
@@ -469,29 +444,18 @@
                   </li>
                 </ul>
                 
-                <div class="mobile-media">
-                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" />
+                <div class="mobile-media" style="margin-top: 1.5rem; text-align: center; border-top: 1px solid #333; padding-top: 1.5rem;">
+                  <span class="exp-media-title" style="text-align: center;">Featured Work (Jan - Dec 2025)</span>
+                  <div style="background: #111; padding: 1rem; border-radius: 8px; border: 1px solid #333; box-sizing: border-box; max-width: 500px; margin: 0 auto;">
+                    <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000;" />
+                  </div>
                 </div>
               </article>
             </li>
             
-            <li class="timeline__item reveal has-left-media">
+            <li class="timeline__item reveal">
               <span class="timeline__dot" aria-hidden="true"></span>
               
-              <div class="timeline__left-media">
-                <span class="exp-media-title">Process Mapping Showcase</span>
-                <div class="exp-video-wrapper">
-                  <iframe 
-                    src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-                  </iframe>
-                </div>
-              </div>
-
               <article class="card exp-card">
                 <div class="exp-card__header">
                   <div class="exp-card__logo exp-card__logo--light">
@@ -511,18 +475,24 @@
                   <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
                 </ul>
 
-                <div class="mobile-media">
-                  <span class="exp-media-title">Process Mapping Showcase</span>
-                  <div class="exp-video-wrapper">
-                    <iframe 
-                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen>
-                    </iframe>
+                <div style="margin-top: 2rem; display: flex; flex-direction: column; align-items: center; border-top: 1px solid #333; padding-top: 1.5rem;">
+                  <span class="exp-media-title" style="text-align: center; margin-bottom: 1rem;">Process Mapping Showcase</span>
+                  <div style="width: 100%; max-width: 500px; background: #111; padding: 1rem; border-radius: 8px; border: 1px solid #333; box-sizing: border-box;">
+                    <div style="width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 6px; overflow: hidden; border: 1px solid #444;">
+                      <iframe 
+                        width="100%" 
+                        height="100%" 
+                        src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen 
+                        style="display: block;">
+                      </iframe>
+                    </div>
                   </div>
                 </div>
+
               </article>
             </li>
           </ol>
@@ -800,7 +770,7 @@
         const lightboxClose = document.getElementById('lightbox-close');
 
         document.body.addEventListener('click', (e) => {
-          if (e.target.tagName === 'IMG' && (e.target.closest('.featured-card__media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.timeline__left-media') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
             lightboxImg.src = e.target.src;
             lightbox.classList.add('is-active');
             document.body.style.overflow = 'hidden'; 
