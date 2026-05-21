@@ -8,7 +8,7 @@
       content="Roger Ng Zi Liang — Digital Transformation Analyst and systems engineer. AI automation, rapid prototyping, and end-to-end digital delivery."
     />
     <title>Roger Ng Zi Liang | Digital Transformation &amp; Systems</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -166,19 +166,21 @@
         border: 1px solid #444;
       }
 
-      /* WIDESCREEN: Branches Media into the Void, Natively Centers & Scales Height */
+      /* WIDESCREEN: Branches Media into the Void, Centered Vertically */
       @media (min-width: 1100px) {
         .timeline__item {
           display: flex;
           position: relative;
           align-items: center; /* THIS aligns the containers natively */
+          /* Clever Widescreen Pull-up for Void row relative to dot */
+          margin-top: -3rem; /* Nudges the entire centered assembly up relative to the dot */
         }
         
         .timeline__item > .card.exp-card {
           flex: 0 0 100%;
           width: 100%;
           max-width: 100%;
-          align-self: center; /* CHANGED from flex-start to dead-center */
+          align-self: center; /* Centered relative to entire item flow height */
         }
 
         /* 1. Left Void Container */
@@ -235,19 +237,16 @@
           padding: 1rem;
           border-radius: 8px;
           border: 1px solid #333;
+          /* Margin on top of image when placed ABOVE card on mobile flow */
+          margin-bottom: 1rem;
           margin-top: 1.5rem;
           text-align: center;
         }
       }
 
-      /* Profile Image Fix: Push image down inside the circle to reveal hair */
-      .about__photo {
-        object-fit: cover !important;
-        object-position: center 15% !important; /* Shoves the photo slightly downwards */
-        transform: scale(0.95); /* Shrinks it to give breathing room */
-      }
+      /* Profile Image Fix: Add breathing room inside the circle */
       .about__photo-wrap {
-        padding: 2%; /* Reduced padding since we are scaling the img directly */
+        padding: 5%; 
       }
     </style>
   </head>
@@ -474,6 +473,11 @@
                 </div>
               </div>
 
+              <div class="mobile-media">
+                <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
+              </div>
+
               <article class="card exp-card">
                 <div class="exp-card__header">
                   <div class="exp-card__logo exp-card__logo--light">
@@ -502,11 +506,6 @@
                     coordinated stakeholders on-site.
                   </li>
                 </ul>
-                
-                <div class="mobile-media">
-                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
-                </div>
               </article>
             </li>
             
@@ -529,6 +528,20 @@
                 </div>
               </div>
 
+              <div class="mobile-media">
+                <span class="exp-media-title">Process Mapping Showcase</span>
+                <div class="exp-video-wrapper">
+                  <iframe 
+                    src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                    title="YouTube video player" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen 
+                    style="width: 100%; height: 100%; display: block;">
+                  </iframe>
+                </div>
+              </div>
+
               <article class="card exp-card">
                 <div class="exp-card__header">
                   <div class="exp-card__logo exp-card__logo--light">
@@ -547,20 +560,6 @@
                   <li>Developed standardised training docs to improve onboarding consistency.</li>
                   <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
                 </ul>
-
-                <div class="mobile-media">
-                  <span class="exp-media-title">Process Mapping Showcase</span>
-                  <div class="exp-video-wrapper">
-                    <iframe 
-                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen 
-                      style="width: 100%; height: 100%; display: block;">
-                    </iframe>
-                  </div>
-                </div>
               </article>
             </li>
           </ol>
