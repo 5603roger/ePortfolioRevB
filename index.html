@@ -248,17 +248,24 @@
       /* PROFILE IMAGE ADJUSTMENT SECTION                                          */
       /* ========================================================================= */
       
+      .about__photo-wrap {
+        padding: 0; 
+        overflow: hidden !important; /* <--- FIX: Forces the circle to crop any spilling image perfectly */
+        border-radius: 50% !important; /* Locks the container as a perfect circle */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
       /* Target BOTH the main about photo AND the navbar logo */
       .about__photo,
       .site-nav__logo-img {
         object-fit: cover !important;
-        object-position: center 40% !important; /* Shoves the photo slightly downwards */
-        transform: scale(1.05); /* Shrinks it to give breathing room */
-      }
-      
-      .about__photo-wrap {
-        /* Removed the broken masking properties from here */
-        padding: 0; 
+        /* Horizontal is 'center', Vertical is '25%' (adjust to taste to reveal hair) */
+        object-position: center 25% !important; 
+        /* Zoom slightly to completely fill the circular mask and eliminate gaps */
+        transform: scale(1.1); 
+        margin: 0 auto; /* Safeguard for perfect horizontal centering */
       }
       /* ========================================================================= */
     </style>
