@@ -91,10 +91,6 @@
       .tab-content p {
         margin-bottom: 0.75rem;
       }
-      .branch-layout__left .exp-card__list,
-      .branch-layout__right .exp-card__list {
-        padding-left: 1rem;
-      }
       .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
       
       @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -150,7 +146,7 @@
         color: #ccc;
       }
 
-      /* Timeline Media Components */
+      /* Timeline Media Layout Box Base Engine */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -169,7 +165,7 @@
         overflow: hidden;
         border: 1px solid #444;
       }
-      .desktop-media-box {
+      .exp-media-box {
         width: 100%; 
         max-width: 480px; 
         background: #111;
@@ -181,19 +177,17 @@
       }
 
       /* ========================================================================= */
-      /* MASTER STYLESHEET TIMELINE RESET & ALIGNMENT (PREVENTS OVERLAPS)          */
+      /* BULLETPROOF SYMMETRICAL THREE-COLUMN GRID OVERRIDES                       */
       /* ========================================================================= */
       @media (min-width: 1100px) {
-        /* Force container to be perfectly centralized */
         ol.timeline {
           max-width: 1050px;
           margin: 0 auto !important;
           position: relative;
-          padding-left: 0 !important;
-          padding-right: 0 !important;
+          padding: 2rem 0 !important;
         }
         
-        /* Force template's default track line to sit precisely at 50% center */
+        /* Force template vertical central trace line back to baseline center exactly */
         ol.timeline::before {
           left: 50% !important;
           transform: translateX(-50%) !important;
@@ -201,64 +195,67 @@
           background: #222 !important;
         }
         
-        /* Neutralize conflicting row properties from style.css across all selectors */
+        /* Strip out layout collisions from style.css template configuration rules */
         li.timeline__item,
         li.timeline__item:nth-child(even),
         li.timeline__item:nth-child(odd) {
-          margin-left: 0 !important;
-          margin-right: 0 !important;
-          padding-left: 0 !important;
-          padding-right: 0 !important;
-          padding-bottom: 0 !important;
+          margin: 0 0 4rem 0 !important;
+          padding: 0 !important;
           width: 100% !important;
           max-width: 100% !important;
           background: none !important;
-          left: auto !important;
-          right: auto !important;
-          transform: none !important;
+          display: block !important;
         }
-        
         li.timeline__item::before,
         li.timeline__item::after {
-          display: none !important; /* Disables template ghost dot artifacts */
+          display: none !important;
         }
 
-        /* Enforce absolute symmetrical three-column row mapping */
-        .branch-layout {
+        /* Symmetric row alignment setup map */
+        .timeline-row {
           display: flex !important;
-          flex-direction: row !important;
           width: 100% !important;
-          margin-bottom: 4rem !important;
-          align-items: center !important; 
+          align-items: center !important; /* Perfect visual midpoint lock */
           justify-content: space-between !important;
+          position: relative !important;
         }
         
-        /* Left Column Structure Map */
-        .branch-layout__left {
+        /* Force precise math on column partitions */
+        .timeline-col {
           flex: 0 0 calc(50% - 35px) !important;
           width: calc(50% - 35px) !important;
-          display: flex !important;
-          justify-content: flex-end !important;
-          box-sizing: border-box;
+          box-sizing: border-box !important;
         }
         
-        /* Center Column Spine Map */
-        .branch-layout__center {
+        /* Layout row control shifts */
+        .timeline-row--media-left {
+          flex-direction: row !important;
+        }
+        .timeline-row--media-right {
+          flex-direction: row-reverse !important;
+        }
+        
+        /* Grid Column alignment adjustments */
+        .timeline-row--media-left .exp-media-box { margin-left: auto !important; margin-right: 0 !important; }
+        .timeline-row--media-right .exp-media-box { margin-right: auto !important; margin-left: 0 !important; }
+        .timeline-row--media-left .card.exp-card { margin-right: auto !important; margin-left: 0 !important; }
+        .timeline-row--media-right .card.exp-card { margin-left: auto !important; margin-right: 0 !important; }
+
+        /* Lock the track dot back in dead center of the new dynamic row block height */
+        .timeline-col--center {
           flex: 0 0 70px !important;
           width: 70px !important;
           display: flex !important;
           justify-content: center !important;
           align-items: center !important;
           position: relative !important;
+          align-self: stretch !important;
         }
-        
-        /* Anchor standalone custom node clean on central track layout */
-        .branch-layout__center .timeline__dot {
-          position: relative !important;
-          display: block !important;
-          left: auto !important;
-          top: auto !important;
-          transform: none !important;
+        .timeline-col--center .timeline__dot {
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          transform: translate(-50%, -50%) !important;
           width: 14px !important;
           height: 14px !important;
           background: #fff !important;
@@ -267,62 +264,41 @@
           margin: 0 !important;
           z-index: 50 !important;
         }
-
-        /* Right Column Structure Map */
-        .branch-layout__right {
-          flex: 0 0 calc(50% - 35px) !important;
-          width: calc(50% - 35px) !important;
-          display: flex !important;
-          justify-content: flex-start !important;
-          box-sizing: border-box;
-        }
-
-        /* Destroy internal offset position bugs inherited from style.css rules */
-        .branch-layout__left .card.exp-card,
-        .branch-layout__right .card.exp-card,
-        .branch-layout__left .desktop-media-box,
-        .branch-layout__right .desktop-media-box {
-          width: 100% !important;
-          max-width: 480px !important;
-          margin: 0 !important;
-          left: auto !important;
-          right: auto !important;
-          transform: none !important;
-          position: relative !important;
-          box-sizing: border-box;
-        }
-        .mobile-media {
-          display: none !important; 
-        }
       }
 
-      /* MOBILE/TABLET: Graceful vertical compression layout fallback */
+      /* MOBILE/TABLET RESPONSIVE COMPRESSION FALLBACK */
       @media (max-width: 1099px) {
-        .branch-layout {
-          display: block !important;
-        }
-        .branch-layout__left,
-        .branch-layout__right {
-          display: block !important;
+        .timeline-row {
+          display: flex !important;
           width: 100% !important;
         }
-        .branch-layout__center {
+        .timeline-col--center {
           display: none !important;
         }
-        .mobile-media {
+        .timeline-col {
+          width: 100% !important;
+          flex: 1 1 auto !important;
+        }
+        /* Forces standard source flow to position text description on top, attachment beneath */
+        .timeline-row--media-left {
+          flex-direction: column-reverse !important;
+        }
+        .timeline-row--media-right {
+          flex-direction: column !important;
+        }
+        .exp-media-box {
           background: #111;
           padding: 1rem;
           border-radius: 8px;
           border: 1px solid #333;
-          margin-bottom: 1.5rem;
-          margin-top: 1.5rem;
+          margin: 1.5rem auto 0 auto !important;
           text-align: center;
+          width: 100%;
+          max-width: 100% !important;
         }
       }
 
-      /* ========================================================================= */
-      /* PROFILE IMAGE FRAME LOCK PROPERTIES                                       */
-      /* ========================================================================= */
+      /* Profile Image Frame Mask Lock Rules */
       .about__photo-wrap {
         padding: 0; 
         overflow: hidden !important; 
@@ -520,110 +496,119 @@
           </header>
           <ol class="timeline">
             
-            <li class="timeline__item reveal branch-layout">
-              <div class="branch-layout__left">
-                <article class="card exp-card">
-                  <div class="exp-card__header">
-                    <div class="exp-card__logo">
-                      <img src="images/logo-winner-engineering.png" alt="" width="48" height="48" decoding="async" />
+            <li class="timeline__item reveal">
+              <div class="timeline-row timeline-row--media-left">
+                <div class="timeline-col">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo">
+                        <img src="images/logo-winner-engineering.png" alt="" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Digital Transformation Analyst</h3>
+                        <p class="exp-card__company">Winner Engineering Pte Ltd</p>
+                      </div>
+                      <span class="exp-card__date">May 2026 – Present</span>
                     </div>
-                    <div class="exp-card__meta">
-                      <h3>Digital Transformation Analyst</h3>
-                      <p class="exp-card__company">Winner Engineering Pte Ltd</p>
-                    </div>
-                    <span class="exp-card__date">May 2026 – Present</span>
-                  </div>
-                  <ul class="exp-card__list">
-                    <li>
-                      Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a
-                      Discover–Design–Deploy–Iterate approach to improve business processes.
-                    </li>
-                    <li>
-                      Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA /
-                      Responsible AI alignment.
-                    </li>
-                    <li>
-                      Translated requirements into user-centric digital applications; led testing, deployment, and
-                      troubleshooting with stakeholders.
-                    </li>
-                    <li>
-                      Authored documentation, delivered training, and mentored junior contributors to support adoption.
-                    </li>
-                  </ul>
-                </article>
+                    <ul class="exp-card__list">
+                      <li>
+                        Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a
+                        Discover–Design–Deploy–Iterate approach to improve business processes.
+                      </li>
+                      <li>
+                        Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA /
+                        Responsible AI alignment.
+                      </li>
+                      <li>
+                        Translated requirements into user-centric digital applications; led testing, deployment, and
+                        troubleshooting with stakeholders.
+                      </li>
+                      <li>
+                        Authored documentation, delivered training, and mentored junior contributors to support adoption.
+                      </li>
+                    </ul>
+                  </article>
+                </div>
+                <div class="timeline-col timeline-col--center">
+                  <span class="timeline__dot" aria-hidden="true"></span>
+                </div>
+                <div class="timeline-col"></div>
               </div>
-              <div class="branch-layout__center">
-                <span class="timeline__dot" aria-hidden="true"></span>
-              </div>
-              <div class="branch-layout__right"></div>
             </li>
             
-            <li class="timeline__item reveal branch-layout">
-              <div class="branch-layout__left">
-                <div class="desktop-media-box">
-                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
-                </div>
-              </div>
-              
-              <div class="branch-layout__center">
-                <span class="timeline__dot" aria-hidden="true"></span>
-              </div>
-
-              <div class="branch-layout__right">
-                <article class="card exp-card">
-                  <div class="exp-card__header">
-                    <div class="exp-card__logo exp-card__logo--light">
-                      <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
-                    </div>
-                    <div class="exp-card__meta">
-                      <h3>Assistant Engineer Intern</h3>
-                      <p class="exp-card__company">WEInnovate Pte Ltd</p>
-                    </div>
-                    <span class="exp-card__date">Jan 2025 – Dec 2025</span>
-                    </div>
-                  
-                  <ul class="exp-card__list">
-                    <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
-                    <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
-                    <li>Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional issues.</li>
-                    <li>Managed procurement and RFQs for 100+ components across projects.</li>
-                    <li>Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and coordinated stakeholders on-site.</li>
-                  </ul>
-                  
-                  <div class="mobile-media">
+            <li class="timeline__item reveal">
+              <div class="timeline-row timeline-row--media-left">
+                <div class="timeline-col">
+                  <div class="exp-media-box">
                     <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
                     <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
                   </div>
-                </article>
+                </div>
+                
+                <div class="timeline-col timeline-col--center">
+                  <span class="timeline__dot" aria-hidden="true"></span>
+                </div>
+
+                <div class="timeline-col">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo exp-card__logo--light">
+                        <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Assistant Engineer Intern</h3>
+                        <p class="exp-card__company">WEInnovate Pte Ltd</p>
+                      </div>
+                      <span class="exp-card__date">Jan 2025 – Dec 2025</span>
+                    </div>
+                    
+                    <ul class="exp-card__list">
+                      <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
+                      <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
+                      <li>Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional issues.</li>
+                      <li>Managed procurement and RFQs for 100+ components across projects.</li>
+                      <li>Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and coordinated stakeholders on-site.</li>
+                    </ul>
+                  </article>
+                </div>
               </div>
             </li>
             
-            <li class="timeline__item reveal branch-layout">
-              <div class="branch-layout__left">
-                <article class="card exp-card">
-                  <div class="exp-card__header">
-                    <div class="exp-card__logo exp-card__logo--light">
-                      <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
+            <li class="timeline__item reveal">
+              <div class="timeline-row timeline-row--media-right">
+                <div class="timeline-col">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo exp-card__logo--light">
+                        <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Systems Engineer Intern</h3>
+                        <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
+                      </div>
+                      <span class="exp-card__date">Apr 2019 – Jul 2019</span>
                     </div>
-                    <div class="exp-card__meta">
-                      <h3>Systems Engineer Intern</h3>
-                      <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
-                    </div>
-                    <span class="exp-card__date">Apr 2019 – Jul 2019</span>
-                  </div>
-                  
-                  <ul class="exp-card__list">
-                    <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
-                    <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
-                    <li>Developed standardised training docs to improve onboarding consistency.</li>
-                    <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
-                  </ul>
+                    
+                    <ul class="exp-card__list">
+                      <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
+                      <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
+                      <li>Developed standardised training docs to improve onboarding consistency.</li>
+                      <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
+                    </ul>
+                  </article>
+                </div>
 
-                  <div class="mobile-media">
+                <div class="timeline-col timeline-col--center">
+                  <span class="timeline__dot" aria-hidden="true"></span>
+                </div>
+
+                <div class="timeline-col">
+                  <div class="desktop-media-box">
                     <span class="exp-media-title">Process Mapping Showcase</span>
                     <div class="exp-video-wrapper">
                       <iframe 
+                        width="100%" 
+                        height="100%" 
                         src="https://www.youtube.com/embed/oFT9y6wwQJA" 
                         title="YouTube video player" 
                         frameborder="0" 
@@ -632,26 +617,6 @@
                         style="width: 100%; height: 100%; display: block;">
                       </iframe>
                     </div>
-                  </div>
-                </article>
-              </div>
-
-              <div class="branch-layout__center">
-                <span class="timeline__dot" aria-hidden="true"></span>
-              </div>
-
-              <div class="branch-layout__right">
-                <div class="desktop-media-box">
-                  <span class="exp-media-title">Process Mapping Showcase</span>
-                  <div class="exp-video-wrapper">
-                    <iframe 
-                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen 
-                      style="width: 100%; height: 100%; display: block;">
-                    </iframe>
                   </div>
                 </div>
               </div>
@@ -896,7 +861,7 @@
         const lightboxClose = document.getElementById('lightbox-close');
 
         document.body.addEventListener('click', (e) => {
-          if (e.target.tagName === 'IMG' && (e.target.closest('.branch-layout__media--left') || e.target.closest('.branch-layout__media--right') || e.target.closest('.mobile-media') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
+          if (e.target.tagName === 'IMG' && (e.target.closest('.timeline-col') || e.target.closest('.project-card__media') || e.target.classList.contains('zoomable-image'))) {
             lightboxImg.src = e.target.src;
             lightbox.classList.add('is-active');
             document.body.style.overflow = 'hidden'; 
