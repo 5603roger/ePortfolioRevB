@@ -146,9 +146,7 @@
         color: #ccc;
       }
 
-      /* ========================================================================= */
-      /* NEW TIMELINE BRANCHING LAYOUT (NO OVERLAPS)                               */
-      /* ========================================================================= */
+      /* Timeline Media Layout Components */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -169,67 +167,101 @@
       }
       .desktop-media-box {
         width: 100%; 
-        max-width: 500px; 
+        max-width: 480px; 
         background: #111;
         padding: 1.25rem;
         border-radius: 8px;
         border: 1px solid #333;
         box-sizing: border-box;
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-        text-align: center;
       }
 
-      /* WIDESCREEN: Branches Media into Voids, Natively Centers & Prevents Overlap */
+      /* ========================================================================= */
+      /* GRID PATTERN OVERRIDES: Symmetry Across Center Spine                      */
+      /* ========================================================================= */
       @media (min-width: 1100px) {
+        .timeline {
+          position: relative;
+          padding: 2rem 0;
+          list-style: none;
+        }
+        /* Custom row configuration balancing layout spacing safely */
         .branch-layout {
-          display: flex;
-          align-items: center; /* Vertically centers the entire container relative to the row */
+          display: flex !important;
+          flex-direction: row !important;
+          width: 100% !important;
+          margin-bottom: 3rem;
+          align-items: center !important; /* Perfect internal balancing */
+          justify-content: space-between;
           position: relative;
         }
         
-        /* Locks the timeline dot to the perfect center of the new taller container */
-        .branch-layout .timeline__dot {
-          top: 50% !important;
-          transform: translateY(-50%) !important;
-          margin-top: 0 !important;
-        }
-
-        /* Flex row that holds BOTH the media and text side-by-side */
-        .branch-layout__inner {
+        /* Left Column Properties */
+        .branch-layout__left {
+          flex: 0 0 calc(50% - 40px) !important;
+          width: calc(50% - 40px) !important;
           display: flex;
-          align-items: center; /* Perfectly centers media and text against each other */
-          width: 100%;
+          justify-content: flex-end; /* Align elements rightwards towards center */
+          box-sizing: border-box;
         }
         
-        /* Left Side Void Placement */
-        .branch-layout__media--left {
-          width: 450px;
-          margin-left: calc(-450px - 50px); /* Pulls left into the void */
-          margin-right: 50px; /* Cancels out horizontal footprint so the text card stays anchored */
-          flex-shrink: 0;
+        /* Spine Anchor Properties */
+        .branch-layout__center {
+          flex: 0 0 80px !important;
+          width: 80px !important;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          position: relative;
+          align-self: stretch; /* Inherits row context height */
+        }
+        
+        /* Central Node positioning mechanics override placement values */
+        .branch-layout__center .timeline__dot {
+          position: absolute !important;
+          top: 50% !important;
+          left: 50% !important;
+          transform: translate(-50%, -50%) !important;
+          margin: 0 !important;
+          z-index: 10;
         }
 
-        /* Right Side Void Placement */
-        .branch-layout__media--right {
-          width: 450px;
-          margin-left: 50px; /* Pushes into the right void */
-          margin-right: calc(-450px - 50px); /* Cancels out horizontal footprint */
-          flex-shrink: 0;
+        /* Right Column Properties */
+        .branch-layout__right {
+          flex: 0 0 calc(50% - 40px) !important;
+          width: calc(50% - 40px) !important;
+          display: flex;
+          justify-content: flex-start; /* Align elements leftwards towards center */
+          box-sizing: border-box;
         }
 
-        .branch-layout__text {
-          width: 100%;
-          flex-grow: 1;
+        /* Standardize timeline item elements widths inside the columns */
+        .branch-layout__left .card.exp-card,
+        .branch-layout__right .card.exp-card,
+        .branch-layout__left .desktop-media-box,
+        .branch-layout__right .desktop-media-box {
+          width: 100% !important;
+          max-width: 480px !important;
+          margin: 0 !important;
+          box-sizing: border-box;
         }
+        
         .mobile-media {
           display: none !important; 
         }
       }
 
-      /* MOBILE/TABLET: Tucks media safely inside the card */
+      /* MOBILE/TABLET COMPATIBILITY FLOWS */
       @media (max-width: 1099px) {
-        .branch-layout__media--left,
-        .branch-layout__media--right {
+        .branch-layout {
+          display: block !important;
+        }
+        .branch-layout__left,
+        .branch-layout__right {
+          display: block !important;
+          width: 100% !important;
+        }
+        .branch-layout__center {
           display: none !important;
         }
         .mobile-media {
@@ -244,9 +276,8 @@
       }
 
       /* ========================================================================= */
-      /* PROFILE IMAGE ADJUSTMENT SECTION                                          */
+      /* PROFILE IMAGE FRAME LOCK PROPERTIES                                       */
       /* ========================================================================= */
-      
       .about__photo-wrap {
         padding: 0; 
         overflow: hidden !important; 
@@ -255,7 +286,6 @@
         justify-content: center;
         align-items: center;
       }
-
       .about__photo,
       .site-nav__logo-img {
         object-fit: cover !important;
@@ -263,7 +293,6 @@
         transform: scale(1.1); 
         margin: 0 auto; 
       }
-      /* ========================================================================= */
     </style>
   </head>
   <body>
@@ -446,106 +475,107 @@
           </header>
           <ol class="timeline">
             
-            <li class="timeline__item reveal">
-              <span class="timeline__dot" aria-hidden="true"></span>
-              <article class="card exp-card">
-                <div class="exp-card__header">
-                  <div class="exp-card__logo">
-                    <img src="images/logo-winner-engineering.png" alt="" width="48" height="48" decoding="async" />
+            <li class="timeline__item reveal branch-layout">
+              <div class="branch-layout__left"></div>
+              <div class="branch-layout__center">
+                <span class="timeline__dot" aria-hidden="true"></span>
+              </div>
+              <div class="branch-layout__right">
+                <article class="card exp-card">
+                  <div class="exp-card__header">
+                    <div class="exp-card__logo">
+                      <img src="images/logo-winner-engineering.png" alt="" width="48" height="48" decoding="async" />
+                    </div>
+                    <div class="exp-card__meta">
+                      <h3>Digital Transformation Analyst</h3>
+                      <p class="exp-card__company">Winner Engineering Pte Ltd</p>
+                    </div>
+                    <span class="exp-card__date">May 2026 – Present</span>
                   </div>
-                  <div class="exp-card__meta">
-                    <h3>Digital Transformation Analyst</h3>
-                    <p class="exp-card__company">Winner Engineering Pte Ltd</p>
-                  </div>
-                  <span class="exp-card__date">May 2026 – Present</span>
-                </div>
-                <ul class="exp-card__list">
-                  <li>
-                    Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a
-                    Discover–Design–Deploy–Iterate approach to improve business processes.
-                  </li>
-                  <li>
-                    Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA /
-                    Responsible AI alignment.
-                  </li>
-                  <li>
-                    Translated requirements into user-centric digital applications; led testing, deployment, and
-                    troubleshooting with stakeholders.
-                  </li>
-                  <li>
-                    Authored documentation, delivered training, and mentored junior contributors to support adoption.
-                  </li>
-                </ul>
-              </article>
+                  <ul class="exp-card__list">
+                    <li>
+                      Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a
+                      Discover–Design–Deploy–Iterate approach to improve business processes.
+                    </li>
+                    <li>
+                      Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA /
+                      Responsible AI alignment.
+                    </li>
+                    <li>
+                      Translated requirements into user-centric digital applications; led testing, deployment, and
+                      troubleshooting with stakeholders.
+                    </li>
+                    <li>
+                      Authored documentation, delivered training, and mentored junior contributors to support adoption.
+                    </li>
+                  </ul>
+                </article>
+              </div>
             </li>
             
             <li class="timeline__item reveal branch-layout">
-              <span class="timeline__dot" aria-hidden="true"></span>
+              <div class="branch-layout__left">
+                <div class="desktop-media-box">
+                  <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
+                  <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
+                </div>
+              </div>
+              
+              <div class="branch-layout__center">
+                <span class="timeline__dot" aria-hidden="true"></span>
+              </div>
 
-              <div class="branch-layout__inner">
-                <div class="branch-layout__media--left">
-                  <div class="desktop-media-box">
+              <div class="branch-layout__right">
+                <article class="card exp-card">
+                  <div class="exp-card__header">
+                    <div class="exp-card__logo exp-card__logo--light">
+                      <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
+                    </div>
+                    <div class="exp-card__meta">
+                      <h3>Assistant Engineer Intern</h3>
+                      <p class="exp-card__company">WEInnovate Pte Ltd</p>
+                    </div>
+                    <span class="exp-card__date">Jan 2025 – Dec 2025</span>
+                  </div>
+                  
+                  <ul class="exp-card__list">
+                    <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
+                    <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
+                    <li>Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional issues.</li>
+                    <li>Managed procurement and RFQs for 100+ components across projects.</li>
+                    <li>Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and coordinated stakeholders on-site.</li>
+                  </ul>
+                  
+                  <div class="mobile-media">
                     <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
                     <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
                   </div>
-                </div>
-
-                <div class="branch-layout__text">
-                  <article class="card exp-card">
-                    <div class="exp-card__header">
-                      <div class="exp-card__logo exp-card__logo--light">
-                        <img src="images/logo-weinnovate.png" alt="" width="48" height="48" decoding="async" />
-                      </div>
-                      <div class="exp-card__meta">
-                        <h3>Assistant Engineer Intern</h3>
-                        <p class="exp-card__company">WEInnovate Pte Ltd</p>
-                      </div>
-                      <span class="exp-card__date">Jan 2025 – Dec 2025</span>
-                    </div>
-                    <ul class="exp-card__list">
-                      <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
-                      <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
-                      <li>Executed assembly and testing for machines and jigs; iterated designs to resolve fit / functional issues.</li>
-                      <li>Managed procurement and RFQs for 100+ components across projects.</li>
-                      <li>Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and coordinated stakeholders on-site.</li>
-                    </ul>
-                  </article>
-                </div>
-              </div>
-
-              <div class="mobile-media">
-                <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
+                </article>
               </div>
             </li>
             
             <li class="timeline__item reveal branch-layout">
-              <span class="timeline__dot" aria-hidden="true"></span>
-              
-              <div class="branch-layout__inner">
-                <div class="branch-layout__text">
-                  <article class="card exp-card">
-                    <div class="exp-card__header">
-                      <div class="exp-card__logo exp-card__logo--light">
-                        <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
-                      </div>
-                      <div class="exp-card__meta">
-                        <h3>Systems Engineer Intern</h3>
-                        <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
-                      </div>
-                      <span class="exp-card__date">Apr 2019 – Jul 2019</span>
+              <div class="branch-layout__left">
+                <article class="card exp-card">
+                  <div class="exp-card__header">
+                    <div class="exp-card__logo exp-card__logo--light">
+                      <img src="images/logo-tui-destination.png" alt="" width="48" height="48" decoding="async" />
                     </div>
-                    <ul class="exp-card__list">
-                      <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
-                      <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
-                      <li>Developed standardised training docs to improve onboarding consistency.</li>
-                      <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
-                    </ul>
-                  </article>
-                </div>
+                    <div class="exp-card__meta">
+                      <h3>Systems Engineer Intern</h3>
+                      <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
+                    </div>
+                    <span class="exp-card__date">Apr 2019 – Jul 2019</span>
+                  </div>
+                  
+                  <ul class="exp-card__list">
+                    <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
+                    <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
+                    <li>Developed standardised training docs to improve onboarding consistency.</li>
+                    <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
+                  </ul>
 
-                <div class="branch-layout__media--right">
-                  <div class="desktop-media-box">
+                  <div class="mobile-media">
                     <span class="exp-media-title">Process Mapping Showcase</span>
                     <div class="exp-video-wrapper">
                       <iframe 
@@ -558,20 +588,26 @@
                       </iframe>
                     </div>
                   </div>
-                </div>
+                </article>
               </div>
 
-              <div class="mobile-media">
-                <span class="exp-media-title">Process Mapping Showcase</span>
-                <div class="exp-video-wrapper">
-                  <iframe 
-                    src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                    title="YouTube video player" 
-                    frameborder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen 
-                    style="width: 100%; height: 100%; display: block;">
-                  </iframe>
+              <div class="branch-layout__center">
+                <span class="timeline__dot" aria-hidden="true"></span>
+              </div>
+
+              <div class="branch-layout__right">
+                <div class="desktop-media-box">
+                  <span class="exp-media-title">Process Mapping Showcase</span>
+                  <div class="exp-video-wrapper">
+                    <iframe 
+                      src="https://www.youtube.com/embed/oFT9y6wwQJA" 
+                      title="YouTube video player" 
+                      frameborder="0" 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowfullscreen 
+                      style="width: 100%; height: 100%; display: block;">
+                    </iframe>
+                  </div>
                 </div>
               </div>
             </li>
@@ -675,7 +711,7 @@
                     <p>Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI expectations.</p>
                   </div>
                   <div id="tab-auto-exec" class="tab-content">
-                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapped trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
+                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapping trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
                   </div>
                   <div id="tab-auto-outcome" class="tab-content">
                     <p>Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise exact metrics where NDAs apply).</p>
