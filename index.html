@@ -91,6 +91,10 @@
       .tab-content p {
         margin-bottom: 0.75rem;
       }
+      .branch-layout__left .exp-card__list,
+      .branch-layout__right .exp-card__list {
+        padding-left: 1rem;
+      }
       .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
       
       @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
@@ -146,7 +150,7 @@
         color: #ccc;
       }
 
-      /* Timeline Media Layout Components */
+      /* Timeline Media Components */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -177,65 +181,92 @@
       }
 
       /* ========================================================================= */
-      /* GRID PATTERN OVERRIDES: Symmetry Across Center Spine                      */
+      /* MASTER STYLESHEET TIMELINE RESET & ALIGNMENT (PREVENTS OVERLAPS)          */
       /* ========================================================================= */
       @media (min-width: 1100px) {
-        .timeline {
+        /* Force container to be perfectly centralized */
+        ol.timeline {
+          max-width: 1050px;
+          margin: 0 auto !important;
           position: relative;
-          padding: 2rem 0;
-          list-style: none;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
         }
-        /* Custom row configuration balancing layout spacing safely */
+        
+        /* Force template's default track line to sit precisely at 50% center */
+        ol.timeline::before {
+          left: 50% !important;
+          transform: translateX(-50%) !important;
+          width: 2px !important;
+          background: #222 !important;
+        }
+        
+        /* Neutralize conflicting row properties from style.css */
+        li.timeline__item {
+          margin-left: 0 !important;
+          padding-left: 0 !important;
+          width: 100% !important;
+          background: none !important;
+        }
+        li.timeline__item::before,
+        li.timeline__item::after {
+          display: none !important; /* Disables double-dot ghost artifacts */
+        }
+
+        /* Enforce absolute symmetrical three-column row mapping */
         .branch-layout {
           display: flex !important;
           flex-direction: row !important;
           width: 100% !important;
-          margin-bottom: 3rem;
-          align-items: center !important; /* Perfect internal balancing */
-          justify-content: space-between;
-          position: relative;
+          margin-bottom: 4rem !important;
+          align-items: center !important; 
+          justify-content: space-between !important;
         }
         
-        /* Left Column Properties */
+        /* Left Column Structure Map */
         .branch-layout__left {
-          flex: 0 0 calc(50% - 40px) !important;
-          width: calc(50% - 40px) !important;
-          display: flex;
-          justify-content: flex-end; /* Align elements rightwards towards center */
+          flex: 0 0 calc(50% - 35px) !important;
+          width: calc(50% - 35px) !important;
+          display: flex !important;
+          justify-content: flex-end !important;
           box-sizing: border-box;
         }
         
-        /* Spine Anchor Properties */
+        /* Center Column Spine Map */
         .branch-layout__center {
-          flex: 0 0 80px !important;
-          width: 80px !important;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          position: relative;
-          align-self: stretch; /* Inherits row context height */
+          flex: 0 0 70px !important;
+          width: 70px !important;
+          display: flex !important;
+          justify-content: center !important;
+          align-items: center !important;
+          position: relative !important;
         }
         
-        /* Central Node positioning mechanics override placement values */
+        /* Anchor standalone custom node clean on central track layout */
         .branch-layout__center .timeline__dot {
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          transform: translate(-50%, -50%) !important;
+          position: relative !important;
+          display: block !important;
+          left: auto !important;
+          top: auto !important;
+          transform: none !important;
+          width: 14px !important;
+          height: 14px !important;
+          background: #fff !important;
+          border-radius: 50% !important;
+          box-shadow: 0 0 0 4px #000 !important;
           margin: 0 !important;
-          z-index: 10;
+          z-index: 50 !important;
         }
 
-        /* Right Column Properties */
+        /* Right Column Structure Map */
         .branch-layout__right {
-          flex: 0 0 calc(50% - 40px) !important;
-          width: calc(50% - 40px) !important;
-          display: flex;
-          justify-content: flex-start; /* Align elements leftwards towards center */
+          flex: 0 0 calc(50% - 35px) !important;
+          width: calc(50% - 35px) !important;
+          display: flex !important;
+          justify-content: flex-start !important;
           box-sizing: border-box;
         }
 
-        /* Standardize timeline item elements widths inside the columns */
         .branch-layout__left .card.exp-card,
         .branch-layout__right .card.exp-card,
         .branch-layout__left .desktop-media-box,
@@ -245,13 +276,12 @@
           margin: 0 !important;
           box-sizing: border-box;
         }
-        
         .mobile-media {
           display: none !important; 
         }
       }
 
-      /* MOBILE/TABLET COMPATIBILITY FLOWS */
+      /* MOBILE/TABLET: Graceful vertical compression layout fallback */
       @media (max-width: 1099px) {
         .branch-layout {
           display: block !important;
@@ -711,7 +741,7 @@
                     <p>Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI expectations.</p>
                   </div>
                   <div id="tab-auto-exec" class="tab-content">
-                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapping trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
+                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapped trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
                   </div>
                   <div id="tab-auto-outcome" class="tab-content">
                     <p>Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise exact metrics where NDAs apply).</p>
