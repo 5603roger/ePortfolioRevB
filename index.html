@@ -8,7 +8,7 @@
       content="Roger Ng Zi Liang — Digital Transformation Analyst and systems engineer. AI automation, rapid prototyping, and end-to-end digital delivery."
     />
     <title>Roger Ng Zi Liang | Digital Transformation &amp; Systems</title>
-    <link rel="icon" type="image/png" href="images/newprofile.jpg" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -171,46 +171,46 @@
         .timeline__item {
           display: flex;
           position: relative;
-          /* Inherit height from the tallest element inside the flex container */
+          align-items: center; /* THIS aligns the containers natively */
         }
         
         .timeline__item > .card.exp-card {
           flex: 0 0 100%;
           width: 100%;
           max-width: 100%;
-          align-self: flex-start; /* Anchors the text to the top so it aligns with the timeline dot */
+          align-self: center; /* CHANGED from flex-start to dead-center */
         }
 
         /* 1. Left Void Container */
         .media-wrapper--left {
-          flex: 0 0 100%; /* Matches card width */
-          margin-left: calc(-100% - 60px); /* Pulls into the left void */
-          margin-right: 60px; /* Cancels footprint so the main card naturally starts at 0 */
+          flex: 0 0 100%; 
+          margin-left: calc(-100% - 60px); 
+          margin-right: 60px; 
           padding-right: 2.5rem; 
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          justify-content: center; /* Dead-center vertically against the total item height */
-          align-items: flex-end; /* Hugs the right edge near the timeline */
+          justify-content: center; 
+          align-items: flex-end; 
         }
 
         /* 2. Right Void Container */
         .media-wrapper--right {
-          flex: 0 0 100%; /* Matches card width */
-          margin-left: calc(100% + 60px); /* Pushes into the right void */
-          margin-right: calc(-200% - 60px); /* Cancels footprint so the main card naturally starts at 0 */
+          flex: 0 0 100%; 
+          margin-left: calc(100% + 60px); 
+          margin-right: calc(-200% - 60px); 
           padding-left: 2.5rem; 
           box-sizing: border-box;
           display: flex;
           flex-direction: column;
-          justify-content: center; /* Dead-center vertically against the total item height */
-          align-items: flex-start; /* Hugs the left edge near the timeline */
+          justify-content: center; 
+          align-items: flex-start; 
         }
 
         /* The actual visible box containing the media */
         .desktop-media-box {
           width: 100%; 
-          max-width: 500px; /* Safe cap for ultra-wide monitors */
+          max-width: 500px; 
           background: #111;
           padding: 1.25rem;
           border-radius: 8px;
@@ -220,7 +220,7 @@
           text-align: center;
         }
         .mobile-media {
-          display: none !important; /* Hide inline fallback on desktop */
+          display: none !important; 
         }
       }
 
@@ -240,9 +240,14 @@
         }
       }
 
-      /* Profile Image Fix: Add breathing room inside the circle */
+      /* Profile Image Fix: Push image down inside the circle to reveal hair */
+      .about__photo {
+        object-fit: cover !important;
+        object-position: center 15% !important; /* Shoves the photo slightly downwards */
+        transform: scale(0.95); /* Shrinks it to give breathing room */
+      }
       .about__photo-wrap {
-        padding: 5%; 
+        padding: 2%; /* Reduced padding since we are scaling the img directly */
       }
     </style>
   </head>
