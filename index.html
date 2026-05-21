@@ -25,10 +25,10 @@
     
     <style>
       /* ========================================================================= */
-      /* GLOBAL WEBSITE ZOOM (SET TO 80%)                                          */
+      /* GLOBAL WEBSITE ZOOM (80% BASELINE)                                        */
       /* ========================================================================= */
       body {
-        zoom: 0.8; /* Scales entire layout layout natively in Chrome, Safari, and Edge */
+        zoom: 0.8; 
       }
 
       .btn-project-details {
@@ -153,7 +153,7 @@
         color: #ccc;
       }
 
-      /* Timeline Media Components Base Styles */
+      /* Timeline Media Components */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
@@ -172,7 +172,7 @@
         overflow: hidden;
         border: 1px solid #444;
       }
-      .desktop-media-box {
+      .exp-media-box {
         width: 100%; 
         max-width: 480px; 
         background: #111;
@@ -184,10 +184,10 @@
       }
 
       /* ========================================================================= */
-      /* MASTER STYLESHEET TIMELINE TRACK LINE RESET & HARD ALIGNMENT OVERRIDES    */
+      /* BULLETPROOF THREE-COLUMN SYMMETRICAL LAYOUT MECHANICS                     */
       /* ========================================================================= */
       ol.timeline::before {
-        background: #555 !important; /* Forces visible mid-tone gray track line color globally */
+        background: #555 !important; 
       }
 
       @media (min-width: 1100px) {
@@ -198,14 +198,12 @@
           padding: 2rem 0 !important;
         }
         
-        /* Lock central timeline spine back to exactly 50% midpoint hook */
         ol.timeline::before {
           left: 50% !important;
           transform: translateX(-50%) !important;
           width: 2px !important;
         }
         
-        /* Strip out conflicting position coordinates and offsets from style.css */
         li.timeline__item,
         li.timeline__item:nth-child(even),
         li.timeline__item:nth-child(odd) {
@@ -222,14 +220,14 @@
         }
         li.timeline__item::before,
         li.timeline__item::after {
-          display: none !important; /* Neutralizes template node ghost duplicates */
+          display: none !important;
         }
 
-        /* Enforce absolute mirrored three-column table architecture mappings */
         .timeline-row {
           display: flex !important;
+          flex-direction: row !important; /* Uniform left-to-right structure map */
           width: 100% !important;
-          align-items: center !important; 
+          align-items: center !important; /* Locks vertical cross-alignment center */
           justify-content: space-between !important;
           position: relative !important;
         }
@@ -240,28 +238,20 @@
           box-sizing: border-box !important;
         }
         
-        .timeline-row--media-left { flex-direction: row !important; }
-        .timeline-row--media-right { flex-direction: row-reverse !important; }
-        
-        /* Lock card items clean along column edge directions */
-        .timeline-row--media-left .exp-media-box { margin-left: auto !important; margin-right: 0 !important; }
-        .timeline-row--media-right .exp-media-box { margin-right: auto !important; margin-left: 0 !important; }
-        .timeline-row--media-left .card.exp-card { margin-right: auto !important; margin-left: 0 !important; }
-        .timeline-row--media-right .card.exp-card { margin-left: auto !important; margin-right: 0 !important; }
+        /* Direct alignments pulling content symmetrically to center timeline rail */
+        .timeline-col:first-child { display: flex !important; justify-content: flex-end !important; }
+        .timeline-col:last-child { display: flex !important; justify-content: flex-start !important; }
 
-        /* Force cleanup of positional bugs inherited on internal elements from style.css */
         .timeline-row .card.exp-card,
-        .timeline-row .desktop-media-box {
+        .timeline-row .exp-media-box {
           position: relative !important;
-          left: auto !important;
-          right: auto !important;
-          transform: none !important;
+          margin: 0 !important;
           width: 100% !important;
           max-width: 480px !important;
           box-sizing: border-box !important;
         }
 
-        /* Central Track Node Component Mapping */
+        /* Center Dot Lock Mechanics */
         .timeline-col--center {
           flex: 0 0 70px !important;
           width: 70px !important;
@@ -284,17 +274,15 @@
           margin: 0 !important;
           z-index: 50 !important;
         }
-        .mobile-media {
-          display: none !important; 
-        }
       }
 
       /* ========================================================================= */
-      /* MOBILE AND TABLET LAYOUT ENGINE AND LOGO ALIGNMENT FIX                    */
+      /* MOBILE LAYOUT & ADAPTIVE INLINE LOGO FIX ENGINE                           */
       /* ========================================================================= */
       @media (max-width: 1099px) {
         .timeline-row {
           display: flex !important;
+          flex-direction: column !important; /* Stack columns vertically on phones */
           width: 100% !important;
         }
         .timeline-col--center {
@@ -304,8 +292,10 @@
           width: 100% !important;
           flex: 1 1 auto !important;
         }
-        .timeline-row--media-left { flex-direction: column-reverse !important; }
-        .timeline-row--media-right { flex-direction: column !important; }
+        
+        /* Forces structural order consistency (Text block always first, Media always beneath) */
+        .timeline-col--text { order: 1 !important; }
+        .timeline-col--media { order: 2 !important; }
         
         .exp-media-box {
           background: #111;
@@ -318,7 +308,7 @@
           max-width: 100% !important;
         }
 
-        /* MOBILE LOGO INLINE ALIGNMENT FIX (Positions logo to the left of Titles) */
+        /* Inline Phone Logo Alignment Engine */
         .exp-card__header {
           display: flex !important;
           flex-direction: row !important;
@@ -346,7 +336,7 @@
         }
       }
 
-      /* Profile Image Frame Mask Lock Rules */
+      /* Profile Image Circle Lock */
       .about__photo-wrap {
         padding: 0; 
         overflow: hidden !important; 
@@ -545,8 +535,8 @@
           <ol class="timeline">
             
             <li class="timeline__item reveal">
-              <div class="timeline-row timeline-row--media-left">
-                <div class="timeline-col">
+              <div class="timeline-row">
+                <div class="timeline-col timeline-col--text">
                   <article class="card exp-card">
                     <div class="exp-card__header">
                       <div class="exp-card__logo">
@@ -580,13 +570,13 @@
                 <div class="timeline-col timeline-col--center">
                   <span class="timeline__dot" aria-hidden="true"></span>
                 </div>
-                <div class="timeline-col"></div>
+                <div class="timeline-col timeline-col--media"></div>
               </div>
             </li>
             
             <li class="timeline__item reveal">
-              <div class="timeline-row timeline-row--media-left">
-                <div class="timeline-col">
+              <div class="timeline-row">
+                <div class="timeline-col timeline-col--media">
                   <div class="exp-media-box">
                     <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
                     <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
@@ -597,7 +587,7 @@
                   <span class="timeline__dot" aria-hidden="true"></span>
                 </div>
 
-                <div class="timeline-col">
+                <div class="timeline-col timeline-col--text">
                   <article class="card exp-card">
                     <div class="exp-card__header">
                       <div class="exp-card__logo exp-card__logo--light">
@@ -623,8 +613,8 @@
             </li>
             
             <li class="timeline__item reveal">
-              <div class="timeline-row timeline-row--media-right">
-                <div class="timeline-col">
+              <div class="timeline-row">
+                <div class="timeline-col timeline-col--text">
                   <article class="card exp-card">
                     <div class="exp-card__header">
                       <div class="exp-card__logo exp-card__logo--light">
@@ -650,7 +640,7 @@
                   <span class="timeline__dot" aria-hidden="true"></span>
                 </div>
 
-                <div class="timeline-col">
+                <div class="timeline-col timeline-col--media">
                   <div class="exp-media-box">
                     <span class="exp-media-title">Process Mapping Showcase</span>
                     <div class="exp-video-wrapper">
