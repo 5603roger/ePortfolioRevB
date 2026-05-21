@@ -184,11 +184,10 @@
       /* GLOBAL AND DESKTOP TIMELINE TRACK LINE RESET & COLOR OVERRIDES            */
       /* ========================================================================= */
       ol.timeline::before {
-        background: #555 !important; /* Force track line to be an elegant visible gray on mobile & desktop */
+        background: #555 !important; 
       }
 
       @media (min-width: 1100px) {
-        /* Force container to be perfectly centralized */
         ol.timeline {
           max-width: 1050px;
           margin: 0 auto !important;
@@ -196,15 +195,13 @@
           padding: 2rem 0 !important;
         }
         
-        /* Force template's default track line to sit precisely at 50% center */
         ol.timeline::before {
           left: 50% !important;
           transform: translateX(-50%) !important;
           width: 2px !important;
-          background: #555 !important; /* Unified visible track line gray color */
+          background: #555 !important; 
         }
         
-        /* Strip out layout collisions from style.css template configuration rules */
         li.timeline__item,
         li.timeline__item:nth-child(even),
         li.timeline__item:nth-child(odd) {
@@ -220,23 +217,20 @@
           display: none !important;
         }
 
-        /* Symmetric row alignment setup map */
         .timeline-row {
           display: flex !important;
           width: 100% !important;
-          align-items: center !important; /* Perfect visual midpoint lock */
+          align-items: center !important; 
           justify-content: space-between !important;
           position: relative !important;
         }
         
-        /* Force precise math on column partitions */
         .timeline-col {
           flex: 0 0 calc(50% - 35px) !important;
           width: calc(50% - 35px) !important;
           box-sizing: border-box !important;
         }
         
-        /* Layout row control shifts */
         .timeline-row--media-left {
           flex-direction: row !important;
         }
@@ -244,13 +238,11 @@
           flex-direction: row-reverse !important;
         }
         
-        /* Grid Column alignment adjustments */
         .timeline-row--media-left .exp-media-box { margin-left: auto !important; margin-right: 0 !important; }
         .timeline-row--media-right .exp-media-box { margin-right: auto !important; margin-left: 0 !important; }
         .timeline-row--media-left .card.exp-card { margin-right: auto !important; margin-left: 0 !important; }
         .timeline-row--media-right .card.exp-card { margin-left: auto !important; margin-right: 0 !important; }
 
-        /* Lock the track dot back in dead center of the new dynamic row block height */
         .timeline-col--center {
           flex: 0 0 70px !important;
           width: 70px !important;
@@ -275,7 +267,7 @@
         }
       }
 
-      /* MOBILE/TABLET RESPONSIVE COMPRESSION FALLBACK */
+      /* MOBILE/TABLET RESPONSIVE FALLBACKS */
       @media (max-width: 1099px) {
         .timeline-row {
           display: flex !important;
@@ -288,7 +280,6 @@
           width: 100% !important;
           flex: 1 1 auto !important;
         }
-        /* Forces standard source flow to position text description on top, attachment beneath */
         .timeline-row--media-left {
           flex-direction: column-reverse !important;
         }
@@ -304,6 +295,27 @@
           text-align: center;
           width: 100%;
           max-width: 100% !important;
+        }
+
+        /* NEW MOBILE LOGO INLINE POSITION OVERRIDES */
+        .exp-card__header {
+          display: flex !important;
+          flex-direction: row !important;
+          align-items: flex-start !important; /* Top-aligns logo with text titles */
+          gap: 1rem !important;
+          flex-wrap: wrap !important;
+        }
+        .exp-card__logo {
+          margin-bottom: 0 !important; /* Removes template absolute stacking margins */
+          flex-shrink: 0 !important;
+        }
+        .exp-card__meta {
+          flex: 1 1 auto !important;
+        }
+        .exp-card__date {
+          display: block !important;
+          width: 100% !important; /* Forces the date badge cleanly onto its own line below */
+          margin-top: 0.5rem !important;
         }
       }
 
