@@ -8,7 +8,7 @@
       content="Roger Ng — Past academic robotics projects, education, and awards. Supplementary to the Digital Transformation portfolio."
     />
     <title>Roger Ng Zi Liang | Academic work &amp; credentials</title>
-    <link rel="icon" type="image/png" href="images/nav-icon.png" />
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -25,7 +25,6 @@
     
     <style>
       /* Image Anti-Cropping & Clickable Hover States */
-      .project-card__media img,
       .featured-card__media img {
         object-fit: contain !important; 
         background-color: #1a1a1a;      
@@ -35,9 +34,16 @@
         cursor: zoom-in; 
         transition: opacity 0.2s ease;
       }
-      .project-card__media img:hover,
       .featured-card__media img:hover {
         opacity: 0.85;
+      }
+
+      /* Profile Image Circle Lock */
+      .site-nav__logo-img {
+        object-fit: cover !important;
+        object-position: center 25% !important; 
+        border-radius: 50% !important;
+        margin: 0 auto; 
       }
 
       .featured-card {
@@ -65,7 +71,8 @@
         gap: 1rem;
       }
       .featured-card__media img,
-      .featured-card__media video {
+      .featured-card__media video,
+      .featured-card__media iframe {
         width: 100%;
         height: 100%;
         max-height: 100%;
@@ -73,6 +80,7 @@
         background-color: transparent;
         display: block;
         border-radius: 8px;
+        border: none;
       }
       .featured-card__media > * {
         flex: 1;
@@ -87,19 +95,24 @@
         margin-bottom: 1.5rem;
         border-bottom: 1px solid #444;
         padding-bottom: 0.5rem;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
       }
+      .tab-buttons::-webkit-scrollbar { display: none; }
+      
       .tab-btn {
         background: none;
         border: none;
-        color: #888;
+        color: #a3a3a3;
         cursor: pointer;
         font-weight: 600;
         font-size: 0.9rem;
         padding: 0.5rem 0;
-        transition: color 0.2s;
+        transition: background-color 0.25s ease, color 0.25s ease;
         position: relative;
       }
-      .tab-btn:hover { color: #ccc; }
+      .tab-btn:hover { color: #e0e0e0; }
       .tab-btn.active { color: #fff; }
       .tab-btn.active::after {
         content: '';
@@ -112,23 +125,26 @@
       }
       .tab-content {
         display: none;
-        color: #bbb;
+        color: #d1d1d1;
         line-height: 1.6;
         font-size: 0.95rem;
+      }
+      .tab-content p {
+        margin-bottom: 0.75rem;
       }
       .tab-content.active { display: block; animation: fadeIn 0.3s ease-in; }
       @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
       /* Education Logos */
       .edu-card__logo {
-        width: 100%; /* Stretch fully across the card */
-        height: 80px; /* Define a set height for consistency */
-        object-fit: contain; /* Ensure the image fills the space but doesn't get distorted */
-        background-color: #f5f5f5; /* Add a light background behind the PNG for contrast */
+        width: 100%; 
+        height: 80px; 
+        object-fit: contain; 
+        background-color: #f5f5f5; 
         margin-bottom: 1.5rem;
         border-radius: 4px;
-        padding: 0.5rem; /* Give the logo some breathing room within the background block */
-        box-sizing: border-box; /* Ensure padding doesn't affect the width */
+        padding: 0.5rem; 
+        box-sizing: border-box; 
       }
 
       /* STANDALONE IMAGE LIGHTBOX MODAL */
@@ -140,14 +156,14 @@
         width: 100vw;
         height: 100vh;
         background: rgba(0, 0, 0, 0.95);
-        z-index: 9999999 !important; /* Force it over everything */
+        z-index: 9999999 !important; 
         justify-content: center;
         align-items: center;
         padding: 2rem;
         box-sizing: border-box;
       }
       #custom-lightbox.is-active {
-        display: flex !important; /* Force display flex when active */
+        display: flex !important; 
       }
       #custom-lightbox img {
         max-width: 100%;
@@ -166,7 +182,7 @@
         font-size: 2.5rem;
         cursor: pointer;
         transition: color 0.2s;
-        z-index: 10000000; /* Force it over the image */
+        z-index: 10000000; 
       }
       .lightbox-close:hover {
         color: #ccc;
@@ -181,7 +197,7 @@
         <a href="index.html#top" class="site-nav__logo" aria-label="Roger Ng — home">
           <img
             class="site-nav__logo-img"
-            src="images/nav-icon.png"
+            src="images/newprofile.jpg"
             width="40"
             height="40"
             alt=""
@@ -195,7 +211,7 @@
             <li><a href="index.html#skills">Skills</a></li>
             <li><a href="index.html#experience">Experience</a></li>
             <li><a href="index.html#projects">Projects</a></li>
-            <li><a href="academic.html#past-work" data-section="past-work">Past work</a></li>
+            <li><a href="academic.html#" data-section="Academic">Academic</a></li>
             <li><a href="index.html#contact">Contact</a></li>
           </ul>
         </nav>
@@ -249,13 +265,13 @@
           </header>
 
           <article class="featured-card reveal">
-            <div class="featured-card__media" id="dynamic-media-container">
+            <div class="featured-card__media">
               <img src="images/picture1.jpg" alt="Analysis of the baseline problem" loading="lazy" />
             </div>
 
             <div class="featured-card__body">
               <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">High-Precision Conveyor Pick & Place System (Capstone)</h3>
-              <div class="project-card__meta" style="margin-bottom: 1.5rem;">
+              <div class="project-card__meta" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
                 <span class="project-card__tag">Systems Integration</span>
                 <span class="project-card__tag">Omron PLC</span>
                 <span class="project-card__tag">HMI Design</span>
@@ -263,140 +279,209 @@
               </div>
               
               <div class="tab-buttons">
-                <button class="tab-btn active" data-target="tab-problem">The Problem</button>
-                <button class="tab-btn" data-target="tab-execution">The Execution</button>
-                <button class="tab-btn" data-target="tab-outcome">The Outcome</button>
+                <button class="tab-btn active" data-target="capstone-problem">The Problem</button>
+                <button class="tab-btn" data-target="capstone-execution">The Execution</button>
+                <button class="tab-btn" data-target="capstone-outcome">The Outcome</button>
               </div>
 
-              <div id="tab-problem" class="tab-content active">
+              <div id="capstone-problem" class="tab-content active">
                 <p>During my internship at WEInnovate Pte Ltd, I was tasked with rescuing a discontinued conveyor-based pick-and-place prototype. The original design had failed its proof-of-concept phase due to critical mechanical limitations.</p>
                 <p>A forensic analysis of the baseline system revealed that the carriage mount relied on spring-force friction against a smooth Polyurethane (PU) belt. This architecture was highly susceptible to severe belt slippage, tooth jumping (ratcheting), and positional drift, making it impossible to maintain accurate coordinates during acceleration and deceleration.</p>
                 <p>The stakeholder required a robust, clean-room suitable testbed capable of repeatable precision for automated assembly, all while remaining strictly under a $500 budget constraint.</p>
               </div>
 
-              <div id="tab-execution" class="tab-content">
+              <div id="capstone-execution" class="tab-content">
                 <p>To transition the project from reactive troubleshooting to structured systems engineering, I first reverse-engineered a digital twin in SolidWorks. Utilizing a Decision Analysis and Resolution (DAR) matrix, I replaced the friction drive with a reverse-tooth belt engagement strategy (using a T5 timing belt) to establish a positive mechanical interlock.</p>
                 <p>For the control architecture, I integrated an Omron NX1P2 PLC with a Weintek HMI, establishing a sequential state machine for deterministic motion control. I synchronized dual Cool Muscle servo motors and integrated Festo pneumatic cylinders to provide a rigid, physical "hard stop" at the target locations.</p>
                 <p>During physical integration, I successfully navigated complex hardware challenges, including resolving PNP/NPN sensor polarity mismatches, bridging communication protocols, and managing facility space and limited pneumatic air supply constraints.</p>
               </div>
 
-              <div id="tab-outcome" class="tab-content">
+              <div id="capstone-outcome" class="tab-content">
                 <p>The re-engineered system successfully eliminated all belt slippage and tooth jumping. By combining the PLC's velocity control with the pneumatic mechanical stoppers, the conveyor achieved a strict, repeatable positional accuracy margin of ±0.2mm across all target locations.</p>
                 <p>The prototype passed all Verification & Validation (V&V) criteria, successfully completing a 20-cycle automated repeatability test. Operators were provided with an intuitive HMI dashboard for seamless forward, reverse, and stop controls.</p>
                 <p>By effectively managing resources and repurposing internal company hardware (such as the Cool Muscle motors and Festo cylinders), the fully functional industrial testbed was delivered for approximately $130 — achieving all objectives well under the $500 budget.</p>
               </div>
-
             </div>
           </article>
 
-          <div class="projects__grid">
-            <article class="card project-card reveal">
-              <div class="project-card__media">
-                <iframe 
-                  src="https://www.youtube.com/embed/ZEj8KNDEHSg" 
-                  title="Omron box folding automation" 
-                  frameborder="0" 
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                  allowfullscreen 
-                  style="width: 100%; height: 100%; aspect-ratio: 16/9; border: none; display: block;"
-                ></iframe>
+          <article class="featured-card reveal">
+            <div class="featured-card__media">
+              <img src="images/omron1.png" alt="Designed jig prototype" loading="lazy" />
+            </div>
+
+            <div class="featured-card__body">
+              <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Omron Box Folding Automation</h3>
+              <div class="project-card__meta" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="project-card__tag">ROS 2</span>
+                <span class="project-card__tag">Jig design</span>
+                <span class="project-card__tag">Physical integration</span>
+                <span class="project-card__tag">Omron</span>
               </div>
-              <div class="project-card__body">
-                <h3 class="project-card__title">Omron box folding automation</h3>
-                <div class="project-card__meta">
-                  <span class="project-card__tag">ROS 2</span>
-                  <span class="project-card__tag">Jig design</span>
-                  <span class="project-card__tag">Physical integration</span>
-                </div>
-                <p class="project-card__desc">
-                  Industrial automation and hardware integration — translating digital motion plans into jigs, brackets,
-                  and on-machine behaviour next to industrial equipment (incl. Omron workcell contexts).
-                </p>
-                <p class="project-card__details" style="margin: 0">
-                  More media and narrative: <code>ePortfolio-main/full-story4.html</code>
-                </p>
+              
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-target="omron-problem">The Problem</button>
+                <button class="tab-btn" data-target="omron-execution">The Execution</button>
+                <button class="tab-btn" data-target="omron-outcome">The Outcome</button>
               </div>
-            </article>
-            <article class="card project-card reveal">
-              <div class="project-card__media">
-                <img
-                  src="images/project-food-printing.png"
-                  alt="Food-safe print labelling prototype with gantry and syringe extruders"
-                  width="640"
-                  height="360"
-                  loading="lazy"
-                  decoding="async"
-                />
+
+              <div id="omron-problem" class="tab-content active">
+                <p>This initiative aimed to improve industrial efficiency and reduce manual labor by automating the folding of SKU boxes. Automating this repetitive task demonstrated the direct potential and ROI for robotics in everyday industrial applications and required bridging digital motion plans with a physical Omron workcell.</p>
               </div>
-              <div class="project-card__body">
-                <h3 class="project-card__title">Food print labelling system (SEP2)</h3>
-                <div class="project-card__meta">
-                  <span class="project-card__tag">SolidWorks</span>
-                  <span class="project-card__tag">Systems Eng</span>
-                </div>
-                <p class="project-card__desc">
-                  Academic systems-engineering project: food-safe labelling prototype, CAD-heavy execution, and
-                  verification thinking from bench tests to documented next steps.
-                </p>
-                <p class="project-card__details" style="margin: 0">
-                  Case study: <code>ePortfolio-main/full-story.html</code>
-                </p>
+
+              <div id="omron-execution" class="tab-content">
+                <p>To ensure the Omron robot could accurately fold the boxes, I designed and fabricated a custom prototype jig. The jig simulated the exact folding process, allowing me to perform physical adjustments and motion optimizations before full implementation.</p>
+                <p>The software architecture was built on ROS 2, where the box folding procedure was meticulously programmed to synchronize the robotic arm's movements with the custom jig's geometry.</p>
               </div>
-            </article>
-            <article class="card project-card reveal">
-              <div class="project-card__media">
-                <img
-                  src="images/project-limo.png"
-                  alt="AgileX LIMO mobile robot platform"
-                  width="640"
-                  height="360"
-                  loading="lazy"
-                  decoding="async"
-                />
+
+              <div id="omron-outcome" class="tab-content">
+                <p>Multiple iterations and tests were conducted to refine the procedural code and physical tolerances. The final implementation resulted in a highly reliable, automated workcell capable of executing the complete box folding procedure continuously without manual intervention.</p>
               </div>
-              <div class="project-card__body">
-                <h3 class="project-card__title">LIMO robot autonomous navigation</h3>
-                <div class="project-card__meta">
-                  <span class="project-card__tag">ROS</span>
-                  <span class="project-card__tag">Python</span>
-                  <span class="project-card__tag">Gmapping</span>
-                </div>
-                <p class="project-card__desc">
-                  Mapping, waypoint planning, and autonomous navigation on a physical LIMO platform — bridging
-                  simulation mindsets with messy real-world sensing.
-                </p>
-                <p class="project-card__details" style="margin: 0">
-                  Case study: <code>ePortfolio-main/full-story5.html</code>
-                </p>
+            </div>
+          </article>
+
+          <article class="featured-card reveal">
+            <div class="featured-card__media">
+              <img src="images/print1.jpg" alt="Concept functionality sketch" loading="lazy" />
+            </div>
+
+            <div class="featured-card__body">
+              <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Food Print Labelling System (SEP2)</h3>
+              <div class="project-card__meta" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="project-card__tag">Systems Eng</span>
+                <span class="project-card__tag">SolidWorks</span>
+                <span class="project-card__tag">Fritzing</span>
+                <span class="project-card__tag">Prototyping</span>
               </div>
-            </article>
-            <article class="card project-card reveal">
-              <div class="project-card__media">
-                <img
-                  src="images/project-turtlebot.png"
-                  alt="TurtleBot3 modular mobile robot with lidar"
-                  width="640"
-                  height="360"
-                  loading="lazy"
-                  decoding="async"
-                />
+              
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-target="food-problem">The Problem</button>
+                <button class="tab-btn" data-target="food-execution">The Execution</button>
+                <button class="tab-btn" data-target="food-outcome">The Outcome</button>
               </div>
-              <div class="project-card__body">
-                <h3 class="project-card__title">Turtlebot maze solver</h3>
-                <div class="project-card__meta">
-                  <span class="project-card__tag">ROS</span>
-                  <span class="project-card__tag">Python</span>
-                </div>
-                <p class="project-card__desc">
-                  Wall-follower style maze navigation with onboard sensing — algorithms tuned against real maze geometry
-                  instead of slide-deck assumptions.
-                </p>
-                <p class="project-card__details" style="margin: 0">
-                  Case study: <code>ePortfolio-main/full-story3.html</code>
-                </p>
+
+              <div id="food-problem" class="tab-content active">
+                <p>Print labels are traditionally pasted on grocery items (like fruits) for stock counting and expiry, which requires consumers to manually peel them off before eating. The objective was to replace these plastic stickers using an Evebot (a food-grade portable inkjet printpen) to print directly on the food.</p>
+                <p>To ensure the printed ink did not fade or smear during transit, the system needed to apply a protective, edible clear wax coat over the print. Because the wax is solid at room temperature, a heated extrusion mechanism had to be engineered.</p>
               </div>
-            </article>
-          </div>
+
+              <div id="food-execution" class="tab-content">
+                <p>I served as the Research Lead and Prototype Designer. I generated schematics using Fritzing and reverse-engineered the body frame, gearbox, and extruder digitally in SolidWorks.</p>
+                <p>The physical build featured a movement system utilizing a 12V DC gear-box motor to drive the platform along the X-axis, while the extruder navigated the Y-axis via a linear displacement mechanism. The extruder assembly used TT motors to open/close the syringes and step-down motors as heating elements to bring the edible wax to 400°F (liquefied state).</p>
+              </div>
+
+              <div id="food-outcome" class="tab-content">
+                <p>The prototype underwent strict verification against the initial requirements matrix. The system successfully executed user input, navigated the extruder over the product, and heated the wax into a liquid state.</p>
+                <p>While the extrusion of the edible wax was only partially successful (the final output was not fully coated evenly), the core mechanics proved viable. The project successfully served as a proof of concept for direct-to-food automated labelling.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="featured-card reveal">
+            <div class="featured-card__media">
+              <img src="images/limo1.png" alt="Visual representation of LIMO" loading="lazy" />
+            </div>
+
+            <div class="featured-card__body">
+              <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">LIMO Robot Autonomous Navigation</h3>
+              <div class="project-card__meta" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="project-card__tag">ROS</span>
+                <span class="project-card__tag">Python</span>
+                <span class="project-card__tag">Gmapping</span>
+                <span class="project-card__tag">LiDAR</span>
+              </div>
+              
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-target="limo-problem">The Problem</button>
+                <button class="tab-btn" data-target="limo-execution">The Execution</button>
+                <button class="tab-btn" data-target="limo-outcome">The Outcome</button>
+              </div>
+
+              <div id="limo-problem" class="tab-content active">
+                <p>This project focused on porting ROS applications onto an AgileX LIMO—a four-wheeled educational robotic platform—to navigate a physical maze.</p>
+                <p>The challenge was bridging digital simulation mindsets with messy real-world sensing, requiring the robot to map an unknown physical environment, identify waypoints, and navigate them autonomously without colliding with physical barriers.</p>
+              </div>
+
+              <div id="limo-execution" class="tab-content">
+                <p>I set up the LIMO robot with a LiDAR sensor to collect environmental data and launched the <code>gmapping</code> ROS package to process the laser range finder and odometry data into a 2D occupancy grid map.</p>
+                <p>After manually driving the robot to map the maze, I used RViz to identify key coordinates and place spatial waypoints. Finally, I configured the <code>move_base</code> node in ROS to handle the path planning algorithms required to reach those targets.</p>
+              </div>
+
+              <div id="limo-outcome" class="tab-content">
+                <p>By launching the ROS navigation stack and continuously monitoring the robot's progress in RViz, I was able to fine-tune the parameters for physical noise. The LIMO successfully navigated the physical maze autonomously, avoiding obstacles and reaching all plotted waypoints.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="featured-card reveal">
+            <div class="featured-card__media">
+              <img src="images/project-turtlebot.png" alt="TurtleBot3 modular mobile robot with lidar" loading="lazy" />
+            </div>
+
+            <div class="featured-card__body">
+              <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Turtlebot Maze Solver</h3>
+              <div class="project-card__meta" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="project-card__tag">ROS</span>
+                <span class="project-card__tag">Python</span>
+                <span class="project-card__tag">TurtleBot3</span>
+              </div>
+              
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-target="turtle-problem">The Problem</button>
+                <button class="tab-btn" data-target="turtle-execution">The Execution</button>
+                <button class="tab-btn" data-target="turtle-outcome">The Outcome</button>
+              </div>
+
+              <div id="turtle-problem" class="tab-content active">
+                <p>As a deep dive into the ROS ecosystem, this project involved programming a Turtlebot3 to autonomously solve and escape a self-designed physical maze. It served as a practical application to translate theoretical knowledge from the ROS Wiki into a functional script driven by live sensor feedback.</p>
+              </div>
+
+              <div id="turtle-execution" class="tab-content">
+                <p>I engineered the navigation logic using the "wall follower" algorithm. Rather than relying on a pre-computed global map, the Turtlebot was programmed to make dynamic decisions at each waypoint based on immediate environmental feedback.</p>
+                <p>The algorithm instructs the robot to move forward until it detects a dead end or obstacle via its onboard sensors. It then performs a calculated rotation and attempts a different path, repeating this state-machine loop continuously.</p>
+              </div>
+
+              <div id="turtle-outcome" class="tab-content">
+                <p>The Turtlebot successfully traversed the self-designed maze. The script proved robust against unknown geometries, effectively utilizing the wall follower logic to consistently find the exit path without manual intervention.</p>
+              </div>
+            </div>
+          </article>
+
+          <article class="featured-card reveal">
+            <div class="featured-card__media">
+              <video src="images/litekit1.MOV" controls preload="metadata"></video>
+            </div>
+
+            <div class="featured-card__body">
+              <h3 class="project-card__title" style="font-size: 1.5rem; margin-bottom: 0.5rem;">Lite Kit Robot Assembly & Programming</h3>
+              <div class="project-card__meta" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                <span class="project-card__tag">Spin Language</span>
+                <span class="project-card__tag">Hardware Assembly</span>
+                <span class="project-card__tag">Prototyping</span>
+              </div>
+              
+              <div class="tab-buttons">
+                <button class="tab-btn active" data-target="lite-problem">The Problem</button>
+                <button class="tab-btn" data-target="lite-execution">The Execution</button>
+                <button class="tab-btn" data-target="lite-outcome">The Outcome</button>
+              </div>
+
+              <div id="lite-problem" class="tab-content active">
+                <p>Marking my initial steps into the realm of robotics, this project focused on the ground-up assembly of a Lite Kit robot. The objective was to build foundational knowledge spanning mechanical assembly, low-level hardware programming, and functional testing.</p>
+              </div>
+
+              <div id="lite-execution" class="tab-content">
+                <p>I fabricated and assembled the raw mechanical and electrical components into a complete robotic chassis. To perform machine-level actions, I programmed the microprocessor using Spin—a specialized, low-level hardware programming language.</p>
+                <p>A key mechanical addition was designing and creating a custom gear mechanism and holder using workshop resources to mount, rotate, and toggle an onboard torchlight.</p>
+              </div>
+
+              <div id="lite-outcome" class="tab-content">
+                <p>The robot successfully passed all functional tests. Directional movement scripts validated the robot's ability to navigate accurately in specified vectors.</p>
+                <p>I further expanded the project's scope by experimenting with and successfully showcasing rudimentary color tracking capabilities, allowing the robot to detect and follow specific color signatures in its environment.</p>
+              </div>
+            </div>
+          </article>
+
+
         </div>
       </section>
 
@@ -480,29 +565,59 @@
     
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. Tab Interaction Logic ---
+        // --- 1. Dynamic Tab & Media Interaction Logic ---
         const tabBtns = document.querySelectorAll('.tab-btn');
-        const tabContents = document.querySelectorAll('.tab-content');
-        const mediaContainer = document.getElementById('dynamic-media-container');
 
         const mediaMap = {
-          'tab-problem': '<img src="images/picture1.jpg" alt="Analysis of the baseline problem" loading="lazy" />',
-          'tab-execution': '<img src="images/picture2.png" alt="Execution and system integration phase" loading="lazy" /><img src="images/picture3.png" alt="Final project outcome" loading="lazy" />',
-          'tab-outcome': '<video src="images/video1.mp4" controls preload="metadata"></video>'
+          // Capstone
+          'capstone-problem': '<img src="images/picture1.jpg" alt="Analysis of the baseline problem" loading="lazy" />',
+          'capstone-execution': '<img src="images/picture2.png" alt="Execution phase" loading="lazy" /><img src="images/picture3.png" alt="Final project outcome" loading="lazy" />',
+          'capstone-outcome': '<video src="images/video1.mp4" controls preload="metadata"></video>',
+          
+          // Omron Box Folding (full-story4)
+          'omron-problem': '<img src="images/omron1.png" alt="Designed jig prototype" loading="lazy" />',
+          'omron-execution': '<video src="images/omron2.mp4" controls preload="metadata"></video>',
+          'omron-outcome': '<iframe src="https://www.youtube.com/embed/ZEj8KNDEHSg" title="Omron box folding automation" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>',
+
+          // Food Printing (full-story)
+          'food-problem': '<img src="images/print1.jpg" alt="Concept functionality sketch" loading="lazy" />',
+          'food-execution': '<img src="images/print2.jpg" alt="Full CAD rendering" loading="lazy" />',
+          'food-outcome': '<img src="images/print3.png" alt="Prototyping showcase" loading="lazy" />',
+
+          // LIMO (full-story5)
+          'limo-problem': '<img src="images/limo1.png" alt="Visual representation of LIMO" loading="lazy" />',
+          'limo-execution': '<img src="images/limo2.jpeg" alt="Physical maze layout" loading="lazy" />',
+          'limo-outcome': '<video src="images/limoaquarium.mp4" controls preload="metadata"></video>',
+
+          // Turtlebot (full-story3)
+          'turtle-problem': '<img src="images/project-turtlebot.png" alt="TurtleBot3 modular mobile robot with lidar" loading="lazy" />',
+          'turtle-execution': '<img src="images/maze.png" alt="Gazebo" loading="lazy" />',
+          'turtle-outcome': '<video src="images/mazesolver.mov" controls preload="metadata"></video>',
+
+          // Lite Kit (full-story2)
+          'lite-problem': '<video src="images/litekit1.MOV" controls preload="metadata"></video>',
+          'lite-execution': '<video src="images/litekit2.mp4" controls preload="metadata"></video>',
+          'lite-outcome': '<video src="images/litekit3.MOV" controls preload="metadata"></video>'
         };
 
         tabBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            // Remove active classes
-            tabBtns.forEach(b => b.classList.remove('active'));
-            tabContents.forEach(c => c.classList.remove('active'));
+          btn.addEventListener('click', (e) => {
+            // Find the specific project card this button belongs to
+            const parentCard = e.target.closest('.featured-card');
+            const cardTabBtns = parentCard.querySelectorAll('.tab-btn');
+            const cardTabContents = parentCard.querySelectorAll('.tab-content');
+            const mediaContainer = parentCard.querySelector('.featured-card__media');
 
-            // Add active class to clicked
+            // Remove active classes only within this card
+            cardTabBtns.forEach(b => b.classList.remove('active'));
+            cardTabContents.forEach(c => c.classList.remove('active'));
+
+            // Add active class to clicked button
             btn.classList.add('active');
             const targetId = btn.getAttribute('data-target');
             document.getElementById(targetId).classList.add('active');
 
-            // Swap out the media container
+            // Swap out the media container dynamically
             if (mediaContainer && mediaMap[targetId]) {
               mediaContainer.innerHTML = mediaMap[targetId];
             }
@@ -516,7 +631,7 @@
 
         // Listen for clicks on the entire body to support dynamically swapped tab images
         document.body.addEventListener('click', (e) => {
-          if (e.target.tagName === 'IMG' && (e.target.closest('.featured-card__media') || e.target.closest('.project-card__media'))) {
+          if (e.target.tagName === 'IMG' && e.target.closest('.featured-card__media')) {
             lightboxImg.src = e.target.src;
             lightbox.classList.add('is-active');
             document.body.style.overflow = 'hidden'; // Stop background scrolling

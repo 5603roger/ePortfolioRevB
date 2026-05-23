@@ -25,10 +25,18 @@
     
     <style>
       /* ========================================================================= */
-      /* GLOBAL WEBSITE ZOOM (80% BASELINE)                                        */
+      /* GLOBAL WEBSITE ZOOM (100% BASELINE)                                       */
       /* ========================================================================= */
       body {
-        zoom: 0.8; 
+        zoom: 1; 
+      }
+
+      /* Native Details/Summary Fixes */
+      details > summary {
+        list-style: none; /* Hide default arrow */
+      }
+      details > summary::-webkit-details-marker {
+        display: none; /* Hide default arrow in Safari/Chrome */
       }
 
       .btn-project-details {
@@ -43,17 +51,23 @@
         margin-top: 1rem;
         transition: background 0.2s, border-color 0.2s;
         width: 100%;
+        display: block;
+        text-align: center;
       }
       .btn-project-details:hover {
         background: #222;
         border-color: #888;
       }
+      
+      /* Pure CSS toggling text for the summary element */
+      .btn-project-details .toggle-text::before {
+        content: "See all";
+      }
+      details[open] .btn-project-details .toggle-text::before {
+        content: "Show less";
+      }
 
       .inline-content {
-        display: none;
-      }
-      .inline-content.is-expanded {
-        display: block;
         margin-top: 1.5rem;
         border-top: 1px solid #333;
         padding-top: 1.25rem;
@@ -70,7 +84,7 @@
       .tab-btn {
         background: none;
         border: none;
-        color: #888;
+        color: #a3a3a3; /* Contrast Fix */
         cursor: pointer;
         font-weight: 600;
         font-size: 0.85rem;
@@ -78,7 +92,7 @@
         transition: color 0.2s;
         position: relative;
       }
-      .tab-btn:hover { color: #ccc; }
+      .tab-btn:hover { color: #e0e0e0; } /* Adjusted hover for new base color */
       .tab-btn.active { color: #fff; }
       .tab-btn.active::after {
         content: '';
@@ -91,7 +105,7 @@
       }
       .tab-content {
         display: none;
-        color: #bbb;
+        color: #d1d1d1; /* Contrast Fix */
         line-height: 1.6;
         font-size: 0.9rem;
       }
@@ -112,30 +126,32 @@
         opacity: 1;
       }
 
-      /* Unified Standalone Lightbox CSS */
+      /* Unified Standalone Lightbox CSS - REBUILT TO DEFEAT ZOOM MATH BUGS */
       #custom-lightbox {
         display: none; 
         position: fixed;
         top: 0;
         left: 0;
-        width: 100vw;
-        height: 100vh;
+        width: 100%; 
+        height: 100%; 
         background: rgba(0, 0, 0, 0.95);
         z-index: 9999999;
-        justify-content: center;
-        align-items: center;
-        padding: 2rem;
-        box-sizing: border-box;
       }
       #custom-lightbox.is-active {
-        display: flex; 
+        display: block; 
       }
       #custom-lightbox img {
-        max-width: 95vw;
-        max-height: 90vh;
+        max-width: 95%; 
+        max-height: 90%; 
         object-fit: contain;
         border-radius: 8px;
         box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        /* Strict Absolute Centering */
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin: 0;
       }
       .lightbox-close {
         position: absolute;
@@ -153,12 +169,12 @@
         color: #ccc;
       }
 
-      /* Timeline Media Components */
+      /* Timeline Media Components Base Styles */
       .exp-media-title {
         font-size: 0.75rem;
         text-transform: uppercase;
         letter-spacing: 0.05em;
-        color: #888;
+        color: #a3a3a3; /* Contrast Fix */
         margin-bottom: 0.75rem;
         display: block;
         font-weight: 600;
@@ -174,7 +190,6 @@
       }
       .exp-media-box {
         width: 100%; 
-        max-width: 480px; 
         background: #111;
         padding: 1.25rem;
         border-radius: 8px;
@@ -183,159 +198,170 @@
         box-shadow: 0 4px 20px rgba(0,0,0,0.3);
       }
 
-      /* ========================================================================= */
-      /* BULLETPROOF THREE-COLUMN SYMMETRICAL LAYOUT MECHANICS                     */
-      /* ========================================================================= */
-      ol.timeline::before {
-        background: #555 !important; 
+      /* MULTI-MEDIA THUMBNAIL GRID */
+      .media-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
       }
-
-      @media (min-width: 1100px) {
-        ol.timeline {
-          max-width: 1050px;
-          margin: 0 auto !important;
-          position: relative;
-          padding: 2rem 0 !important;
-        }
-        
-        ol.timeline::before {
-          left: 50% !important;
-          transform: translateX(-50%) !important;
-          width: 2px !important;
-        }
-        
-        li.timeline__item,
-        li.timeline__item:nth-child(even),
-        li.timeline__item:nth-child(odd) {
-          margin: 0 0 5rem 0 !important;
-          padding: 0 !important;
-          width: 100% !important;
-          max-width: 100% !important;
-          background: none !important;
-          display: block !important;
-          position: relative !important;
-          left: auto !important;
-          right: auto !important;
-          transform: none !important;
-        }
-        li.timeline__item::before,
-        li.timeline__item::after {
-          display: none !important;
-        }
-
-        .timeline-row {
-          display: flex !important;
-          flex-direction: row !important; /* Uniform left-to-right structure map */
-          width: 100% !important;
-          align-items: center !important; /* Locks vertical cross-alignment center */
-          justify-content: space-between !important;
-          position: relative !important;
-        }
-        
-        .timeline-col {
-          flex: 0 0 calc(50% - 35px) !important;
-          width: calc(50% - 35px) !important;
-          box-sizing: border-box !important;
-        }
-        
-        /* Direct alignments pulling content symmetrically to center timeline rail */
-        .timeline-col:first-child { display: flex !important; justify-content: flex-end !important; }
-        .timeline-col:last-child { display: flex !important; justify-content: flex-start !important; }
-
-        .timeline-row .card.exp-card,
-        .timeline-row .exp-media-box {
-          position: relative !important;
-          margin: 0 !important;
-          width: 100% !important;
-          max-width: 480px !important;
-          box-sizing: border-box !important;
-        }
-
-        /* Center Dot Lock Mechanics */
-        .timeline-col--center {
-          flex: 0 0 70px !important;
-          width: 70px !important;
-          display: flex !important;
-          justify-content: center !important;
-          align-items: center !important;
-          position: relative !important;
-          align-self: stretch !important;
-        }
-        .timeline-col--center .timeline__dot {
-          position: absolute !important;
-          top: 50% !important;
-          left: 50% !important;
-          transform: translate(-50%, -50%) !important;
-          width: 14px !important;
-          height: 14px !important;
-          background: #fff !important;
-          border-radius: 50% !important;
-          box-shadow: 0 0 0 4px #000 !important;
-          margin: 0 !important;
-          z-index: 50 !important;
-        }
+      .media-grid-item {
+        display: flex;
+        flex-direction: column;
+      }
+      .media-grid-item img {
+        width: 100%;
+        aspect-ratio: 1 / 1.1; 
+        object-fit: cover;
+        object-position: top; 
+        border-radius: 6px;
+        border: 1px solid #444;
+        display: block;
+      }
+      .media-hint {
+        text-align: center;
+        margin-top: 1rem;
+        font-size: 0.75rem;
+        color: #a3a3a3; /* Contrast Fix */
+        font-style: italic;
       }
 
       /* ========================================================================= */
-      /* MOBILE LAYOUT & ADAPTIVE INLINE LOGO FIX ENGINE                           */
+      /* DYNAMIC "COMING SOON" PLACEHOLDER STYLES                                  */
       /* ========================================================================= */
-      @media (max-width: 1099px) {
-        .timeline-row {
-          display: flex !important;
-          flex-direction: column !important; /* Stack columns vertically on phones */
-          width: 100% !important;
-        }
-        .timeline-col--center {
-          display: none !important;
-        }
-        .timeline-col {
-          width: 100% !important;
-          flex: 1 1 auto !important;
-        }
-        
-        /* Forces structural order consistency (Text block always first, Media always beneath) */
-        .timeline-col--text { order: 1 !important; }
-        .timeline-col--media { order: 2 !important; }
-        
-        .exp-media-box {
-          background: #111;
-          padding: 1rem;
-          border-radius: 8px;
-          border: 1px solid #333;
-          margin: 1.5rem auto 0 auto !important;
-          text-align: center;
-          width: 100%;
-          max-width: 100% !important;
-        }
-
-        /* Inline Phone Logo Alignment Engine */
-        .exp-card__header {
-          display: flex !important;
-          flex-direction: row !important;
-          align-items: flex-start !important; 
-          gap: 1rem !important;
-          position: relative !important;
-          width: 100% !important;
-        }
-        .exp-card__logo {
-          margin: 0 !important; 
-          position: static !important;
-          flex: 0 0 48px !important;
-          width: 48px !important;
-          height: 48px !important;
-        }
-        .exp-card__meta {
-          flex: 1 1 auto !important;
-        }
-        .exp-card__date {
-          display: block !important;
-          position: static !important;
-          width: 100% !important; 
-          margin-top: 0.5rem !important;
-          text-align: left !important;
-        }
+      .project-card.coming-soon {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background: rgba(255, 255, 255, 0.02);
+        border: 2px dashed #333;
+        height: 100%; 
+        min-height: 350px;
+        text-align: center;
+        box-shadow: none;
+        transition: border-color 0.3s;
+        padding: 2rem;
+        box-sizing: border-box;
+      }
+      .project-card.coming-soon:hover {
+        transform: none; 
+        border-color: #555;
+      }
+      .project-card.coming-soon i {
+        font-size: 3rem;
+        color: #444;
+        margin-bottom: 1rem;
+      }
+      .project-card.coming-soon h3 {
+        color: #a3a3a3; /* Contrast Fix */
+        margin: 0;
       }
 
+      /* ========================================================================= */
+      /* HORIZONTAL TABBED EXPERIENCE ENGINE                                       */
+      /* ========================================================================= */
+      .exp-tabs-container {
+        display: flex;
+        justify-content: center; /* Centers the tabs on larger screens */
+        overflow-x: auto;
+        gap: 0.5rem;
+        margin-bottom: 2rem;
+        border-bottom: 2px solid #333;
+        padding-bottom: 0.5rem;
+        scrollbar-width: none; /* Hides scrollbar on Firefox */
+      }
+
+      .exp-tabs-container::-webkit-scrollbar {
+        display: none; /* Hides scrollbar on Chrome/Safari */
+      }
+
+      /* Add this media query to ensure safe scrolling on mobile */
+      @media (max-width: 768px) {
+        .exp-tabs-container {
+          justify-content: flex-start;
+        }
+      }
+      .exp-tab {
+        background: transparent;
+        border: none;
+        color: #a3a3a3; /* Contrast Fix */
+        padding: 0.75rem 1.25rem;
+        cursor: pointer;
+        text-align: left;
+        border-radius: 6px 6px 0 0;
+        transition: background-color 0.25s ease, color 0.25s ease; /* Transition Fix */
+        min-width: max-content;
+        position: relative;
+      }
+      .exp-tab:hover {
+        background: rgba(255, 255, 255, 0.03);
+        color: #ddd;
+      }
+      .exp-tab.active {
+        color: #fff;
+        background: rgba(255, 255, 255, 0.05);
+      }
+      /* The horizontal active line indicator */
+      .exp-tab.active::after {
+        content: '';
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: #fff;
+      }
+      .exp-tab-year {
+        display: block;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.25rem;
+        color: inherit;
+        opacity: 0.7;
+      }
+      .exp-tab-title {
+        display: block;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+      
+      /* Panels */
+      .exp-panel {
+        display: none;
+        animation: fadeIn 0.4s ease-in-out;
+      }
+      .exp-panel.active {
+        display: block;
+      }
+      .exp-panel .timeline-content {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 850px;
+        margin: 0 auto;
+      }
+      .exp-panel .card.exp-card,
+      .exp-panel .exp-media-box {
+        width: 100%;
+        margin: 0;
+      }
+      .exp-card__header {
+        display: flex;
+        align-items: flex-start;
+        gap: 1.25rem;
+        width: 100%;
+      }
+      .exp-card__logo {
+        flex: 0 0 48px;
+        width: 48px;
+        height: 48px;
+      }
+      .exp-card__meta {
+        flex: 1 1 auto;
+      }
+      
       /* Profile Image Circle Lock */
       .about__photo-wrap {
         padding: 0; 
@@ -376,7 +402,7 @@
             <li><a href="#skills" data-section="skills">Skills</a></li>
             <li><a href="#experience" data-section="experience">Experience</a></li>
             <li><a href="#projects" data-section="projects">Projects</a></li>
-            <li><a href="academic.html#past-work">Past work</a></li>
+            <li><a href="academic.html">Academic</a></li>
             <li><a href="#contact" data-section="contact">Contact</a></li>
           </ul>
         </nav>
@@ -401,7 +427,7 @@
           <li><a href="#skills" data-section="skills">Skills</a></li>
           <li><a href="#experience" data-section="experience">Experience</a></li>
           <li><a href="#projects" data-section="projects">Projects</a></li>
-          <li><a href="academic.html#past-work">Past work</a></li>
+          <li><a href="academic.html">Academic</a></li>
           <li><a href="#contact" data-section="contact">Contact</a></li>
         </ul>
       </div>
@@ -449,7 +475,7 @@
             <div class="reveal" style="transition-delay: 0.08s">
               <p class="about__body">
                 <strong>Digital Transformation Analyst and Systems Engineer.</strong> I specialize in identifying process
-                bottlenecks and leveraging AI automation, rapid prototyping, and systems thinking to deploy real-world
+                bottleneck and leveraging AI automation, rapid prototyping, and systems thinking to deploy real-world
                 solutions. I translate stakeholder needs into governed digital delivery — workflows, integrations, and
                 applications — with the same rigour I apply to requirements, interfaces, documentation, and training.
               </p>
@@ -532,11 +558,35 @@
               stakeholders can run without heroics.
             </p>
           </header>
-          <ol class="timeline">
-            
-            <li class="timeline__item reveal">
-              <div class="timeline-row">
-                <div class="timeline-col timeline-col--text">
+          
+          <div class="reveal">
+            <div class="exp-tabs-container">
+              <button class="exp-tab active" data-exp="exp-winner">
+                <span class="exp-tab-year">May 2026 – Present</span>
+                <span class="exp-tab-title">Winner Engineering</span>
+              </button>
+              <button class="exp-tab" data-exp="exp-weinnovate">
+                <span class="exp-tab-year">Jan – Dec 2025</span>
+                <span class="exp-tab-title">WEInnovate</span>
+              </button>
+              <button class="exp-tab" data-exp="exp-army">
+                <span class="exp-tab-year">2020 – 2022</span>
+                <span class="exp-tab-title">Singapore Army</span>
+              </button>
+              <button class="exp-tab" data-exp="exp-tui">
+                <span class="exp-tab-year">Apr – Jul 2019</span>
+                <span class="exp-tab-title">TUI Group</span>
+              </button>
+              <button class="exp-tab" data-exp="exp-parttime">
+                <span class="exp-tab-year">2015 – 2024</span>
+                <span class="exp-tab-title">Foundation</span>
+              </button>
+            </div>
+
+            <div class="exp-panels-container">
+              
+              <div id="exp-winner" class="exp-panel active">
+                <div class="timeline-content">
                   <article class="card exp-card">
                     <div class="exp-card__header">
                       <div class="exp-card__logo">
@@ -546,48 +596,19 @@
                         <h3>Digital Transformation Analyst</h3>
                         <p class="exp-card__company">Winner Engineering Pte Ltd</p>
                       </div>
-                      <span class="exp-card__date">May 2026 – Present</span>
                     </div>
                     <ul class="exp-card__list">
-                      <li>
-                        Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a
-                        Discover–Design–Deploy–Iterate approach to improve business processes.
-                      </li>
-                      <li>
-                        Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA /
-                        Responsible AI alignment.
-                      </li>
-                      <li>
-                        Translated requirements into user-centric digital applications; led testing, deployment, and
-                        troubleshooting with stakeholders.
-                      </li>
-                      <li>
-                        Authored documentation, delivered training, and mentored junior contributors to support adoption.
-                      </li>
+                      <li>Designed and implemented AI-assisted solutions and automation workflows (e.g. n8n) using a Discover–Design–Deploy–Iterate approach to improve business processes.</li>
+                      <li>Managed self-hosted systems with attention to operational reliability, cybersecurity, and PDPA / Responsible AI alignment.</li>
+                      <li>Translated requirements into user-centric digital applications; led testing, deployment, and troubleshooting with stakeholders.</li>
+                      <li>Authored documentation, delivered training, and mentored junior contributors to support adoption.</li>
                     </ul>
                   </article>
                 </div>
-                <div class="timeline-col timeline-col--center">
-                  <span class="timeline__dot" aria-hidden="true"></span>
-                </div>
-                <div class="timeline-col timeline-col--media"></div>
               </div>
-            </li>
-            
-            <li class="timeline__item reveal">
-              <div class="timeline-row">
-                <div class="timeline-col timeline-col--media">
-                  <div class="exp-media-box">
-                    <span class="exp-media-title">Featured Work (Jan - Dec 2025)</span>
-                    <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="width: 100%; height: auto; border-radius: 6px; border: 1px solid #444; background: #000; display: block;" />
-                  </div>
-                </div>
-                
-                <div class="timeline-col timeline-col--center">
-                  <span class="timeline__dot" aria-hidden="true"></span>
-                </div>
 
-                <div class="timeline-col timeline-col--text">
+              <div id="exp-weinnovate" class="exp-panel">
+                <div class="timeline-content">
                   <article class="card exp-card">
                     <div class="exp-card__header">
                       <div class="exp-card__logo exp-card__logo--light">
@@ -597,9 +618,7 @@
                         <h3>Assistant Engineer Intern</h3>
                         <p class="exp-card__company">WEInnovate Pte Ltd</p>
                       </div>
-                      <span class="exp-card__date">Jan 2025 – Dec 2025</span>
                     </div>
-                    
                     <ul class="exp-card__list">
                       <li>Designed 5+ engineered systems and supported 10+ cross-disciplinary projects from concept through fabrication.</li>
                       <li>Applied GD&amp;T and DFM/DFA for manufacturable, accurate designs.</li>
@@ -608,13 +627,50 @@
                       <li>Maintained engineering documentation — BOMs, Gantt charts, drawings, and machine manuals — and coordinated stakeholders on-site.</li>
                     </ul>
                   </article>
+                  <div class="exp-media-box">
+                    <div class="media-grid">
+                      <div class="media-grid-item">
+                        <span class="exp-media-title" style="font-size: 0.65rem;">Featured Work</span>
+                        <img src="images/image6.png" alt="WEInnovate Internship Projects" class="zoomable-image" style="background: #000;" />
+                      </div>
+                      <div class="media-grid-item">
+                        <span class="exp-media-title" style="font-size: 0.65rem;">Testimonial</span>
+                        <img src="images/testimonial.jpg" alt="WEInnovate Supervisor Testimonial" class="zoomable-image" style="background: #fff;" />
+                      </div>
+                    </div>
+                    <p class="media-hint"><i class="fa-solid fa-magnifying-glass"></i> Click images to read and expand</p>
+                  </div>
                 </div>
               </div>
-            </li>
-            
-            <li class="timeline__item reveal">
-              <div class="timeline-row">
-                <div class="timeline-col timeline-col--text">
+
+              <div id="exp-army" class="exp-panel">
+                <div class="timeline-content">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo">
+                        <img src="images/army.png" alt="Singapore Army Logo" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Sea Terminal Operator (NSF)</h3>
+                        <p class="exp-card__company">Singapore Army</p>
+                      </div>
+                    </div>
+                    <ul class="exp-card__list">
+                      <li>Managed ground-level port and terminal operations, coordinating the secure loading, unloading, and staging of military assets and supplies.</li>
+                      <li>Gained hands-on experience in complex supply chain logistics and inventory tracking in high-stakes, time-sensitive environments.</li>
+                      <li>Maintained strict adherence to safety protocols and operational workflows, providing a strong foundational understanding of physical process management.</li>
+                    </ul>
+                    <div class="media-grid-item">
+                      <span class="exp-media-title" style="font-size: 0.65rem;"> National Service</span>
+                      <img src="images/ns1.png" alt="national service" class="zoomable-image" style="background: #fff;" />
+                    </div>
+                  </article>
+                  <p class="media-hint"><i class="fa-solid fa-magnifying-glass"></i> Click images to read and expand</p>
+                </div>
+              </div>
+
+              <div id="exp-tui" class="exp-panel">
+                <div class="timeline-content">
                   <article class="card exp-card">
                     <div class="exp-card__header">
                       <div class="exp-card__logo exp-card__logo--light">
@@ -624,9 +680,7 @@
                         <h3>Systems Engineer Intern</h3>
                         <p class="exp-card__company">Destination Services &amp; Intercruises (TUI)</p>
                       </div>
-                      <span class="exp-card__date">Apr 2019 – Jul 2019</span>
                     </div>
-                    
                     <ul class="exp-card__list">
                       <li>Streamlined workflows with Excel VBA and Access; reduced lead time by ~70%.</li>
                       <li>Applied root cause analysis to process issues; recognised with a Certificate of Appreciation.</li>
@@ -634,33 +688,52 @@
                       <li>Explored automation tooling for continuous improvement with cross-functional teams.</li>
                     </ul>
                   </article>
-                </div>
-
-                <div class="timeline-col timeline-col--center">
-                  <span class="timeline__dot" aria-hidden="true"></span>
-                </div>
-
-                <div class="timeline-col timeline-col--media">
                   <div class="exp-media-box">
                     <span class="exp-media-title">Process Mapping Showcase</span>
                     <div class="exp-video-wrapper">
-                      <iframe 
-                        width="100%" 
-                        height="100%" 
-                        src="https://www.youtube.com/embed/oFT9y6wwQJA" 
-                        title="YouTube video player" 
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen 
-                        style="width: 100%; height: 100%; display: block;">
-                      </iframe>
+                      <iframe width="100%" height="100%" src="https://www.youtube.com/embed/oFT9y6wwQJA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen style="width: 100%; height: 100%; display: block;"></iframe>
                     </div>
                   </div>
                 </div>
               </div>
-            </li>
 
-          </ol>
+              <div id="exp-parttime" class="exp-panel">
+                <div class="timeline-content">
+                  <article class="card exp-card">
+                    <div class="exp-card__header">
+                      <div class="exp-card__logo">
+                        <img src="images/part-time.png" alt="Part-Time Roles Logo" width="48" height="48" decoding="async" />
+                      </div>
+                      <div class="exp-card__meta">
+                        <h3>Various Operational &amp; Service Roles</h3>
+                        <p class="exp-card__company">Multiple Organizations (Part-Time)</p>
+                      </div>
+                    </div>
+                    <ul class="exp-card__list">
+                      <li><strong>Operational Empathy & Process Awareness:</strong> Gained first-hand experience navigating ground-level operations across logistics, retail, and F&B. This practical understanding of physical workflows informs my current approach to designing user-friendly digital transformations and automation.</li>
+                      <li><strong>Rapid Problem Solving:</strong> Acted as a runner and usher in high-pressure event environments, requiring immediate troubleshooting, spatial awareness, and the ability to adapt to sudden logistical changes.</li>
+                      <li><strong>Stakeholder Communication:</strong> Managed direct customer interactions in sales and F&B, developing the ability to de-escalate conflicts, translate needs quickly, and communicate clearly across different demographic groups.</li>
+                      <li><strong>Prioritization & Resilience:</strong> Successfully balanced ad-hoc employment commitments alongside rigorous academic engineering schedules and mandatory National Service.</li>
+                    </ul>
+                    <div class="exp-media-box">
+                      <div class="media-grid">
+                        <div class="media-grid-item">
+                          <span class="exp-media-title" style="font-size: 0.65rem;">'18 Moon Cake Event</span>
+                          <img src="images/parttime1.png" alt="Moon Cake Event" class="zoomable-image" style="background: #000;" />
+                        </div>
+                        <div class="media-grid-item">
+                          <span class="exp-media-title" style="font-size: 0.65rem;">'24 Sales Promotor</span>
+                          <img src="images/parttime2.png" alt="2024 Sales Promotor" class="zoomable-image" style="background: #fff;" />
+                        </div>
+                      </div>
+                      <p class="media-hint"><i class="fa-solid fa-magnifying-glass"></i> Click images to read and expand</p>
+                    </div>
+                  </article>
+                </div>
+              </div>
+
+            </div>
+          </div>
         </div>
       </section>
 
@@ -671,9 +744,10 @@
             <h2 class="section__title" id="projects-heading">Selected work</h2>
             <p class="section__intro">
               Featured work in AI-accelerated delivery and governed automation. Hardware integration and university-era
-              projects live on the <a href="academic.html#past-work">Past work</a> page.
+              projects live on the <a href="academic.html">Academic</a> page.
             </p>
           </header>
+          
           <div class="projects__grid">
             
             <article class="card project-card reveal">
@@ -699,34 +773,34 @@
                   Designed, generated, and deployed this static web portfolio using AI-driven tools (Cursor/Composer),
                   reducing development time from weeks to hours.
                 </p>
-                <button type="button" class="btn-project-details toggle-expand" aria-expanded="false">
-                  See all
-                </button>
-
-                <div class="inline-content">
-                  <div class="tab-buttons">
-                    <button class="tab-btn active" data-target="tab-eport-problem">The Problem</button>
-                    <button class="tab-btn" data-target="tab-eport-exec">The Execution</button>
-                    <button class="tab-btn" data-target="tab-eport-outcome">The Outcome</button>
+                
+                <details>
+                  <summary class="btn-project-details"><span class="toggle-text"></span></summary>
+                  <div class="inline-content">
+                    <div class="tab-buttons">
+                      <button class="tab-btn active" data-target="tab-eport-problem">The Problem</button>
+                      <button class="tab-btn" data-target="tab-eport-exec">The Execution</button>
+                      <button class="tab-btn" data-target="tab-eport-outcome">The Outcome</button>
+                    </div>
+                    <div id="tab-eport-problem" class="tab-content active">
+                      <p>The legacy student portfolio no longer matched a Digital Transformation Analyst storyline: the template was dated, the information architecture was rigid, and manually rewriting responsive HTML/CSS would burn weeks while still risking weak accessibility and inconsistent content.</p>
+                    </div>
+                    <div id="tab-eport-exec" class="tab-content">
+                      <p>I used Cursor/Composer as an implementation accelerator: structured prompts for semantic sections, design tokens, and DOM refactors, then reviewed every output for layout, contrast, and keyboard flow. The workflow treated the LLM as a pair programmer under explicit IA and brand constraints rather than a black-box author.</p>
+                    </div>
+                    <div id="tab-eport-outcome" class="tab-content">
+                      <p>The result is this deployable, two-page static site — including CV preview and embedded inline case studies — produced in hours instead of a multi-week ground-up build, with interview-ready narrative and room to iterate as roles and proof points evolve.</p>
+                    </div>
                   </div>
-                  <div id="tab-eport-problem" class="tab-content active">
-                    <p>The legacy student portfolio no longer matched a Digital Transformation Analyst storyline: the template was dated, the information architecture was rigid, and manually rewriting responsive HTML/CSS would burn weeks while still risking weak accessibility and inconsistent content.</p>
-                  </div>
-                  <div id="tab-eport-exec" class="tab-content">
-                    <p>I used Cursor/Composer as an implementation accelerator: structured prompts for semantic sections, design tokens, and DOM refactors, then reviewed every output for layout, contrast, and keyboard flow. The workflow treated the LLM as a pair programmer under explicit IA and brand constraints rather than a black-box author.</p>
-                  </div>
-                  <div id="tab-eport-outcome" class="tab-content">
-                    <p>The result is this deployable, two-page static site — including CV preview and embedded inline case studies — produced in hours instead of a multi-week ground-up build, with interview-ready narrative and room to iterate as roles and proof points evolve.</p>
-                  </div>
-                </div>
+                </details>
               </div>
             </article>
 
             <article class="card project-card reveal">
               <div class="project-card__media">
                 <img
-                  src="images/project-workflow-automation.png"
-                  alt="AI and Automation Workflows"
+                  src="images/project-tracking.png"
+                  alt="Digital Assembly Tracking Dashboard"
                   width="640"
                   height="360"
                   loading="lazy"
@@ -735,36 +809,84 @@
                 />
               </div>
               <div class="project-card__body">
-                <h3 class="project-card__title">AI &amp; automation workflows (current)</h3>
+                <h3 class="project-card__title">Digital Engineering &amp; Assembly Tracking Portal</h3>
                 <div class="project-card__meta">
-                  <span class="project-card__tag">n8n</span>
-                  <span class="project-card__tag">Python</span>
-                  <span class="project-card__tag">PDPA</span>
+                  <span class="project-card__tag">n8n Webhooks</span>
+                  <span class="project-card__tag">RBAC</span>
+                  <span class="project-card__tag">Relational Data</span>
+                  <span class="project-card__tag">Systems Integration</span>
                 </div>
                 <p class="project-card__desc">
-                  Digital transformation delivery: AI-assisted automations, self-hosted operations, and stakeholder-safe
-                  rollout — with documentation, training, and Responsible AI / PDPA alignment built in from day one.
+                  Developed a centralized, role-gated web platform to track component lifecycles across multiple trades, integrating relational databases with n8n automated alerting.
                 </p>
-                <button type="button" class="btn-project-details toggle-expand" aria-expanded="false">
-                  See all
-                </button>
+                
+                <details>
+                  <summary class="btn-project-details"><span class="toggle-text"></span></summary>
+                  <div class="inline-content">
+                    <div class="tab-buttons">
+                      <button class="tab-btn active" data-target="tab-track-problem">The Problem</button>
+                      <button class="tab-btn" data-target="tab-track-exec">The Execution</button>
+                      <button class="tab-btn" data-target="tab-track-outcome">The Outcome</button>
+                    </div>
+                    <div id="tab-track-problem" class="tab-content active">
+                      <p>The team was managing complex assembly lifecycles across multiple trades and modules using disjointed spreadsheets. This caused data silos, made cross-module referencing nearly impossible, and posed data security risks since everyone had the exact same visibility. Furthermore, critical workflows like user onboarding and status alerting were entirely manual.</p>
+                    </div>
+                    <div id="tab-track-exec" class="tab-content">
+                      <p>I engineered a centralized web portal with strict Role-Based Access Control (RBAC), ensuring different trades and management tiers only saw the data and features relevant to their specific roles. To handle the complex production landscape, I designed the backend with strict pointer references, cleanly linking disparate modules, trades, and miscellaneous components so they aggregated correctly on the main dashboard.</p>
+                      <p>Finally, to eliminate manual admin bottlenecks, I successfully introduced n8n webhooks to the architecture. This automated the generation and delivery of One-Time Passwords (OTPs) for secure new user onboarding and pushed real-time reporting alerts to stakeholders.</p>
+                    </div>
+                    <div id="tab-track-outcome" class="tab-content">
+                      <p>The system replaced static spreadsheets with a dynamic, secure, and fully relational application. Cross-trade dependencies are now cleanly visible on the dashboard, data access is safely compartmentalized by role, and automated n8n alerting ensures the team never misses a critical project update without needing manual intervention.</p>
+                    </div>
+                  </div>
+                </details>
+              </div>
+            </article>
 
-                <div class="inline-content">
-                  <div class="tab-buttons">
-                    <button class="tab-btn active" data-target="tab-auto-problem">The Problem</button>
-                    <button class="tab-btn" data-target="tab-auto-exec">The Execution</button>
-                    <button class="tab-btn" data-target="tab-auto-outcome">The Outcome</button>
-                  </div>
-                  <div id="tab-auto-problem" class="tab-content active">
-                    <p>Teams needed dependable handoffs between tools without multiplying shadow IT: manual steps slowed onboarding, duplicated data entry, and created grey areas for PDPA, retention, and Responsible AI expectations.</p>
-                  </div>
-                  <div id="tab-auto-exec" class="tab-content">
-                    <p>I prototyped and hardened flows in n8n with Python connectors where needed, mapping trust boundaries for each integration, and wrote operator-facing documentation so automations could be owned after launch — not dependent on ad-hoc fixes.</p>
-                  </div>
-                  <div id="tab-auto-outcome" class="tab-content">
-                    <p>Outcomes were framed around fewer manual touches, clearer exception paths, and measurable cycle time — so stakeholders could adopt the workflows confidently while staying inside governance boundaries (anonymise exact metrics where NDAs apply).</p>
-                  </div>
+            <article class="card project-card reveal">
+              <div class="project-card__media">
+                <img
+                  src="images/project-stamping.png"
+                  alt="Digital Stamping & Verification System"
+                  width="640"
+                  height="360"
+                  loading="lazy"
+                  decoding="async"
+                  class="zoomable-image"
+                />
+              </div>
+              <div class="project-card__body">
+                <h3 class="project-card__title">Enterprise Digital Stamping &amp; Verification Portal</h3>
+                <div class="project-card__meta">
+                  <span class="project-card__tag">React &amp; Django</span>
+                  <span class="project-card__tag">PostgreSQL</span>
+                  <span class="project-card__tag">Cryptography</span>
+                  <span class="project-card__tag">SSO Integration</span>
                 </div>
+                <p class="project-card__desc">
+                  A full-stack enterprise application designed to fully digitize the manual contract stamping workflow, featuring bulk-processing, smart orientation sorting, and embedded cryptographic tracking.
+                </p>
+                
+                <details>
+                  <summary class="btn-project-details"><span class="toggle-text"></span></summary>
+                  <div class="inline-content">
+                    <div class="tab-buttons">
+                      <button class="tab-btn active" data-target="tab-stamp-problem">The Problem</button>
+                      <button class="tab-btn" data-target="tab-stamp-exec">The Execution</button>
+                      <button class="tab-btn" data-target="tab-stamp-outcome">The Outcome</button>
+                    </div>
+                    <div id="tab-stamp-problem" class="tab-content active">
+                      <p>The company relied on a highly manual process for contract execution: printing 100+ page documents, physically stamping every page, and scanning them back into the system for record-keeping. The process was slow, and tracking the authenticity and history of signatures—especially when multiple users signed the same document—was difficult and error-prone.</p>
+                    </div>
+                    <div id="tab-stamp-exec" class="tab-content">
+                      <p>I built a full-stack platform (React/Django/PostgreSQL) linked directly to the company's HR portal via SSO. To handle massive, complex PDFs, I engineered a smart UI that automatically groups pages into tabs based on size and orientation. Users can now drop resizable signatures onto specific tabs, individual pages, or bulk-apply them across the document.</p>
+                      <p>For security, I embedded an invisible, computer-readable cryptographic key into a separate PDF layer for every signature applied. This ensured that even if a second user stamped the document later, the tracking ID of the previous signer remained fully intact and traceable.</p>
+                    </div>
+                    <div id="tab-stamp-outcome" class="tab-content">
+                      <p>The system successfully eliminated the physical print-stamp-scan bottleneck, keeping all records purely digital and secure. Alongside the stamping tool, I deployed a dedicated verification portal allowing the company to instantly audit the cryptographic authenticity of any stamped PDF. Delivered as my first major company project, it massively improved operational cycle times and compliance tracking.</p>
+                    </div>
+                  </div>
+                </details>
               </div>
             </article>
 
@@ -774,22 +896,21 @@
 
       <section class="section" id="contact" aria-labelledby="contact-heading">
         <div class="container">
-          <header class="section__header reveal">
-            <p class="section__eyebrow">Hello</p>
+          <header class="section__header reveal" style="text-align: center;">
             <h2 class="section__title" id="contact-heading">Contact</h2>
-            <p class="section__intro">
-              Open to roles in digital transformation, systems integration, and AI-governed automation. Reach out
-              below.
+            <p class="section__intro" style="margin: 0 auto; max-width: 600px;">
+              Open to roles in digital transformation, systems integration, and AI-governed automation. Reach out below.
             </p>
           </header>
-          <div class="contact__grid">
-            <div class="reveal">
-              <div class="card contact__info">
+          
+          <div style="display: flex; justify-content: center; width: 100%; margin-top: 2rem;">
+            <div class="reveal" style="width: 100%; max-width: 500px;">
+              <div class="card contact__info" style="text-align: center;">
                 <p>
                   <strong>Phone:</strong> +65 8993 7209<br />
                   Prefer email for first contact — I typically reply within 1–2 business days.
                 </p>
-                <div class="contact-links">
+                <div class="contact-links" style="display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 1.5rem;">
                   <a href="mailto:rogerngwork@gmail.com">
                     <i class="fa-solid fa-envelope" aria-hidden="true"></i> rogerngwork@gmail.com
                   </a>
@@ -804,28 +925,6 @@
                   </a>
                 </div>
               </div>
-            </div>
-            <div class="reveal" style="transition-delay: 0.08s">
-              <form class="card" id="contact-form" action="#" method="get" novalidate>
-                <div class="form-group">
-                  <label for="contact-name">Name</label>
-                  <input type="text" id="contact-name" name="name" autocomplete="name" required />
-                </div>
-                <div class="form-group">
-                  <label for="contact-email">Email</label>
-                  <input type="email" id="contact-email" name="email" autocomplete="email" required />
-                </div>
-                <div class="form-group">
-                  <label for="contact-message">Message</label>
-                  <textarea id="contact-message" name="message" required></textarea>
-                </div>
-                <button type="submit" class="btn btn--primary" style="width: 100%">
-                  <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Send message
-                </button>
-                <p class="section__intro" style="margin: 1rem 0 0; font-size: 0.8125rem">
-                  Submits via your email app (no server). For a hosted form, wire this to Formspree or similar later.
-                </p>
-              </form>
             </div>
           </div>
         </div>
@@ -855,27 +954,7 @@
     
     <script>
       document.addEventListener('DOMContentLoaded', () => {
-        // --- 1. Inline Expansion Toggle Logic ---
-        const toggleBtns = document.querySelectorAll('.toggle-expand');
-        
-        toggleBtns.forEach(btn => {
-          btn.addEventListener('click', () => {
-            const content = btn.nextElementSibling;
-            const isExpanded = btn.getAttribute('aria-expanded') === 'true';
-            
-            if (isExpanded) {
-              btn.setAttribute('aria-expanded', 'false');
-              btn.textContent = 'See all';
-              content.classList.remove('is-expanded');
-            } else {
-              btn.setAttribute('aria-expanded', 'true');
-              btn.textContent = 'Show less';
-              content.classList.add('is-expanded');
-            }
-          });
-        });
-
-        // --- 2. Inline Tab Interaction Logic ---
+        // --- 1. Inline Tab Interaction Logic ---
         const tabBtns = document.querySelectorAll('.tab-btn');
 
         tabBtns.forEach(btn => {
@@ -893,7 +972,7 @@
           });
         });
 
-        // --- 3. Unified Custom Lightbox Logic ---
+        // --- 2. Unified Custom Lightbox Logic ---
         const lightbox = document.getElementById('custom-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
         const lightboxClose = document.getElementById('lightbox-close');
@@ -920,6 +999,73 @@
             }
           });
         }
+
+        // --- 3. Dynamic Project Grid Balancing & Pagination ---
+        const projectGrid = document.querySelector('.projects__grid');
+        if (projectGrid) {
+          const realProjects = Array.from(projectGrid.querySelectorAll('.project-card:not(.coming-soon)'));
+          
+          // If odd number of projects, inject a placeholder card to balance the grid
+          if (realProjects.length % 2 !== 0) {
+            const comingSoonHTML = `
+              <article class="card project-card coming-soon reveal" style="opacity: 1; transform: none;">
+                <div style="margin-top: 5rem;">
+                  <i class="fa-solid fa-person-digging" aria-hidden="true"></i>
+                  <h3 class="project-card__title">More work coming soon</h3>
+                  <p class="project-card__desc" style="margin-top: 0.5rem; font-size: 0.85rem; color: #666;">Currently building and documenting new systems.</p>
+                </div>
+              </article>
+            `;
+            projectGrid.insertAdjacentHTML('beforeend', comingSoonHTML);
+          }
+
+          // Handle Pagination (Max 4 items per view)
+          const allProjects = Array.from(projectGrid.querySelectorAll('.project-card'));
+          const maxVisible = 4;
+          
+          if (allProjects.length > maxVisible) {
+            allProjects.forEach((card, index) => {
+              if (index >= maxVisible) {
+                card.style.display = 'none';
+                card.classList.add('is-paginated');
+              }
+            });
+
+            const paginationHTML = `
+              <div class="projects__pagination" style="width: 100%; text-align: center; grid-column: 1 / -1; margin-top: 2rem;">
+                <button type="button" class="btn btn--ghost" id="load-more-btn">
+                  <i class="fa-solid fa-angle-down" aria-hidden="true"></i> Load More Projects
+                </button>
+              </div>
+            `;
+            projectGrid.insertAdjacentHTML('beforeend', paginationHTML);
+
+            document.getElementById('load-more-btn').addEventListener('click', function() {
+              projectGrid.querySelectorAll('.is-paginated').forEach(card => {
+                card.style.display = ''; 
+                card.style.animation = 'fadeIn 0.5s ease-in'; 
+              });
+              this.parentElement.style.display = 'none';
+            });
+          }
+        }
+
+        // --- 4. Main Experience Tabs Logic ---
+        const mainExpTabs = document.querySelectorAll('.exp-tab');
+        const mainExpPanels = document.querySelectorAll('.exp-panel');
+
+        mainExpTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            // Remove active class from all tabs and panels
+            mainExpTabs.forEach(t => t.classList.remove('active'));
+            mainExpPanels.forEach(p => p.classList.remove('active'));
+
+            // Add active class to clicked tab and corresponding panel
+            tab.classList.add('active');
+            const targetId = tab.getAttribute('data-exp');
+            document.getElementById(targetId).classList.add('active');
+          });
+        });
       });
     </script>
   </body>
